@@ -16,7 +16,7 @@
 - No previous week
 
 ### Issues
--
+- No blockers for the moment
 
 ### Risk
 - Prevent fraud by pretending to have made a purchase at a partner store
