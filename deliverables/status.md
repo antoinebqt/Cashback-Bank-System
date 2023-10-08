@@ -7,16 +7,16 @@
 - Define the scope of the MVP
 - Define the use cases
 - Define the user stories answering these use case
-- Choose the technologie to build the application : Java Spring
+- Choose the technology to build the application : Java Spring
 
 ### What is planned
-- Have a clear idea about how to link different cash back systems for differents partners
+- Have a clear idea about how to link different cash back systems for different partners
 
 ### What's the difference from last week
 - Refining the bank application diagram
 - Define the use cases
 - Define the user stories answering these use case
-- Choose the technologie to build the application : Java Spring
+- Choose the technology to build the application : Java Spring
 
 ### Issues
 - No blockers for the moment
