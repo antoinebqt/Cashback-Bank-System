@@ -1,8 +1,9 @@
 package fr.teama.bankservice.interfaces;
 
 import fr.teama.bankservice.models.Card;
+import fr.teama.bankservice.models.User;
 
 public interface UserRegistration {
 
-    Card registerUser(String firstName, String lastName, String email, String password);
+    Card registerUser(User user);
 }
