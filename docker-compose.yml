@@ -10,3 +10,25 @@ services:
     image: "newbank/cashback-service"
     ports:
       - 3001:8080
+
+
+  # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
+  postgres:
+    image: postgres:15.2
+    container_name: database-bank
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=database-bank
+    ports:
+      - "4000:5432"
+
+  postgres-payload:
+    image: postgres:15.2
+    container_name: database-cashback
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=database-cashback
+    ports:
+      - "4001:5432"
