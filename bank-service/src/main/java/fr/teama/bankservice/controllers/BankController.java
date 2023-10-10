@@ -1,9 +1,6 @@
 package fr.teama.bankservice.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -16,6 +13,11 @@ public class BankController {
     @GetMapping
     public String getBank() {
         return "Bank";
+    }
+
+    @PostMapping("/register")
+    public String register() {
+        return "Account created";
     }
 
 }
