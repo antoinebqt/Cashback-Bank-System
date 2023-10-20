@@ -2,7 +2,7 @@ package fr.teama.bankservice.controllers;
 
 import fr.teama.bankservice.interfaces.UserRegistration;
 import fr.teama.bankservice.models.Card;
-import fr.teama.bankservice.models.User;
+import fr.teama.bankservice.models.BankUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class BankController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Card> register(@RequestBody User user) {
+    public ResponseEntity<Card> register(@RequestBody BankUser user) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userRegistration.registerUser(user));
     }

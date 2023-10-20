@@ -2,6 +2,8 @@ package fr.teama.bankservice.models;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import jakarta.persistence.GeneratedValue;
+import org.springframework.data.annotation.Id;
 
 @Embeddable
 public class BankAccount {

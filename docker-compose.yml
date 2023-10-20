@@ -1,15 +1,15 @@
 version: "3"
 
 services:
-  bank-service:
-    image: "newbank/bank-service"
-    ports:
-      - 3000:8080
-
-  cashback-service:
-    image: "newbank/cashback-service"
-    ports:
-      - 3001:8080
+#  bank-service:
+#    image: "newbank/bank-service"
+#    ports:
+#      - 3000:8080
+#
+#  cashback-service:
+#    image: "newbank/cashback-service"
+#    ports:
+#      - 3001:8080
 
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
@@ -23,7 +23,7 @@ services:
     ports:
       - "4000:5432"
 
-  postgres-payload:
+  postgres-cashback:
     image: postgres:15.2
     container_name: database-cashback
     environment:

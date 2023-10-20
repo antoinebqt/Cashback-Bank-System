@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class User {
+public class BankUser {
 
     @Id
     @GeneratedValue
@@ -25,10 +25,10 @@ public class User {
     @Embedded
     private BankAccount bankAccount;
 
-    public User() {
+    public BankUser() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
+    public BankUser(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -88,7 +88,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        BankUser user = (BankUser) o;
         return Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
     }
 
