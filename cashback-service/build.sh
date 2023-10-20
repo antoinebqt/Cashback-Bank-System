@@ -4,6 +4,6 @@ APP="${PWD##*/}"
 
 # Compiling and buildpacking docker image
 echo "** Compiling $APP"
-docker image rm "newbank/$APP"
-mvn clean spring-boot:build-image -Dspring-boot.build-image.imageName="newbank/$APP"
+docker image rm newbank/$APP
+docker build -t "newbank/$APP" .
 echo "** Done"
