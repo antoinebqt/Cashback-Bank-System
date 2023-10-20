@@ -5,10 +5,10 @@ import jakarta.persistence.Id;
 
 @Entity
 public class AffiliatedStore {
-
-    private String name;
     @Id
     private Long id;
+
+    private String name;
 
 
     public void setId(Long id) {
