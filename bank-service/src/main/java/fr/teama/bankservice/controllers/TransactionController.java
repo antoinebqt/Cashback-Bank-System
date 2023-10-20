@@ -1,6 +1,6 @@
 package fr.teama.bankservice.controllers;
 
-import fr.teama.bankservice.components.TransactionManager;
+import fr.teama.bankservice.components.TransactionHandler;
 import fr.teama.bankservice.controllers.DTO.PaymentDTO;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.repository.CardRepository;
@@ -18,14 +18,14 @@ public class TransactionController {
     @Autowired
     private CardRepository cardRepository;
     @Autowired
-    private TransactionManager transactionManager;
+    private TransactionHandler transactionHandler;
 
     @PostMapping("/pay")
     public ResponseEntity<String> pay(@RequestBody PaymentDTO paymentDTO) {
         System.out.println("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate()))
-            return ResponseEntity.ok(transactionManager.pay(card).toString());
+            return ResponseEntity.ok(transactionHandler.pay(card).toString());
         else{
             return ResponseEntity.badRequest().body("Invalid card");
         }
