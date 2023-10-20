@@ -5,5 +5,5 @@ import fr.teama.bankservice.models.BankUser;
 
 public interface UserRegistration {
 
-    Card registerUser(BankUser user);
+    Card registerUser(String firstName, String lastName, String email, String password);
 }
