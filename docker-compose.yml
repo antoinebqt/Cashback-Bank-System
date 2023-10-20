@@ -3,17 +3,27 @@ version: "3"
 services:
 #  bank-service:
 #    image: "newbank/bank-service"
+#    environment:
+#      - POSTGRES_HOST=postgres-bank:5432
 #    ports:
-#      - 3000:8080
+#      - 3000:3000
 #
 #  cashback-service:
 #    image: "newbank/cashback-service"
+#    environment:
+#      - POSTGRES_HOST=postgres-cashback:5432
 #    ports:
-#      - 3001:8080
+#      - 3001:3001
+
+
+  external-bank-mock-service:
+    image: "newbank/external-bank-mock-service"
+    ports:
+      - 5000:8080
 
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
-  postgres:
+  postgres-bank:
     image: postgres:15.2
     container_name: database-bank
     environment:

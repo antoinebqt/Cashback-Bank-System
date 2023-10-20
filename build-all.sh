@@ -13,6 +13,8 @@ compile_dir "bank-service"
 
 compile_dir "cashback-service"
 
+compile_dir "external-bank-mock-service"
+
 # remove # to add pause in script execution
 #read -p "Press any key to continue... "
 
