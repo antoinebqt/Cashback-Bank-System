@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class PaymentHandler implements IPayment {
 
     @Override
-    public Payment pay(Card card) {
-        return new Payment(25.0,"DesCatsLongs");
+    public Payment pay(Card card, String beneficiary, double amount) {
+        return new Payment(amount, beneficiary);
     }
 }

@@ -25,7 +25,7 @@ public class TransactionController {
         System.out.println("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate()))
-            return ResponseEntity.ok(transactionHandler.pay(card).toString());
+            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()).toString());
         else{
             return ResponseEntity.badRequest().body("Invalid card");
         }

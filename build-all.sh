@@ -9,9 +9,9 @@ function compile_dir()  # $1 is the dir to get it
 
 echo "** Building all"
 
-compile_dir "bank-service"
-
-compile_dir "cashback-service"
+#compile_dir "bank-service"
+#
+#compile_dir "cashback-service"
 
 compile_dir "external-bank-mock-service"
 

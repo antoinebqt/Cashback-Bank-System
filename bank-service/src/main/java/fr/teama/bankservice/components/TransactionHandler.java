@@ -12,7 +12,8 @@ public class TransactionHandler implements ITransaction {
     @Autowired
     private IPayment payment;
     @Override
-    public Transaction pay(Card card) {
-        return new Transaction(payment.pay(card),card);
+    public Transaction pay(Card card, String beneficiary, double amount) {
+
+        return new Transaction(payment.pay(card, beneficiary, amount), card);
     }
 }
