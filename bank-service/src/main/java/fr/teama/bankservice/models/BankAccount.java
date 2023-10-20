@@ -9,6 +9,8 @@ public class BankAccount {
     @Embedded
     private Card card;
 
+    private String iban;
+
     private Double balance;
 
     public BankAccount() {
@@ -37,11 +39,20 @@ public class BankAccount {
         this.balance = balance;
     }
 
+    public String getIban() {
+        return iban;
+    }
+
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
+
     @Override
     public String toString() {
         return "BankAccount{" +
                 "card=" + card +
                 ", balance=" + balance +
+                ", iban='" + iban +
                 '}';
     }
 }
