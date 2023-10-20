@@ -22,6 +22,7 @@ public class Transaction {
     }
     public Transaction(Payment payment, Card card) {
         this.payment = payment;
+        this.card = card;
     }
     public void setId(Long id) {
         this.id = id;

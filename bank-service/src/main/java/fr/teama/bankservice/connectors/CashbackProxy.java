@@ -2,18 +2,19 @@ package fr.teama.bankservice.connectors;
 
 import fr.teama.bankservice.connectors.DTO.AffiliatedStoreDTO;
 import fr.teama.bankservice.helpers.LoggerHelper;
+import fr.teama.bankservice.interfaces.proxy.ICashbackProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class CashbackProxy {
+public class CashbackProxy implements ICashbackProxy {
     @Value("${rocket-department.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public Double getCashback(String beneficiary) {
+    public Double getCashbackRate(String beneficiary) {
         try {
             LoggerHelper.logInfo("Ask cashback-service for the cashback of " + beneficiary);
             AffiliatedStoreDTO affiliatedStoreDTO = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/store/name", beneficiary, AffiliatedStoreDTO.class).getBody();

@@ -6,4 +6,5 @@ import fr.teama.bankservice.models.Transaction;
 
 public interface ITransaction {
     Transaction pay(Card card, String beneficiary, double amount);
+    Transaction saveTransaction(Transaction transaction);
 }
