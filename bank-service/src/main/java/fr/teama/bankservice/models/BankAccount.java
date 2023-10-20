@@ -11,6 +11,7 @@ public class BankAccount {
 
     private Double balance;
     @Id
+    @GeneratedValue
     private Long id;
 
     public BankAccount() {
