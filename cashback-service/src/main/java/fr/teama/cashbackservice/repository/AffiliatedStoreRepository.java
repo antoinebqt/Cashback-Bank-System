@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CashbackDataRepository extends JpaRepository<AffiliatedStore, Long> {
+public interface AffiliatedStoreRepository extends JpaRepository<AffiliatedStore, Long> {
+    AffiliatedStore findByName(String name);
 }
