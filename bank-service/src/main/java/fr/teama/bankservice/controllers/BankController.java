@@ -25,9 +25,9 @@ public class BankController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Card> register(@RequestBody BankUser user) {
+    public ResponseEntity<Card> register(@RequestBody String firstName, String lastName, String email, String password) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(userRegistration.registerUser(user));
+                .body(userRegistration.registerUser(firstName, lastName, email, password));
     }
 
 }
