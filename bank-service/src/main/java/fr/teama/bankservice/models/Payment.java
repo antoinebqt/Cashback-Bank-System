@@ -7,7 +7,6 @@ public class Payment {
     private double amount;
     private String beneficiary;
 
-    private BankUser user;
 
     public Payment() {
     }
