@@ -1,16 +1,24 @@
 package fr.teama.bankservice.models;
 
 
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 
-@Embeddable
+import java.util.List;
+
+@Entity
 public class Card {
+    @OneToOne
+    private BankAccount bankAccount;
 
     private String cardNumber;
 
     private String expirationDate;
 
     private String cvv;
+    @OneToMany
+    List<Transaction> transactions;
+    @Id
+    private Long id;
 
     public Card() {
     }
@@ -52,5 +60,13 @@ public class Card {
                 ", expirationDate='" + expirationDate + '\'' +
                 ", cvv='" + cvv + '\'' +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -1,9 +1,6 @@
 package fr.teama.bankservice.models;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -22,7 +19,7 @@ public class BankUser {
 
     private String password;
 
-    @Embedded
+    @OneToOne
     private BankAccount bankAccount;
 
     public BankUser() {

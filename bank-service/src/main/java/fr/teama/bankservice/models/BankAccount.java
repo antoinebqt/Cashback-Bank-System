@@ -1,19 +1,17 @@
 package fr.teama.bankservice.models;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
-@Embeddable
+@Entity
 public class BankAccount {
-
-    @Embedded
+    @OneToOne
     private Card card;
 
     private String iban;
 
     private Double balance;
+    @Id
+    private Long id;
 
     public BankAccount() {
         card = new Card();
@@ -56,5 +54,13 @@ public class BankAccount {
                 ", balance=" + balance +
                 ", iban='" + iban +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
