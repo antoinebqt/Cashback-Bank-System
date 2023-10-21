@@ -3,7 +3,8 @@ package fr.teama.bankservice.components;
 import fr.teama.bankservice.interfaces.UserRegistration;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.models.BankUser;
-import fr.teama.bankservice.repository.BankDataRepository;
+import fr.teama.bankservice.repository.BankAccountRepository;
+import fr.teama.bankservice.repository.BankUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,10 @@ import java.util.Random;
 public class BankAccountManager implements UserRegistration {
 
     @Autowired
-    BankDataRepository bankDataRepository;
+    BankUserRepository bankUserRepository;
+
+    @Autowired
+    BankAccountRepository bankAccountRepository;
 
     @Override
     public Card registerUser(String firstName, String lastName, String email, String password) {
@@ -28,7 +32,7 @@ public class BankAccountManager implements UserRegistration {
         for (int i = 0; i < 3; i++) {
             cvv.append(random.nextInt(10));
         }
-        Card card = new Card(cardNumber.toString(), "12/24", cvv.toString());
+        Card card = new Card(cardNumber.toString(), "12/24", cvv.toString(), user.getBankAccount());
 
         StringBuilder iban = new StringBuilder(22);
         for (int i = 0; i < 22; i++) {
@@ -38,7 +42,7 @@ public class BankAccountManager implements UserRegistration {
         user.getBankAccount().setCard(card);
         user.getBankAccount().setIban("FR" + iban + "A12");
 
-        bankDataRepository.save(user);
+        bankUserRepository.save(user);
         return card;
     }
 }

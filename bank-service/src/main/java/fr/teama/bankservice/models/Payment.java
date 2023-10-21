@@ -14,4 +14,12 @@ public class Payment {
         this.amount = amount;
         this.beneficiary = beneficiary;
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "amount=" + amount +
+                ", beneficiary='" + beneficiary + '\'' +
+                '}';
+    }
 }

@@ -4,24 +4,29 @@ import jakarta.persistence.*;
 
 @Entity
 public class BankAccount {
-    @OneToOne
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Card card;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private BankUser bankUser;
 
     private String iban;
 
     private Double balance;
-    @Id
-    @GeneratedValue
-    private Long id;
 
     public BankAccount() {
         card = new Card();
         balance = 0.0;
     }
 
-    public BankAccount(Card card, Double balance) {
+    public BankAccount(BankUser bankUser, Card card, Double balance) {
         this.card = card;
         this.balance = balance;
+        this.bankUser = bankUser;
     }
 
     public Card getCard() {

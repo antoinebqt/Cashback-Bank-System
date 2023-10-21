@@ -1,5 +1,6 @@
 package fr.teama.bankservice.controllers;
 
+import fr.teama.bankservice.controllers.DTO.BankTransferDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

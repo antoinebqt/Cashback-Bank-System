@@ -7,7 +7,11 @@ import java.util.List;
 
 @Entity
 public class Card {
-    @OneToOne
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private BankAccount bankAccount;
 
     private String cardNumber;
@@ -17,13 +21,11 @@ public class Card {
     private String cvv;
     @OneToMany
     List<Transaction> transactions;
-    @Id
-    private Long id;
 
     public Card() {
     }
 
-    public Card(String cardNumber, String expirationDate, String cvv) {
+    public Card(String cardNumber, String expirationDate, String cvv, BankAccount bankAccount) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
