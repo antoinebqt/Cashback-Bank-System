@@ -4,6 +4,7 @@ import fr.teama.bankservice.controllers.dto.BankTransferDTO;
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
 import fr.teama.bankservice.interfaces.BalanceModifier;
 import org.springframework.beans.factory.annotation.Autowired;
+import fr.teama.bankservice.controllers.DTO.BankTransferDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

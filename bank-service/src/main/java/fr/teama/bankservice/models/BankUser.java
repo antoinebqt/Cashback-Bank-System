@@ -19,7 +19,7 @@ public class BankUser {
 
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private BankAccount bankAccount;
 
     public BankUser() {

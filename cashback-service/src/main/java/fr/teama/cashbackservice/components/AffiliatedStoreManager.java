@@ -1,6 +1,7 @@
 package fr.teama.cashbackservice.components;
 
 import fr.teama.cashbackservice.exceptions.AffiliatedStoreAlreadyExist;
+import fr.teama.cashbackservice.interfaces.IAffiliatedStoreCatalog;
 import fr.teama.cashbackservice.interfaces.IAffiliatedStoreManager;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.models.AffiliatedStore;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AffiliatedStoreManager implements IAffiliatedStoreManager {
+public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffiliatedStoreCatalog {
 
     @Autowired
     AffiliatedStoreRepository affiliatedStoreRepository;
