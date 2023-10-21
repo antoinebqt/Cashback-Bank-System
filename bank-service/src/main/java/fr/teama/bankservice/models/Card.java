@@ -9,9 +9,10 @@ import java.util.List;
 public class Card {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
+    @OneToOne(mappedBy = "card")
     private BankAccount bankAccount;
 
     private String cardNumber;

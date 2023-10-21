@@ -10,9 +10,9 @@ public class BankAccount {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bank_account_id")
     private Card card;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "bankAccount")
+    @OneToOne(cascade = CascadeType.ALL)
     private BankUser bankUser;
 
     private String iban;
