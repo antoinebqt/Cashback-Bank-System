@@ -1,4 +1,4 @@
-package fr.teama.bankservice.controllers;
+package fr.teama.bankservice.controllers.DTO;
 
 public class BankTransferDTO {
 

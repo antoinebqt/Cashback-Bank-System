@@ -13,6 +13,7 @@ public class Transaction {
     private Card card;
     @Embedded
     Payment payment;
+
     public Transaction() {
     }
     public Transaction(Double cashBack, Payment payment, Card card) {
@@ -20,6 +21,17 @@ public class Transaction {
         this.payment = payment;
         this.card = card;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", cashBack=" + cashBack +
+                ", card=" + card +
+                ", payment=" + payment +
+                '}';
+    }
+
     public Transaction(Payment payment, Card card) {
         this.payment = payment;
         this.card = card;

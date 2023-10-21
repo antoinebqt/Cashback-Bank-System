@@ -16,7 +16,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = BalanceController.BASE_URI, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(path = TransactionController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class TransactionController {
     public static final String BASE_URI = "/api/transaction";
     @Autowired
