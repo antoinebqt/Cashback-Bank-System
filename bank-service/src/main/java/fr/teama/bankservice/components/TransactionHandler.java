@@ -22,6 +22,8 @@ public class TransactionHandler implements ITransaction {
     ICashbackProxy cashbackProxy;
     @Autowired
     TransactionRepository transactionRepository;
+    @Autowired
+    BalanceManager balanceManager;
 
     @Override
     public Transaction pay(Card card, String beneficiary, double amount) throws NotEnoughMoneyException {
@@ -35,6 +37,11 @@ public class TransactionHandler implements ITransaction {
             LoggerHelper.logInfo(beneficiary + " is an affiliated store, apply cashback of " + cashbackRate + "%");
             Double cashbackAmount = amount * cashbackRate / 100;
             transaction = new Transaction(cashbackAmount, myPayment, card);
+            try {
+                balanceManager.addBalance(card.getBankAccount().getIban(), cashbackAmount);
+            } catch (Exception e) {
+                LoggerHelper.logError("Error while adding cashback to bank account");
+            }
         } else {
             LoggerHelper.logInfo(beneficiary + " is not an affiliated store");
             transaction = new Transaction(myPayment, card);
