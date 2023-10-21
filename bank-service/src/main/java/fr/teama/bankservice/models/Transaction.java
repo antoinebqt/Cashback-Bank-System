@@ -44,4 +44,27 @@ public class Transaction {
         return id;
     }
 
+    public Double getCashBack() {
+        return cashBack;
+    }
+
+    public void setCashBack(Double cashBack) {
+        this.cashBack = cashBack;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 }

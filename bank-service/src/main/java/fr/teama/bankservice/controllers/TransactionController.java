@@ -1,8 +1,13 @@
 package fr.teama.bankservice.controllers;
 
 import fr.teama.bankservice.components.TransactionHandler;
+import fr.teama.bankservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.bankservice.controllers.dto.PaymentDTO;
+import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
+import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
+import fr.teama.bankservice.helpers.LoggerHelper;
+import fr.teama.bankservice.interfaces.BankUserInformation;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.models.Transaction;
 import fr.teama.bankservice.repository.CardRepository;
@@ -26,10 +31,12 @@ public class TransactionController {
     private TransactionHandler transactionHandler;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private BankUserInformation bankUserInformation;
 
     @PostMapping("/pay")
     public ResponseEntity<String> pay(@RequestBody PaymentDTO paymentDTO) {
-        System.out.println("PaymentDTO: " + paymentDTO.toString());
+        LoggerHelper.logInfo("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
             try {
@@ -45,6 +52,19 @@ public class TransactionController {
 
     @GetMapping
     public List<Transaction> getTransaction() {
-        return transactionRepository.findAll();
+        LoggerHelper.logInfo("Request received to get all transactions");
+        return transactionHandler.getTransactions();
+    }
+
+    @PostMapping("/user")
+    public List<Transaction> getBankUserTransaction(@RequestBody BankUserConnectionDTO bankUserConnectionDTO) throws BankAccountNotFoundException, InvalidAccountPasswordException {
+        LoggerHelper.logInfo("Request received to get all transactions of user " + bankUserConnectionDTO.getEmail());
+        return bankUserInformation.getTransactions(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
+    }
+
+    @PostMapping("/user-cashback")
+    public Double getBankUserTransactionsTotalCashback(@RequestBody BankUserConnectionDTO bankUserConnectionDTO) throws BankAccountNotFoundException, InvalidAccountPasswordException {
+        LoggerHelper.logInfo("Request received to get total earned cashback of user " + bankUserConnectionDTO.getEmail());
+        return bankUserInformation.getAmountEarnedWithTransactionCashback(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
     }
 }

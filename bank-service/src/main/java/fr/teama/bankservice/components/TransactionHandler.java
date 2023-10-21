@@ -12,6 +12,8 @@ import fr.teama.bankservice.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TransactionHandler implements ITransaction {
     @Autowired
@@ -44,5 +46,10 @@ public class TransactionHandler implements ITransaction {
     public Transaction saveTransaction(Transaction transaction) {
         LoggerHelper.logInfo("Save transaction");
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public List<Transaction> getTransactions() {
+        return transactionRepository.findAll();
     }
 }
