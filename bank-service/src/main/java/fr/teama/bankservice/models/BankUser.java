@@ -20,6 +20,7 @@ public class BankUser {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bank_user_id")
     private BankAccount bankAccount;
 
     public BankUser() {

@@ -12,7 +12,7 @@ public class BankAccount {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bank_account_id")
     private Card card;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "bankAccount")
     private BankUser bankUser;
 
     private String iban;
