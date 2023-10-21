@@ -1,6 +1,7 @@
 package fr.teama.bankservice.components;
 
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
+import fr.teama.bankservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.bankservice.interfaces.BankUserInformation;
 import fr.teama.bankservice.interfaces.UserRegistration;
@@ -21,7 +22,11 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
     BankUserRepository bankUserRepository;
 
     @Override
-    public BankUser registerUser(String firstName, String lastName, String email, String password) {
+    public BankUser registerUser(String firstName, String lastName, String email, String password) throws BankUserWithEmailAlreadyExistException {
+        if (bankUserRepository.findByEmail(email) != null) {
+            throw new BankUserWithEmailAlreadyExistException();
+        }
+
         BankUser user = new BankUser(firstName, lastName, email, password);
 
         Random random = new Random();

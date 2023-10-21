@@ -5,6 +5,7 @@ import fr.teama.bankservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.bankservice.controllers.dto.PaymentDTO;
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
 import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
+import fr.teama.bankservice.exceptions.InvalidCardException;
 import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.BankUserInformation;
@@ -35,14 +36,14 @@ public class TransactionController {
     private BankUserInformation bankUserInformation;
 
     @PostMapping("/pay")
-    public ResponseEntity<String> pay(@RequestBody PaymentDTO paymentDTO) throws NotEnoughMoneyException {
+    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws NotEnoughMoneyException, InvalidCardException {
         LoggerHelper.logInfo("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
-            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()).toString());
+            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()));
         }
         else{
-            return ResponseEntity.badRequest().body("Invalid card");
+            throw new InvalidCardException();
         }
     }
 

@@ -89,7 +89,6 @@ public class Card {
     public String toString() {
         return "Card{" +
                 "id=" + id +
-                ", bankAccount=" + bankAccount +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", expirationDate='" + expirationDate + '\'' +
                 ", cvv='" + cvv + '\'' +

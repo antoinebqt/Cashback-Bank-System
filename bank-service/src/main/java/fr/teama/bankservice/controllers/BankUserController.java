@@ -55,7 +55,7 @@ public class BankUserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<BankUser> getUser(@PathVariable BankUserConnectionDTO bankUserConnectionDTO) throws BankAccountNotFoundException, InvalidAccountPasswordException {
+    public ResponseEntity<BankUser> getUser(@RequestBody BankUserConnectionDTO bankUserConnectionDTO) throws BankAccountNotFoundException, InvalidAccountPasswordException {
         LoggerHelper.logInfo("Request received for getting user " + bankUserConnectionDTO.getEmail());
         BankUser user = bankUserInformation.getBankUser(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
         return ResponseEntity.ok(user);

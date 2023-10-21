@@ -1,9 +1,7 @@
 package fr.teama.bankservice.controllers;
 
 import fr.teama.bankservice.controllers.dto.ErrorDTO;
-import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
-import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
-import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
+import fr.teama.bankservice.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,12 +28,30 @@ public class GlobalControllerAdvice {
         return errorDTO;
     }
 
+    @ExceptionHandler({BankUserWithEmailAlreadyExistException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDTO handleExceptions(BankUserWithEmailAlreadyExistException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Bank user already exist");
+        errorDTO.setDetails("Bank user with email " + e.getEmail() + " already exist");
+        return errorDTO;
+    }
+
     @ExceptionHandler({NotEnoughMoneyException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorDTO handleExceptions(NotEnoughMoneyException e) {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Not enough money");
         errorDTO.setDetails("Not enough money on account");
+        return errorDTO;
+    }
+
+    @ExceptionHandler({InvalidCardException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDTO handleExceptions(InvalidCardException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Invalid card");
+        errorDTO.setDetails("Invalid given card");
         return errorDTO;
     }
 

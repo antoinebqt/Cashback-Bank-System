@@ -30,7 +30,6 @@ public class Transaction {
         return "Transaction{" +
                 "id=" + id +
                 ", cashBack=" + cashBack +
-                ", card=" + card +
                 ", payment=" + payment +
                 '}';
     }
