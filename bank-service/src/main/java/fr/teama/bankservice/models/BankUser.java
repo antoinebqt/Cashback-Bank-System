@@ -20,7 +20,7 @@ public class BankUser {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bank_user_id")
+    @JoinColumn(name = "bank_account_id")
     private BankAccount bankAccount;
 
     public BankUser() {
@@ -97,7 +97,7 @@ public class BankUser {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "BankUser{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

@@ -3,6 +3,7 @@ package fr.teama.bankservice.controllers;
 import fr.teama.bankservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.bankservice.controllers.dto.BankUserDTO;
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
+import fr.teama.bankservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.BankUserInformation;
@@ -40,7 +41,7 @@ public class BankUserController {
     }
 
     @PostMapping(value = "/register", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<BankUser> register(@RequestBody BankUserDTO bankUserDTO) {
+    public ResponseEntity<BankUser> register(@RequestBody BankUserDTO bankUserDTO) throws BankUserWithEmailAlreadyExistException {
         LoggerHelper.logInfo("Request received for registering user " + bankUserDTO.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userRegistration.registerUser(bankUserDTO.getFirstName(), bankUserDTO.getLastName(), bankUserDTO.getEmail(), bankUserDTO.getPassword()));

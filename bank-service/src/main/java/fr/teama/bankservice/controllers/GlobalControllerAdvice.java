@@ -3,6 +3,7 @@ package fr.teama.bankservice.controllers;
 import fr.teama.bankservice.controllers.dto.ErrorDTO;
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
 import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
+import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,6 +27,15 @@ public class GlobalControllerAdvice {
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Invalid password");
         errorDTO.setDetails("Invalid password for bank account " + e.getEmail());
+        return errorDTO;
+    }
+
+    @ExceptionHandler({NotEnoughMoneyException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDTO handleExceptions(NotEnoughMoneyException e) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Not enough money");
+        errorDTO.setDetails("Not enough money on account");
         return errorDTO;
     }
 

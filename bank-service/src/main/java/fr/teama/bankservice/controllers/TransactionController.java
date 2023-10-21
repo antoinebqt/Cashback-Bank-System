@@ -35,15 +35,11 @@ public class TransactionController {
     private BankUserInformation bankUserInformation;
 
     @PostMapping("/pay")
-    public ResponseEntity<String> pay(@RequestBody PaymentDTO paymentDTO) {
+    public ResponseEntity<String> pay(@RequestBody PaymentDTO paymentDTO) throws NotEnoughMoneyException {
         LoggerHelper.logInfo("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
-            try {
-                return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()).toString());
-            } catch (NotEnoughMoneyException e) {
-                return ResponseEntity.badRequest().body("Not enough money");
-            }
+            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()).toString());
         }
         else{
             return ResponseEntity.badRequest().body("Invalid card");

@@ -1,6 +1,7 @@
 package fr.teama.bankservice.components;
 
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
+import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import fr.teama.bankservice.interfaces.BalanceModifier;
 import fr.teama.bankservice.models.BankAccount;
 import fr.teama.bankservice.repository.BankAccountRepository;
@@ -20,6 +21,14 @@ public class BalanceManager implements BalanceModifier {
             throw new BankAccountNotFoundException("IBAN", iban);
         }
         bankAccount.setBalance(bankAccount.getBalance() + amount);
+        bankAccountRepository.save(bankAccount);
+    }
+    @Override
+    public void debitBalance(BankAccount bankAccount, Double amount) throws NotEnoughMoneyException {
+        if (bankAccount.getBalance() < amount) {
+            throw new NotEnoughMoneyException();
+        }
+        bankAccount.setBalance(bankAccount.getBalance() - amount);
         bankAccountRepository.save(bankAccount);
     }
 }
