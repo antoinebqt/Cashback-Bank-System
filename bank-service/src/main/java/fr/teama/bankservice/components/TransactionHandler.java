@@ -1,5 +1,6 @@
 package fr.teama.bankservice.components;
 
+import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.IPayment;
 import fr.teama.bankservice.interfaces.ITransaction;
@@ -21,7 +22,7 @@ public class TransactionHandler implements ITransaction {
     TransactionRepository transactionRepository;
 
     @Override
-    public Transaction pay(Card card, String beneficiary, double amount) {
+    public Transaction pay(Card card, String beneficiary, double amount) throws NotEnoughMoneyException {
         LoggerHelper.logInfo("Ask " + beneficiary + " to validate payment of " + amount);
         Payment myPayment = payment.pay(card, beneficiary, amount);
         LoggerHelper.logInfo("Check if " + beneficiary + " is an affiliated store");

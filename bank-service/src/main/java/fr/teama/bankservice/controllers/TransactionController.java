@@ -2,6 +2,7 @@ package fr.teama.bankservice.controllers;
 
 import fr.teama.bankservice.components.TransactionHandler;
 import fr.teama.bankservice.controllers.DTO.PaymentDTO;
+import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,13 @@ public class TransactionController {
     public ResponseEntity<String> pay(@RequestBody PaymentDTO paymentDTO) {
         System.out.println("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
-        if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate()))
-            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()).toString());
+        if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
+            try {
+                return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()).toString());
+            } catch (NotEnoughMoneyException e) {
+                return ResponseEntity.badRequest().body("Not enough money");
+            }
+        }
         else{
             return ResponseEntity.badRequest().body("Invalid card");
         }
