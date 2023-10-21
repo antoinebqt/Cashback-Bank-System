@@ -1,7 +1,7 @@
 package fr.teama.bankservice.controllers;
 
 import fr.teama.bankservice.components.TransactionHandler;
-import fr.teama.bankservice.controllers.DTO.PaymentDTO;
+import fr.teama.bankservice.controllers.dto.PaymentDTO;
 import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.models.Transaction;

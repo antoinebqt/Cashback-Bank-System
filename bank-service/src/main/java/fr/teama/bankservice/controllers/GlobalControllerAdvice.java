@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(assignableTypes = {BalanceController.class, BankController.class})
+@RestControllerAdvice(assignableTypes = {BalanceController.class, BankUserController.class})
 public class GlobalControllerAdvice {
 
     @ExceptionHandler({BankAccountNotFoundException.class})

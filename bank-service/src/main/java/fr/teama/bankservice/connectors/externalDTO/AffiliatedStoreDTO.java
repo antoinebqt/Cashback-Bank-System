@@ -1,4 +1,4 @@
-package fr.teama.bankservice.connectors.DTO;
+package fr.teama.bankservice.connectors.externalDTO;
 
 public class AffiliatedStoreDTO {
     private Long id;

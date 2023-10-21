@@ -30,7 +30,7 @@ public class BankAccountManager implements UserRegistration {
         for (int i = 0; i < 3; i++) {
             cvv.append(random.nextInt(10));
         }
-        Card card = new Card(cardNumber.toString(), "12/24", cvv.toString(), user.getBankAccount());
+        Card card = new Card(cardNumber.toString(), "12/24", cvv.toString());
 
         StringBuilder iban = new StringBuilder(22);
         for (int i = 0; i < 22; i++) {

@@ -1,5 +1,6 @@
 package fr.teama.bankservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,7 +12,7 @@ public class BankAccount {
     @OneToOne(cascade = CascadeType.ALL)
     private Card card;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "bankAccount")
     private BankUser bankUser;
 
     private String iban;

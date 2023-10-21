@@ -11,7 +11,7 @@ public class Card {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
     private BankAccount bankAccount;
 
     private String cardNumber;
@@ -25,7 +25,7 @@ public class Card {
     public Card() {
     }
 
-    public Card(String cardNumber, String expirationDate, String cvv, BankAccount bankAccount) {
+    public Card(String cardNumber, String expirationDate, String cvv) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvv = cvv;

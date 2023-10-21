@@ -1,4 +1,4 @@
-package fr.teama.bankservice.controllers.DTO;
+package fr.teama.bankservice.controllers.dto;
 
 public class PaymentDTO {
     private String cardNumber;

@@ -1,6 +1,6 @@
 package fr.teama.bankservice.connectors;
 
-import fr.teama.bankservice.connectors.DTO.AffiliatedStoreDTO;
+import fr.teama.bankservice.connectors.externalDTO.AffiliatedStoreDTO;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.proxy.ICashbackProxy;
 import org.springframework.beans.factory.annotation.Value;
