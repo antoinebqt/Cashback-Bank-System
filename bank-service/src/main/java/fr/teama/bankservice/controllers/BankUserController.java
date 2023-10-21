@@ -2,7 +2,9 @@ package fr.teama.bankservice.controllers;
 
 import fr.teama.bankservice.controllers.dto.BankUserDTO;
 import fr.teama.bankservice.interfaces.UserRegistration;
+import fr.teama.bankservice.models.BankAccount;
 import fr.teama.bankservice.models.BankUser;
+import fr.teama.bankservice.repository.BankAccountRepository;
 import fr.teama.bankservice.repository.BankUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,9 @@ public class BankUserController {
     @Autowired
     BankUserRepository bankUserRepository;
 
+    @Autowired
+    BankAccountRepository bankAccountRepository;
+
     @GetMapping
     public String getBank() {
         return "Bank";
@@ -44,4 +49,11 @@ public class BankUserController {
         return ResponseEntity.ok(userList);
     }
 
+    @GetMapping("/all-bank-accounts")
+    public ResponseEntity<List<BankAccount>> getAllBankAccount() {
+        System.out.println("Request received for getting all bank accounts");
+        List<BankAccount> bankAccountList = bankAccountRepository.findAll();
+        System.out.println(bankAccountList.get(0).getBankUser().getEmail());
+        return ResponseEntity.ok(bankAccountList);
+    }
 }

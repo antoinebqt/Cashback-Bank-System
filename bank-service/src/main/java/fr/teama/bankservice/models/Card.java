@@ -1,8 +1,10 @@
 package fr.teama.bankservice.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,7 @@ public class Card {
     private Long id;
 
     @OneToOne(mappedBy = "card")
+    @JsonIgnore
     private BankAccount bankAccount;
 
     private String cardNumber;
@@ -20,7 +23,7 @@ public class Card {
     private String expirationDate;
 
     private String cvv;
-    @OneToMany
+    @OneToMany(mappedBy = "card")
     List<Transaction> transactions;
 
     public Card() {
@@ -30,6 +33,7 @@ public class Card {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
+        transactions = new ArrayList<>();
     }
 
     public String getCardNumber() {
@@ -56,15 +60,6 @@ public class Card {
         this.cvv = cvv;
     }
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "cardNumber='" + cardNumber + '\'' +
-                ", expirationDate='" + expirationDate + '\'' +
-                ", cvv='" + cvv + '\'' +
-                '}';
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -87,5 +82,18 @@ public class Card {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", bankAccount=" + bankAccount +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", transactions=" + transactions +
+                '}';
     }
 }

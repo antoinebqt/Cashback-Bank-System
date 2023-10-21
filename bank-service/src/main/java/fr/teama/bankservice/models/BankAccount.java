@@ -10,9 +10,10 @@ public class BankAccount {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bank_account_id")
+    @JoinColumn(name = "card_id")
     private Card card;
     @OneToOne(mappedBy = "bankAccount")
+    @JsonIgnore
     private BankUser bankUser;
 
     private String iban;
@@ -54,20 +55,26 @@ public class BankAccount {
         this.iban = iban;
     }
 
-    @Override
-    public String toString() {
-        return "BankAccount{" +
-                "card=" + card +
-                ", balance=" + balance +
-                ", iban='" + iban +
-                '}';
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public BankUser getBankUser() {
+        return bankUser;
+    }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "id=" + id +
+                ", card=" + card +
+                ", bankUser=" + bankUser +
+                ", iban='" + iban + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package fr.teama.bankservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,8 @@ public class Transaction {
     @Column(nullable = true)
     private Double cashBack;
     @ManyToOne
+    @JoinColumn(name = "card_id")
+    @JsonIgnore
     private Card card;
     @Embedded
     Payment payment;
