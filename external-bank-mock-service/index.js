@@ -5,8 +5,8 @@ const axios = require('axios');
 const app = express();
 const port = 8080;
 
-//const apiURL = "http://bank-service:3000";
-const apiURL = "http://localhost:3000";
+const apiURL = "http://bank-service:3000";
+//const apiURL = "http://localhost:3000";
 
 app.use(bodyParser.json());
 
@@ -28,8 +28,9 @@ app.post('/create-bank-transfer', (req, res) => {
             res.status(200).send('Balance added');
         })
         .catch(error => {
-            console.error(error);
-            res.status(500).send('Error while adding balance');
+            // console.error(error);
+            // res.status(500).send('Error while adding balance');
+            res.status(error.response.status).send(error.response.data);
         });
 });
 

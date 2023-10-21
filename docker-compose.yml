@@ -1,19 +1,19 @@
 version: "3"
 
 services:
-#  bank-service:
-#    image: "newbank/bank-service"
-#    environment:
-#      - POSTGRES_HOST=postgres-bank:5432
-#    ports:
-#      - 3000:3000
-#
-#  cashback-service:
-#    image: "newbank/cashback-service"
-#    environment:
-#      - POSTGRES_HOST=postgres-cashback:5432
-#    ports:
-#      - 3001:3001
+  bank-service:
+    image: "newbank/bank-service"
+    environment:
+      - POSTGRES_HOST=postgres-bank:5432
+    ports:
+      - 3000:3000
+
+  cashback-service:
+    image: "newbank/cashback-service"
+    environment:
+      - POSTGRES_HOST=postgres-cashback:5432
+    ports:
+      - 3001:3001
 
 
   external-bank-mock-service:

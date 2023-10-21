@@ -3,7 +3,7 @@ package fr.teama.bankservice.components;
 import fr.teama.bankservice.interfaces.UserRegistration;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.models.BankUser;
-import fr.teama.bankservice.repository.BankDataRepository;
+import fr.teama.bankservice.repository.BankUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +13,10 @@ import java.util.Random;
 public class BankAccountManager implements UserRegistration {
 
     @Autowired
-    BankDataRepository bankDataRepository;
+    BankUserRepository bankUserRepository;
 
     @Override
-    public Card registerUser(String firstName, String lastName, String email, String password) {
+    public BankUser registerUser(String firstName, String lastName, String email, String password) {
         BankUser user = new BankUser(firstName, lastName, email, password);
 
         Random random = new Random();
@@ -38,7 +38,6 @@ public class BankAccountManager implements UserRegistration {
         user.getBankAccount().setCard(card);
         user.getBankAccount().setIban("FR" + iban + "A12");
 
-        bankDataRepository.save(user);
-        return card;
+        return bankUserRepository.save(user);
     }
 }
