@@ -1,5 +1,31 @@
 # New Bank Status
 
+## Week 42
+
+### What was done
+- Developpement of features associated with our user stories:
+  - Creation of bank account and a card
+  - Money transfer into an account
+  - Make a Payment
+  - View affiliated store catalog and get cashback after a purchase 
+  - Transactions history and amount earn thanks to cashback
+
+### What is planned
+- Continue the development of the MVP to cover more user stories
+
+### What's the difference from last week
+- Additional functionalities 
+
+### Issues
+- No blockers
+
+### Risk
+- Prevent fraud by pretending to have made a purchase at a partner store
+
+### RYG flag
+- Green
+---
+
 ## Week 41
 
 ### What was done
