@@ -59,4 +59,9 @@ public class TransactionHandler implements ITransaction {
     public List<Transaction> getTransactions() {
         return transactionRepository.findAll();
     }
+
+    @Override
+    public List<Transaction> getCashbackTransactions() {
+        return transactionRepository.findAll().stream().filter(transaction -> transaction.getCashBack() != 0).toList();
+    }
 }

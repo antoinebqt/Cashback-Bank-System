@@ -35,6 +35,7 @@ public class Transaction {
     }
 
     public Transaction(Payment payment, Card card) {
+        this.cashBack = 0.0;
         this.payment = payment;
         this.card = card;
     }

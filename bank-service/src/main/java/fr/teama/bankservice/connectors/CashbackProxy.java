@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class CashbackProxy implements ICashbackProxy {
-    @Value("${rocket-department.host.baseurl}")
+    @Value("${cashback.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();

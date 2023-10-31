@@ -35,11 +35,6 @@ public class BankUserController {
     @Autowired
     BankUserInformation bankUserInformation;
 
-    @GetMapping
-    public String getBank() {
-        return "Bank";
-    }
-
     @PostMapping(value = "/register", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<BankUser> register(@RequestBody BankUserDTO bankUserDTO) throws BankUserWithEmailAlreadyExistException {
         LoggerHelper.logInfo("Request received for registering user " + bankUserDTO.getEmail());

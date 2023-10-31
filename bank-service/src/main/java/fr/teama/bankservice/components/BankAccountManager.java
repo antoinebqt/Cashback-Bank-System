@@ -73,7 +73,7 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
         BankUser user = getBankUser(email, password);
         Double totalEarned = 0.0;
         for (Transaction transaction : user.getBankAccount().getCard().getTransactions()) {
-            if (transaction.getCashBack() != null) {
+            if (transaction.getCashBack() != 0) {
                 totalEarned += transaction.getCashBack();
             }
         }
