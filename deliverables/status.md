@@ -1,5 +1,28 @@
 # New Bank Status
 
+## Week 44
+
+### What was done
+- Developpement of features associated with our user stories:
+  Transactions statistics for the bank partnership manager
+  Features progress
+
+### What is planned
+- Continue the development of the MVP to cover more user stories
+
+### What's the difference from last week
+- Additional functionalities
+
+### Issues
+- No blockers
+
+### Risk
+- Prevent fraud by pretending to have made a purchase at a partner store
+
+### RYG flag
+- Yellow
+---
+
 ## Week 42
 
 ### What was done
