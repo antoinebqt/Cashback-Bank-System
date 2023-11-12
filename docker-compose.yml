@@ -21,6 +21,10 @@ services:
     ports:
       - 5000:8080
 
+  external-mid-interpreter-mock-service:
+    image: "newbank/external-mid-interpreter-mock-service"
+    ports:
+      - 5001:8080
 
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres-bank:

@@ -15,6 +15,8 @@ echo "** Building all"
 
 compile_dir "external-bank-mock-service"
 
+compile_dir "external-mid-interpreter-mock-service"
+
 # remove # to add pause in script execution
 #read -p "Press any key to continue... "
 
