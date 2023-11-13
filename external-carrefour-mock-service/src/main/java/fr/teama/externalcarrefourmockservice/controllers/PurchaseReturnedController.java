@@ -28,14 +28,14 @@ public class PurchaseReturnedController {
 
     @PostMapping(path = "/purchaseMade")
     public ResponseEntity<String> makePurchase(@RequestBody String id) {
-        LoggerHelper.logInfo("Request received to get make purchase in Store Carrefour");
+        LoggerHelper.logInfo("Request received to get make purchase in Store Carrefour : " + id);
         purchaseReturnedRetriever.makePurchase(id);
         return ResponseEntity.ok("Purchase made in Store Carrefour");
     }
 
     @PostMapping(path = "/return")
     public ResponseEntity<String> returnPurchase(@RequestBody String id) {
-        LoggerHelper.logInfo("Request received to get return purchase in Store Carrefour");
+        LoggerHelper.logInfo("Request received to get return purchase in Store Carrefour : " + id);
         purchaseReturnedRetriever.returnPurchase(id);
         return ResponseEntity.ok("Purchase returned in Store Carrefour");
     }

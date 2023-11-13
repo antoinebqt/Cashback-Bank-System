@@ -34,19 +34,17 @@ app.post('/api/transaction-payment', (req, res) => {
         return res.status(400).send(false);
     }
 
-    let mastercardTransactionId = generateRandomNumericString(10);
+    let id = generateRandomNumericString(10);
 
     // call external store mock
     if (transaction.merchant_mid === 'MID123') {
-        axios.post('http://localhost:5003/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
-        // axios.post('http://localhost:5003/api/store/return', mastercardTransactionId).then(r => console.log(r));
+        axios.post('http://localhost:5003/api/store/purchaseMade', id, {headers: {"Content-Type": "text/plain"}});
     } else if (transaction.merchant_mid === 'MID789') {
-        // axios.post('http://localhost:5004/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
-        axios.post('http://localhost:5004/api/store/return', mastercardTransactionId).then(r => console.log(r));
+        axios.post('http://localhost:5004/api/store/purchaseMade', id, {headers: {"Content-Type": "text/plain"}});
     }
 
     console.log('Transaction validated : ' + transaction.toString());
-    res.send(mastercardTransactionId);
+    res.send(id);
 });
 
 // Start the server
