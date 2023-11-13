@@ -26,6 +26,16 @@ services:
     ports:
       - 5001:8080
 
+  external-carrefour-mock-service:
+    image: "newbank/external-carrefour-mock-service"
+    ports:
+      - 5002:8080
+
+  external-decathlon-mock-service:
+    image: "newbank/external-decathlon-mock-service"
+    ports:
+      - 5003:8080
+
   # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
   postgres-bank:
     image: postgres:15.2
