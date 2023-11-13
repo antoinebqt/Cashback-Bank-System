@@ -1,4 +1,6 @@
 const express = require('express');
+const axios = require('axios');
+
 const app = express();
 const port = 8080;
 
@@ -36,9 +38,11 @@ app.post('/api/transaction-payment', (req, res) => {
 
     // call external store mock
     if (transaction.merchant_mid === 'MID123') {
-        POST('http://localhost:5003/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
+        axios.post('http://localhost:5003/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
+        // axios.post('http://localhost:5003/api/store/return', mastercardTransactionId).then(r => console.log(r));
     } else if (transaction.merchant_mid === 'MID789') {
-        POST('http://localhost:5004/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
+        // axios.post('http://localhost:5004/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
+        axios.post('http://localhost:5004/api/store/return', mastercardTransactionId).then(r => console.log(r));
     }
 
     console.log('Transaction validated : ' + transaction.toString());
@@ -50,10 +54,12 @@ app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });
 
-function POST(url, body) {
-    const requestOptions = {
-        method: 'POST',
-        body: body
-    };
-    return fetch(url, requestOptions);
-}
+// function POST(url, body) {
+//     const requestOptions = {
+//         method: 'POST',
+//         headers: {'Content-Type': 'application/json'},
+//         body: body
+//     };
+//     axios.post()
+//     return fetch(url, requestOptions);
+// }
