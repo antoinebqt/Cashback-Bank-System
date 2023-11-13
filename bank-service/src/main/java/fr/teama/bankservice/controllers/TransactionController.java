@@ -36,7 +36,7 @@ public class TransactionController {
 
     @PostMapping("/pay")
     public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException {
-        LoggerHelper.logInfo("PaymentDTO: " + paymentDTO.toString());
+        LoggerHelper.logInfo("Request received to pay " + paymentDTO);
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
             return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getMid(), paymentDTO.getAmount()));

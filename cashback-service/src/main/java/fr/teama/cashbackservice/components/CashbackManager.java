@@ -24,12 +24,12 @@ public class CashbackManager implements ICashbackManager {
 
     @Override
     public Double addPotentialCashback(PaymentDTO payment, Long bankAccountId) {
-        AffiliatedStore affiliatedStore = affiliatedStoreCatalog.getAffiliatedStoreByName(payment.getBeneficiary());
+        AffiliatedStore affiliatedStore = affiliatedStoreCatalog.getAffiliatedStoreBySiret(payment.getSiret());
         if (affiliatedStore == null) {
-            LoggerHelper.logInfo("No affiliated store founded for this beneficiary");
+            LoggerHelper.logInfo("No affiliated store founded for siret : " + payment.getSiret());
             return 0.0;
         } else {
-            LoggerHelper.logInfo("Affiliated store founded for this beneficiary");
+            LoggerHelper.logInfo("Affiliated store founded for this siret");
             Double cashbackAmount = payment.getAmount() * affiliatedStore.getCashbackRate() / 100;
             LoggerHelper.logInfo("Apply cashback of " + affiliatedStore.getCashbackRate() + "% on " + payment.getAmount() + "€");
             this.bankProxy.addCashback(cashbackAmount, bankAccountId);
