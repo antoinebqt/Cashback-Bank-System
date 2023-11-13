@@ -2,6 +2,7 @@ package fr.teama.bankservice.components;
 
 import fr.teama.bankservice.controllers.dto.TransactionDTO;
 import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
+import fr.teama.bankservice.exceptions.PaymentFailedException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.IPayment;
 import fr.teama.bankservice.interfaces.ITransaction;
@@ -25,9 +26,9 @@ public class TransactionHandler implements ITransaction {
     @Autowired
     TransactionRepository transactionRepository;
     @Override
-    public Transaction pay(Card card, String beneficiary, double amount) throws NotEnoughMoneyException {
-        LoggerHelper.logInfo("Ask " + beneficiary + " to validate payment of " + amount);
-        Payment myPayment = payment.pay(card, beneficiary, amount);
+    public Transaction pay(Card card, String MID, double amount) throws PaymentFailedException {
+        LoggerHelper.logInfo("Transfer fonds (" + amount + ") via mastercard service for merchant " + MID);
+        Payment myPayment = payment.pay(card, MID, amount);
 
         Transaction transaction = new Transaction(myPayment, card);
 
@@ -48,8 +49,17 @@ public class TransactionHandler implements ITransaction {
     }
 
     @Override
+    public List<TransactionDTO> getCashbackTransactionsByStore(String siret) {
+        List<Transaction> transactions = transactionRepository.findByCashbackReturnedIsNotAndPaymentSiretEquals(0,siret);
+        List<TransactionDTO> transactionDTOS = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            transactionDTOS.add(new TransactionDTO(transaction));
+        }
+        return transactionDTOS;
+    }
+    @Override
     public List<TransactionDTO> getCashbackTransactions() {
-        List<Transaction> transactions = transactionRepository.findAll().stream().filter(transaction -> transaction.getCashbackReturned() != 0).toList();
+        List<Transaction> transactions = transactionRepository.findByCashbackReturnedIsNot(0);
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
         for (Transaction transaction : transactions) {
             transactionDTOS.add(new TransactionDTO(transaction));

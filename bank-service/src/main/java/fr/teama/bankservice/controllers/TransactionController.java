@@ -3,6 +3,7 @@ package fr.teama.bankservice.controllers;
 import fr.teama.bankservice.components.TransactionHandler;
 import fr.teama.bankservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.bankservice.controllers.dto.PaymentDTO;
+import fr.teama.bankservice.exceptions.*;
 import fr.teama.bankservice.controllers.dto.TransactionDTO;
 import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
 import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
@@ -34,11 +35,11 @@ public class TransactionController {
     private BankUserInformation bankUserInformation;
 
     @PostMapping("/pay")
-    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws NotEnoughMoneyException, InvalidCardException {
-        LoggerHelper.logInfo("PaymentDTO: " + paymentDTO.toString());
+    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException {
+        LoggerHelper.logInfo("Request received to pay " + paymentDTO);
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
-            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()));
+            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getMid(), paymentDTO.getAmount()));
         }
         else{
             throw new InvalidCardException();
@@ -50,6 +51,13 @@ public class TransactionController {
         LoggerHelper.logInfo("Request received to get all transactions");
         return transactionHandler.getTransactions();
     }
+
+    @GetMapping("/cashback-by-store")
+    public List<TransactionDTO> getCashbackTransactionByStore(String siret) {
+        LoggerHelper.logInfo("Request received to get all cashback transactions");
+        return transactionHandler.getCashbackTransactionsByStore(siret);
+    }
+
 
     @GetMapping("/cashback")
     public List<TransactionDTO> getCashbackTransaction() {
