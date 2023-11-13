@@ -22,7 +22,7 @@ public class PurchaseReturnedController {
 
     @GetMapping(path = "/purchaseReturned")
     public ResponseEntity<List<Long>> getPurchasedReturned() {
-        LoggerHelper.logInfo("Request received to get the list of purchase returned");
+        LoggerHelper.logInfo("Carrefour: Request received to get the list of purchase returned");
         return ResponseEntity.ok(purchaseReturnedRetriever.getPurchasedReturned());
     }
 
