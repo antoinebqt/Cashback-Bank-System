@@ -21,7 +21,7 @@ public class PurchaseReturnedController {
     @Autowired
     PurchaseReturnedRetriever purchaseReturnedRetriever;
 
-    @GetMapping(path = "/purchaseReturned")
+    @PostMapping(path = "/purchaseReturned")
     public ResponseEntity<List<String>> getPurchasedReturned(@RequestBody List<String> purchasedItems) {
         LoggerHelper.logInfo("Decathlon: Request received to get the list of purchase returned");
         return ResponseEntity.ok(purchaseReturnedRetriever.getPurchasedReturned(purchasedItems));

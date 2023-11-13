@@ -18,13 +18,13 @@ public class StoreAPIOfType2Proxy implements IStoreAPIOfType2 {
 
 
     @Override
-    public List<String> getCashbackTransactionsAborted(List<String> transactionAbortedID,String apiRoute) {
+    public List<String> getCashbackTransactionsAborted(List<String> transactionAbortedID, String apiRoute) {
         try {
-            LoggerHelper.logInfo("Ask carrefour service for all cashback transactions aborted in the last month");
-            ResponseEntity<String[]> response = restTemplate.getForEntity(apiRoute, String[].class,transactionAbortedID);
+            LoggerHelper.logInfo("Ask service for all cashback transactions aborted in the last month");
+            ResponseEntity<String[]> response = restTemplate.postForEntity(apiRoute + "/store/purchaseReturned", transactionAbortedID, String[].class);
             return List.of(Objects.requireNonNull(response.getBody()));
         } catch (Exception e) {
-            LoggerHelper.logError("Carrefour service is unavailable");
+            LoggerHelper.logError("StoreAPI type 2 service is unavailable");
             LoggerHelper.logError(e.getMessage());
             return new ArrayList<>();
         }
