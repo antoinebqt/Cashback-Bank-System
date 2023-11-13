@@ -23,12 +23,34 @@ public class BankProxy implements IBankProxy {
     public List<TransactionDTO> getCashbackTransactions() {
         try {
             LoggerHelper.logInfo("Ask bank-service for all cashback transactions");
-            ResponseEntity<TransactionDTO[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/transaction/cashback", TransactionDTO[].class);
+            ResponseEntity<TransactionDTO[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/api/store/carrefour", TransactionDTO[].class);
             return List.of(Objects.requireNonNull(response.getBody()));
         } catch (Exception e) {
             LoggerHelper.logError("Bank service is unavailable");
             LoggerHelper.logError(e.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public void addCashback(Double cashbackAmount, Long bankAccountId) {
+        try {
+            LoggerHelper.logInfo("Ask Bank service to add " + cashbackAmount + "€ to bank account " + bankAccountId);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/balance/add-cashback/" + bankAccountId, cashbackAmount, Void.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Bank service is unavailable");
+            LoggerHelper.logError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void removeCashback(Double cashbackToRemove, Long bankAccountId) {
+        try {
+            LoggerHelper.logInfo("Ask Bank service to remove " + cashbackToRemove + "€ to bank account " + bankAccountId);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/balance/remove-cashback/" + bankAccountId, cashbackToRemove, Void.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Bank service is unavailable");
+            LoggerHelper.logError(e.getMessage());
         }
     }
 }

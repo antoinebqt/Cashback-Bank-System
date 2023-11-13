@@ -65,4 +65,13 @@ public class AffiliatedStoreController {
         LoggerHelper.logInfo("Request received to get all affiliated stores");
         return ResponseEntity.ok(affiliatedStoreCatalog.getAllAffiliatedStores());
     }
+
+    @PostMapping(path= "cancelled-cashback-transactions")
+    public ResponseEntity<String> manuallyCheckCancelledCashbackTransactions() {
+        LoggerHelper.logInfo("Request received to manually check cancelled cashback transactions for affiliated stores");
+
+        affiliatedStoreManager.manuallyCheckCancelledCashbackTransactions();
+
+        return ResponseEntity.ok("Cashback removed of bank accounts with cancelled cashback transactions.");
+    }
 }

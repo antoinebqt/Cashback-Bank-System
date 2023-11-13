@@ -4,6 +4,11 @@ import fr.teama.bankservice.components.TransactionHandler;
 import fr.teama.bankservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.bankservice.controllers.dto.PaymentDTO;
 import fr.teama.bankservice.exceptions.*;
+import fr.teama.bankservice.controllers.dto.TransactionDTO;
+import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
+import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
+import fr.teama.bankservice.exceptions.InvalidCardException;
+import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.BankUserInformation;
 import fr.teama.bankservice.models.Card;
@@ -48,7 +53,7 @@ public class TransactionController {
     }
 
     @GetMapping("/cashback")
-    public List<Transaction> getCashbackTransaction() {
+    public List<TransactionDTO> getCashbackTransaction() {
         LoggerHelper.logInfo("Request received to get all cashback transactions");
         return transactionHandler.getCashbackTransactions();
     }

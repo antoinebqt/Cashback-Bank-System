@@ -4,9 +4,11 @@ public class TransactionDTO {
 
     private Long id;
 
-    private Double cashBack;
+    private Double cashbackReturned;
 
     PaymentDTO payment;
+
+    Long bankAccountId;
 
     public TransactionDTO() {
     }
@@ -15,8 +17,9 @@ public class TransactionDTO {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", cashBack=" + cashBack +
+                ", cashBack=" + cashbackReturned +
                 ", payment=" + payment +
+                ", bankAccountId=" + bankAccountId +
                 '}';
     }
 
@@ -28,12 +31,12 @@ public class TransactionDTO {
         return id;
     }
 
-    public Double getCashBack() {
-        return cashBack;
+    public Double getCashbackReturned() {
+        return cashbackReturned;
     }
 
-    public void setCashBack(Double cashBack) {
-        this.cashBack = cashBack;
+    public void setCashbackReturned(Double cashbackReturned) {
+        this.cashbackReturned = cashbackReturned;
     }
 
     public PaymentDTO getPayment() {
@@ -42,5 +45,13 @@ public class TransactionDTO {
 
     public void setPayment(PaymentDTO payment) {
         this.payment = payment;
+    }
+
+    public Long getBankAccountId() {
+        return bankAccountId;
+    }
+
+    public void setBankAccountId(Long bankAccountId) {
+        this.bankAccountId = bankAccountId;
     }
 }

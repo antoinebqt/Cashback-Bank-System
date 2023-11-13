@@ -1,0 +1,11 @@
+FROM maven:3.8.4-openjdk-17
+
+WORKDIR /app
+
+COPY . /app
+
+RUN mvn clean package
+
+EXPOSE 5002
+
+CMD ["java", "-jar", "target/external-carrefour-mock-service-0.0.1-SNAPSHOT.jar"]

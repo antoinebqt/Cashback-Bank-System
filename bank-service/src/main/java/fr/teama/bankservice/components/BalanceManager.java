@@ -31,4 +31,22 @@ public class BalanceManager implements BalanceModifier {
         bankAccount.setBalance(bankAccount.getBalance() - amount);
         bankAccountRepository.save(bankAccount);
     }
+
+    @Override
+    public void addCashback(Long bankAccountId, Double cashbackAmount) {
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId).orElse(null);
+        if (bankAccount != null) {
+            bankAccount.setBalance(bankAccount.getBalance() + cashbackAmount);
+            bankAccountRepository.save(bankAccount);
+        }
+    }
+
+    @Override
+    public void removeCashback(Long bankAccountId, Double cashbackToRemove) {
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId).orElse(null);
+        if (bankAccount != null) {
+            bankAccount.setBalance(bankAccount.getBalance() - cashbackToRemove);
+            bankAccountRepository.save(bankAccount);
+        }
+    }
 }

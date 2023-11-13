@@ -1,9 +1,6 @@
 package fr.teama.cashbackservice.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class AffiliatedStore {
@@ -18,12 +15,21 @@ public class AffiliatedStore {
 
     private String siret;
 
+    @Embedded
+    CashBackAnnulationParameters cashBackAnnulationParameters;
+
     public AffiliatedStore() {
     }
 
     public AffiliatedStore(String name, float cashbackRate) {
         this.name = name;
         this.cashbackRate = cashbackRate;
+    }
+
+    public AffiliatedStore(String name, float cashbackRate,CashBackAnnulationParameters cashBackAnnulationParameters) {
+        this.name = name;
+        this.cashbackRate = cashbackRate;
+        this.cashBackAnnulationParameters = cashBackAnnulationParameters;
     }
 
     @Override
@@ -33,6 +39,7 @@ public class AffiliatedStore {
                 ", name='" + name + '\'' +
                 ", cashbackRate=" + cashbackRate +
                 ", siret='" + siret + '\'' +
+                ", cashBackAnnulationParameters=" + cashBackAnnulationParameters +
                 '}';
     }
 
@@ -66,5 +73,13 @@ public class AffiliatedStore {
 
     public void setSiret(String siret) {
         this.siret = siret;
+    }
+
+    public CashBackAnnulationParameters getCashBackAnnulationParameters() {
+        return cashBackAnnulationParameters;
+    }
+
+    public void setCashBackAnnulationParameters(CashBackAnnulationParameters cashBackAnnulationParameters) {
+        this.cashBackAnnulationParameters = cashBackAnnulationParameters;
     }
 }

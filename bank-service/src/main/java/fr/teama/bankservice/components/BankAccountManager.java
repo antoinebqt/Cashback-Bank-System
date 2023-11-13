@@ -24,7 +24,7 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
     @Override
     public BankUser registerUser(String firstName, String lastName, String email, String password) throws BankUserWithEmailAlreadyExistException {
         if (bankUserRepository.findByEmail(email) != null) {
-            throw new BankUserWithEmailAlreadyExistException();
+            throw new BankUserWithEmailAlreadyExistException(email);
         }
 
         BankUser user = new BankUser(firstName, lastName, email, password);
@@ -73,8 +73,8 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
         BankUser user = getBankUser(email, password);
         Double totalEarned = 0.0;
         for (Transaction transaction : user.getBankAccount().getCard().getTransactions()) {
-            if (transaction.getCashBack() != 0) {
-                totalEarned += transaction.getCashBack();
+            if (transaction.getCashbackReturned() != 0) {
+                totalEarned += transaction.getCashbackReturned();
             }
         }
         return totalEarned;
