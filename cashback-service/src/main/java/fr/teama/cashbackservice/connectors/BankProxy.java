@@ -31,4 +31,15 @@ public class BankProxy implements IBankProxy {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public void addCashback(Double cashbackAmount, Long bankAccountId) {
+        try {
+            LoggerHelper.logInfo("Ask Bank service to add " + cashbackAmount + "€ to bank account " + bankAccountId);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/balance/add-cashback/" + bankAccountId, cashbackAmount, Void.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Bank service is unavailable");
+            LoggerHelper.logError(e.getMessage());
+        }
+    }
 }

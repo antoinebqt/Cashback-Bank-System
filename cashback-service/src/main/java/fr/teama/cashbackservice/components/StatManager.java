@@ -26,7 +26,7 @@ public class StatManager implements IStatManager {
         if (transactionDTOList != null) {
             generalStat.setNumberOfTransactions(transactionDTOList.size());
             generalStat.setAmountSpent(transactionDTOList.stream().mapToDouble(t -> t.getPayment().getAmount()).sum());
-            generalStat.setCashBackReturned(transactionDTOList.stream().mapToDouble(TransactionDTO::getCashBack).sum());
+            generalStat.setCashBackReturned(transactionDTOList.stream().mapToDouble(TransactionDTO::getCashbackReturned).sum());
 
             for (TransactionDTO transactionDTO : transactionDTOList) {
                 boolean storeFound = false;
@@ -34,13 +34,13 @@ public class StatManager implements IStatManager {
                     if (stat.getName().equals(transactionDTO.getPayment().getBeneficiary())) {
                         stat.setNumberOfTransactions(stat.getNumberOfTransactions() + 1);
                         stat.setAmountSpent(stat.getAmountSpent() + transactionDTO.getPayment().getAmount());
-                        stat.setCashBackReturned(stat.getCashBackReturned() + transactionDTO.getCashBack());
+                        stat.setCashBackReturned(stat.getCashBackReturned() + transactionDTO.getCashbackReturned());
                         storeFound = true;
                         break;
                     }
                 }
                 if (!storeFound) {
-                    CashbackStat newStat = new CashbackStat(transactionDTO.getPayment().getBeneficiary(), 1, transactionDTO.getPayment().getAmount(), transactionDTO.getCashBack());
+                    CashbackStat newStat = new CashbackStat(transactionDTO.getPayment().getBeneficiary(), 1, transactionDTO.getPayment().getAmount(), transactionDTO.getCashbackReturned());
                     statsByStore.add(newStat);
                 }
             }
