@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface IStoreAPIOfType1 {
 
-    List<Long> getCashbackTransactionsAbortedID(String apiBaseUrlHostAndPort);
+    List<String> getCashbackTransactionsAbortedID(String apiBaseUrlHostAndPort);
 }
