@@ -6,6 +6,6 @@ COPY . /app
 
 RUN mvn clean package
 
-EXPOSE 5002
+EXPOSE 8080
 
 CMD ["java", "-jar", "target/external-carrefour-mock-service-0.0.1-SNAPSHOT.jar"]

@@ -6,6 +6,6 @@ COPY . /app
 
 RUN mvn clean package
 
-EXPOSE 5003
+EXPOSE 8080
 
 CMD ["java", "-jar", "target/external-decathlon-mock-service-0.0.1-SNAPSHOT.jar"]
