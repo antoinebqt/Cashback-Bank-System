@@ -18,7 +18,7 @@ public class PurchaseReturnedManager implements PurchaseReturnedRetriever {
         List<String> purchaseReturned = new ArrayList<>();
         for(String id : purchasedItems) {
             LoggerHelper.logInfo("ID: " + id);
-            if(purchaseMadeList.contains(id)) {
+            if(purchaseReturnedList.contains(id)) {
                 LoggerHelper.logInfo("IN IF ");
                 purchaseReturned.add(id);
             }
