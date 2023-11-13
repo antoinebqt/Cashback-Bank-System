@@ -9,5 +9,5 @@ public interface IBankProxy {
 
     void addCashback(Double cashbackAmount, Long bankAccountId);
 
-    void removeCashback(Double cashbackToCancel, Long bankAccountId);
+    void removeCashback(TransactionDTO transaction);
 }

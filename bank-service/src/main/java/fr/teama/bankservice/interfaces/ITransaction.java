@@ -13,4 +13,6 @@ public interface ITransaction {
     List<Transaction> getTransactions();
 
     List<TransactionDTO> getCashbackTransactions();
+
+    void cancelCashback(Long transactionId);
 }

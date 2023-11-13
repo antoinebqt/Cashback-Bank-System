@@ -42,9 +42,7 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
         for (AffiliatedStore store : affiliatedStores) {
             List<TransactionDTO> transactionDTOList = getTransactionsToCancel(store);
             for (TransactionDTO transaction : transactionDTOList) {
-                Double cashbackToCancel = transaction.getCashbackReturned();
-                Long bankAccountId = transaction.getBankAccountId();
-                bankProxy.removeCashback(cashbackToCancel, bankAccountId);
+                bankProxy.removeCashback(transaction);
             }
         }
     }

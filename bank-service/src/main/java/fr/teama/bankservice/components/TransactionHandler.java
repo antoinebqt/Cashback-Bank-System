@@ -56,4 +56,13 @@ public class TransactionHandler implements ITransaction {
         }
         return transactionDTOS;
     }
+
+    @Override
+    public void cancelCashback(Long transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElse(null);
+        if (transaction != null) {
+            transaction.setCashbackReturned(0.0);
+            transactionRepository.save(transaction);
+        }
+    }
 }
