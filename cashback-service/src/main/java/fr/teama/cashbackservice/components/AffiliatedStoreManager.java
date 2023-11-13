@@ -37,6 +37,19 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     }
 
     @Override
+    public void manuallyCheckCancelledCashbackTransactions() {
+        List<AffiliatedStore> affiliatedStores = affiliatedStoreRepository.findAll().stream().filter(s -> s.getCashBackAnnulationParameters().isCashBackAnnulationActivated()).toList();
+        for (AffiliatedStore store : affiliatedStores) {
+            List<TransactionDTO> transactionDTOList = getTransactionsToCancel(store);
+            for (TransactionDTO transaction : transactionDTOList) {
+                Double cashbackToCancel = transaction.getCashbackReturned();
+                Long bankAccountId = transaction.getBankAccountId();
+                bankProxy.removeCashback(cashbackToCancel, bankAccountId);
+            }
+        }
+    }
+
+    @Override
     public AffiliatedStore getAffiliatedStoreById(Long id) {
         LoggerHelper.logInfo("Get affiliated store by id : " + id);
         return affiliatedStoreRepository.findById(id).orElse(null);

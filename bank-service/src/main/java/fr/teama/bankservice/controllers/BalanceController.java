@@ -43,4 +43,20 @@ public class BalanceController {
         }
     }
 
+    @PostMapping(path = "/remove-cashback/{bankAccountId}")
+    public ResponseEntity<String> removeCashbackToAccount(@PathVariable Long bankAccountId, @RequestBody Double cashbackToRemove) {
+        try {
+            LoggerHelper.logInfo("Received request to remove " + cashbackToRemove + "€ to bank account " + bankAccountId);
+
+            balanceModifier.removeCashback(bankAccountId, cashbackToRemove);
+
+            LoggerHelper.logInfo("Cashback removed successfully");
+            return ResponseEntity.ok("Cashback removed successfully");
+        } catch (Exception e) {
+            LoggerHelper.logError("Failed to removed cashback to bank account " + bankAccountId);
+            LoggerHelper.logError(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
