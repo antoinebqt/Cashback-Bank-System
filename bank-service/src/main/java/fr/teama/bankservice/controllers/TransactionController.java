@@ -51,6 +51,13 @@ public class TransactionController {
         return transactionHandler.getTransactions();
     }
 
+    @GetMapping("/cashback-by-store")
+    public List<TransactionDTO> getCashbackTransactionByStore(String siret) {
+        LoggerHelper.logInfo("Request received to get all cashback transactions");
+        return transactionHandler.getCashbackTransactionsByStore(siret);
+    }
+
+
     @GetMapping("/cashback")
     public List<TransactionDTO> getCashbackTransaction() {
         LoggerHelper.logInfo("Request received to get all cashback transactions");

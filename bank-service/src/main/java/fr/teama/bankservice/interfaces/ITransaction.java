@@ -12,5 +12,7 @@ public interface ITransaction {
     Transaction saveTransaction(Transaction transaction);
     List<Transaction> getTransactions();
 
+    List<TransactionDTO> getCashbackTransactionsByStore(String siret);
+
     List<TransactionDTO> getCashbackTransactions();
 }
