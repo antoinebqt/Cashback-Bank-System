@@ -69,4 +69,10 @@ public class TransactionController {
         LoggerHelper.logInfo("Request received to get total earned cashback of user " + bankUserConnectionDTO.getEmail());
         return bankUserInformation.getAmountEarnedWithTransactionCashback(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
     }
+
+    @PostMapping("/cashback-cancellation/{transactionId}")
+    public void cancelCashback(@PathVariable Long transactionId) {
+        LoggerHelper.logInfo("Request received to cancel cashback of transaction " + transactionId);
+        transactionHandler.cancelCashback(transactionId);
+    }
 }
