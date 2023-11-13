@@ -50,9 +50,7 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
         for (AffiliatedStore store : affiliatedStores) {
             List<TransactionDTO> transactionDTOList = getTransactionsToCancel(store);
             for (TransactionDTO transaction : transactionDTOList) {
-                Double cashbackToCancel = transaction.getCashbackReturned();
-                Long bankAccountId = transaction.getBankAccountId();
-                bankProxy.removeCashback(cashbackToCancel, bankAccountId);
+                bankProxy.removeCashback(transaction);
             }
         }
     }
@@ -61,6 +59,12 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     public AffiliatedStore getAffiliatedStoreById(Long id) {
         LoggerHelper.logInfo("Get affiliated store by id : " + id);
         return affiliatedStoreRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public AffiliatedStore getAffiliatedStoreBySiret(String siret) {
+        LoggerHelper.logInfo("Get affiliated store by siret : " + siret);
+        return affiliatedStoreRepository.findBySiret(siret);
     }
 
     @Override

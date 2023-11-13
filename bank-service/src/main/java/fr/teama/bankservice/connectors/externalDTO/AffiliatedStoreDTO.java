@@ -4,13 +4,9 @@ public class AffiliatedStoreDTO {
     private Long id;
     private String name;
     private Double cashbackRate;
+    private String siret;
 
     public AffiliatedStoreDTO() {
-    }
-
-    public AffiliatedStoreDTO(String name, Double cashbackRate) {
-        this.name = name;
-        this.cashbackRate = cashbackRate;
     }
 
     @Override
@@ -19,6 +15,7 @@ public class AffiliatedStoreDTO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cashbackRate=" + cashbackRate +
+                ", siret='" + siret + '\'' +
                 '}';
     }
 
@@ -44,5 +41,13 @@ public class AffiliatedStoreDTO {
 
     public void setCashbackRate(Double cashbackRate) {
         this.cashbackRate = cashbackRate;
+    }
+
+    public String getSiret() {
+        return siret;
+    }
+
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 }

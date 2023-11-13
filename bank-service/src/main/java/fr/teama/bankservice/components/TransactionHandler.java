@@ -2,6 +2,7 @@ package fr.teama.bankservice.components;
 
 import fr.teama.bankservice.controllers.dto.TransactionDTO;
 import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
+import fr.teama.bankservice.exceptions.PaymentFailedException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.IPayment;
 import fr.teama.bankservice.interfaces.ITransaction;
@@ -25,9 +26,9 @@ public class TransactionHandler implements ITransaction {
     @Autowired
     TransactionRepository transactionRepository;
     @Override
-    public Transaction pay(Card card, String beneficiary, double amount) throws NotEnoughMoneyException {
-        LoggerHelper.logInfo("Ask " + beneficiary + " to validate payment of " + amount);
-        Payment myPayment = payment.pay(card, beneficiary, amount);
+    public Transaction pay(Card card, String MID, double amount) throws PaymentFailedException {
+        LoggerHelper.logInfo("Transfer fonds (" + amount + ") via mastercard service for merchant " + MID);
+        Payment myPayment = payment.pay(card, MID, amount);
 
         Transaction transaction = new Transaction(myPayment, card);
 
@@ -64,5 +65,14 @@ public class TransactionHandler implements ITransaction {
             transactionDTOS.add(new TransactionDTO(transaction));
         }
         return transactionDTOS;
+    }
+
+    @Override
+    public void cancelCashback(Long transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElse(null);
+        if (transaction != null) {
+            transaction.setCashbackReturned(0.0);
+            transactionRepository.save(transaction);
+        }
     }
 }

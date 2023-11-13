@@ -13,11 +13,14 @@ public class AffiliatedStore {
 
     private float cashbackRate;
 
+    private String siret;
+
     @Embedded
     CashBackAnnulationParameters cashBackAnnulationParameters;
 
     public AffiliatedStore() {
     }
+
     public AffiliatedStore(String name, float cashbackRate) {
         this.name = name;
         this.cashbackRate = cashbackRate;
@@ -35,6 +38,7 @@ public class AffiliatedStore {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cashbackRate=" + cashbackRate +
+                ", siret='" + siret + '\'' +
                 ", cashBackAnnulationParameters=" + cashBackAnnulationParameters +
                 '}';
     }
@@ -61,6 +65,14 @@ public class AffiliatedStore {
 
     public void setCashbackRate(float cashbackRate) {
         this.cashbackRate = cashbackRate;
+    }
+
+    public String getSiret() {
+        return siret;
+    }
+
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 
     public CashBackAnnulationParameters getCashBackAnnulationParameters() {

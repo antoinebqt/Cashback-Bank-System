@@ -5,7 +5,18 @@ public class PaymentDTO {
     private String expirationDate;
     private String cvv;
     private double amount;
-    private String beneficiary;
+    private String mid;
+
+    @Override
+    public String toString() {
+        return "PaymentDTO{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expirationDate='" + expirationDate + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", amount=" + amount +
+                ", mid='" + mid + '\'' +
+                '}';
+    }
 
     public String getCardNumber() {
         return cardNumber;
@@ -39,11 +50,11 @@ public class PaymentDTO {
         this.amount = amount;
     }
 
-    public String getBeneficiary() {
-        return beneficiary;
+    public String getMid() {
+        return mid;
     }
 
-    public void setBeneficiary(String beneficiary) {
-        this.beneficiary = beneficiary;
+    public void setMid(String mid) {
+        this.mid = mid;
     }
 }
