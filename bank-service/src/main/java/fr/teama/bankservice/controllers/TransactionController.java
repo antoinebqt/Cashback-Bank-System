@@ -3,10 +3,7 @@ package fr.teama.bankservice.controllers;
 import fr.teama.bankservice.components.TransactionHandler;
 import fr.teama.bankservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.bankservice.controllers.dto.PaymentDTO;
-import fr.teama.bankservice.exceptions.BankAccountNotFoundException;
-import fr.teama.bankservice.exceptions.InvalidAccountPasswordException;
-import fr.teama.bankservice.exceptions.InvalidCardException;
-import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
+import fr.teama.bankservice.exceptions.*;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.BankUserInformation;
 import fr.teama.bankservice.models.Card;
@@ -33,11 +30,11 @@ public class TransactionController {
     private BankUserInformation bankUserInformation;
 
     @PostMapping("/pay")
-    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws NotEnoughMoneyException, InvalidCardException {
+    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException {
         LoggerHelper.logInfo("PaymentDTO: " + paymentDTO.toString());
         Card card=cardRepository.findByCardNumber(paymentDTO.getCardNumber());
         if (card!=null && card.getCvv().equals(paymentDTO.getCvv()) && card.getExpirationDate().equals(paymentDTO.getExpirationDate())) {
-            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getBeneficiary(), paymentDTO.getAmount()));
+            return ResponseEntity.ok(transactionHandler.pay(card, paymentDTO.getMid(), paymentDTO.getAmount()));
         }
         else{
             throw new InvalidCardException();

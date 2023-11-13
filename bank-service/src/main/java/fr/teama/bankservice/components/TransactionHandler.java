@@ -1,6 +1,7 @@
 package fr.teama.bankservice.components;
 
 import fr.teama.bankservice.exceptions.NotEnoughMoneyException;
+import fr.teama.bankservice.exceptions.PaymentFailedException;
 import fr.teama.bankservice.helpers.LoggerHelper;
 import fr.teama.bankservice.interfaces.IPayment;
 import fr.teama.bankservice.interfaces.ITransaction;
@@ -26,15 +27,15 @@ public class TransactionHandler implements ITransaction {
     BalanceManager balanceManager;
 
     @Override
-    public Transaction pay(Card card, String beneficiary, double amount) throws NotEnoughMoneyException {
-        LoggerHelper.logInfo("Ask " + beneficiary + " to validate payment of " + amount);
-        Payment myPayment = payment.pay(card, beneficiary, amount);
-        LoggerHelper.logInfo("Check if " + beneficiary + " is an affiliated store");
-        Double cashbackRate = cashbackProxy.getCashbackRate(beneficiary);
+    public Transaction pay(Card card, String MID, double amount) throws PaymentFailedException {
+        LoggerHelper.logInfo("Transfer fonds (" + amount + ") via mastercard service for merchant " + MID);
+        Payment myPayment = payment.pay(card, MID, amount);
+        LoggerHelper.logInfo("Check if " + myPayment.getSiret() + " is the siret of an affiliated store");
+        Double cashbackRate = cashbackProxy.getCashbackRate(myPayment.getSiret());
         // Generate transaction with cashback if affiliated store
         Transaction transaction;
         if (cashbackRate > 0) {
-            LoggerHelper.logInfo(beneficiary + " is an affiliated store, apply cashback of " + cashbackRate + "%");
+            LoggerHelper.logInfo(myPayment.getSiret() + " is an affiliated store, apply cashback of " + cashbackRate + "%");
             Double cashbackAmount = amount * cashbackRate / 100;
             transaction = new Transaction(cashbackAmount, myPayment, card);
             try {
@@ -43,7 +44,7 @@ public class TransactionHandler implements ITransaction {
                 LoggerHelper.logError("Error while adding cashback to bank account");
             }
         } else {
-            LoggerHelper.logInfo(beneficiary + " is not an affiliated store");
+            LoggerHelper.logInfo(myPayment.getSiret() + " is not an affiliated store");
             transaction = new Transaction(myPayment, card);
         }
         return saveTransaction(transaction);

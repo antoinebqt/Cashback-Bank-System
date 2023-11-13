@@ -16,6 +16,8 @@ public class AffiliatedStore {
 
     private float cashbackRate;
 
+    private String siret;
+
     public AffiliatedStore() {
     }
 
@@ -30,6 +32,7 @@ public class AffiliatedStore {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cashbackRate=" + cashbackRate +
+                ", siret='" + siret + '\'' +
                 '}';
     }
 
@@ -55,5 +58,13 @@ public class AffiliatedStore {
 
     public void setCashbackRate(float cashbackRate) {
         this.cashbackRate = cashbackRate;
+    }
+
+    public String getSiret() {
+        return siret;
+    }
+
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 }

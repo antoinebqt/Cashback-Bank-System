@@ -34,6 +34,12 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     }
 
     @Override
+    public AffiliatedStore getAffiliatedStoreBySiret(String siret) {
+        LoggerHelper.logInfo("Get affiliated store by siret : " + siret);
+        return affiliatedStoreRepository.findBySiret(siret);
+    }
+
+    @Override
     public AffiliatedStore getAffiliatedStoreByName(String name) {
         LoggerHelper.logInfo("Get affiliated store by name : " + name);
         return affiliatedStoreRepository.findByName(name);

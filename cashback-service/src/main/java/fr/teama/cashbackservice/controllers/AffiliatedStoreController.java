@@ -50,6 +50,16 @@ public class AffiliatedStoreController {
         return ResponseEntity.ok(affiliatedStoreCatalog.getAffiliatedStoreByName(name));
     }
 
+    @GetMapping(path = "/siret/{siret}")
+    public ResponseEntity<AffiliatedStore> getAffiliatedStoreBySiret(@PathVariable("siret") String siret) {
+        LoggerHelper.logInfo("Request received to get affiliated store with siret : " + siret);
+        AffiliatedStore affiliatedStore = affiliatedStoreCatalog.getAffiliatedStoreBySiret(siret);
+        if (affiliatedStore == null) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.ok(affiliatedStore);
+    }
+
     @GetMapping
     public ResponseEntity<List<AffiliatedStore>> getAllAffiliatedStores() {
         LoggerHelper.logInfo("Request received to get all affiliated stores");

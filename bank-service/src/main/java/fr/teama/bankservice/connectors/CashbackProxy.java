@@ -14,12 +14,12 @@ public class CashbackProxy implements ICashbackProxy {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public Double getCashbackRate(String beneficiary) {
+    public Double getCashbackRate(String siret) {
         try {
-            LoggerHelper.logInfo("Ask cashback-service for the cashback of " + beneficiary);
-            AffiliatedStoreDTO affiliatedStoreDTO = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/store/name", beneficiary, AffiliatedStoreDTO.class).getBody();
+            LoggerHelper.logInfo("Ask cashback-service for the cashback of merchant with siret " + siret);
+            AffiliatedStoreDTO affiliatedStoreDTO = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/store/siret/" + siret, AffiliatedStoreDTO.class).getBody();
             if (affiliatedStoreDTO == null) {
-                LoggerHelper.logInfo("The cashback affiliated store founded for this beneficiary");
+                LoggerHelper.logInfo("The cashback affiliated store founded for siret " + siret);
                 return 0.0;
             } else {
                 return affiliatedStoreDTO.getCashbackRate();
