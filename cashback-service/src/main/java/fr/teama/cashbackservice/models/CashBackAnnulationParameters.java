@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable;
 public class CashBackAnnulationParameters {
     private boolean cashBackAnnulationActivated;
     private String apiForCashbackAnnulation;
-    private ApiConfigurationMode specificAPIConfigurationMode;
+    private StoreAPIType specificStoreAPIType;
 
     public String getApiForCashbackAnnulation() {
         return apiForCashbackAnnulation;
@@ -28,12 +28,12 @@ public class CashBackAnnulationParameters {
     }
 
 
-    public ApiConfigurationMode getSpecificAPIConfigurationMode() {
-        return specificAPIConfigurationMode;
+    public StoreAPIType getSpecificAPIConfigurationMode() {
+        return specificStoreAPIType;
     }
 
-    public void setSpecificAPIConfigurationMode(ApiConfigurationMode specificAPIConfigurationMode) {
-        this.specificAPIConfigurationMode = specificAPIConfigurationMode;
+    public void setSpecificAPIConfigurationMode(StoreAPIType specificStoreAPIType) {
+        this.specificStoreAPIType = specificStoreAPIType;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class CashBackAnnulationParameters {
         return "CashBackAnnulationParameters{" +
                 "cashBackAnnulationActivated=" + cashBackAnnulationActivated +
                 ", apiForCashbackAnnulation='" + apiForCashbackAnnulation + '\'' +
-                ", specificAPIConfigurationMode=" + specificAPIConfigurationMode +
+                ", specificAPIConfigurationMode=" + specificStoreAPIType +
                 '}';
     }
 }

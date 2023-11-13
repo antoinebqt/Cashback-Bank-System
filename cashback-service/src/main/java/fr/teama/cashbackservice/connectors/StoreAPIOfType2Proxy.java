@@ -1,9 +1,7 @@
 package fr.teama.cashbackservice.connectors;
 
-
-import fr.teama.cashbackservice.connectors.externalDTO.TransactionDTO;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
-import fr.teama.cashbackservice.interfaces.proxy.ICarrefourProxy;
+import fr.teama.cashbackservice.interfaces.proxy.IDecathlonProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -14,17 +12,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class CarrefourProxy implements ICarrefourProxy {
+public class StoreAPIOfType2Proxy implements IDecathlonProxy {
     @Value("${carrefour.host.baseurl}")
     private String apiBaseUrlHostAndPort;
     ///api/store/carrefour/purchaseReturned
     private final RestTemplate restTemplate = new RestTemplate();
 
+
     @Override
-    public List<Long> getCashbackTransactionsAbortedID() {
+    public List<Long> getCashbackTransactionsAborted(List<Long> transactionAbortedID) {
         try {
             LoggerHelper.logInfo("Ask carrefour service for all cashback transactions aborted in the last month");
-            ResponseEntity<Long[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/api/store/carrefour", Long[].class);
+            ResponseEntity<Long[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/api/store/purchaseReturned", Long[].class,transactionAbortedID);
             return List.of(Objects.requireNonNull(response.getBody()));
         } catch (Exception e) {
             LoggerHelper.logError("Carrefour service is unavailable");

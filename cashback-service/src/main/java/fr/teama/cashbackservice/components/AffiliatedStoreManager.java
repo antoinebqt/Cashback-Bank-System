@@ -2,14 +2,14 @@ package fr.teama.cashbackservice.components;
 
 import fr.teama.cashbackservice.connectors.externalDTO.TransactionDTO;
 import fr.teama.cashbackservice.exceptions.AffiliatedStoreAlreadyExist;
-import fr.teama.cashbackservice.interfaces.CashbackCancel;
+import fr.teama.cashbackservice.interfaces.CashbackCancelAdaptor;
 import fr.teama.cashbackservice.interfaces.IAffiliatedStoreCatalog;
 import fr.teama.cashbackservice.interfaces.IAffiliatedStoreManager;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.interfaces.proxy.IBankProxy;
 import fr.teama.cashbackservice.interfaces.proxy.ICarrefourProxy;
 import fr.teama.cashbackservice.models.AffiliatedStore;
-import fr.teama.cashbackservice.models.ApiConfigurationMode;
+import fr.teama.cashbackservice.models.StoreAPIType;
 import fr.teama.cashbackservice.models.CashBackAnnulationParameters;
 import fr.teama.cashbackservice.repository.AffiliatedStoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffiliatedStoreCatalog, CashbackCancel {
+public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffiliatedStoreCatalog, CashbackCancelAdaptor {
 
     @Autowired
     AffiliatedStoreRepository affiliatedStoreRepository;
@@ -74,8 +74,8 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     @Override
     public List<TransactionDTO> getTransactionsToCancel(AffiliatedStore affiliatedStore) {
         CashBackAnnulationParameters cashBackAnnulationParameters = affiliatedStore.getCashBackAnnulationParameters();
-        if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== ApiConfigurationMode.DEFAULT){
-            carrefourProxy.getCashbackTransactionsAbortedID();
+        if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== StoreAPIType.DEFAULT){
+            carrefourProxy.getCashbackTransactionsAbortedID(affiliatedStore.getName());
         }
         List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactions();
         return null;

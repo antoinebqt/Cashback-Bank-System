@@ -16,7 +16,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @CrossOrigin
 @RequestMapping(path = PurchaseReturnedController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class PurchaseReturnedController {
-    public static final String BASE_URI = "/api/store/decathlon";
+    public static final String BASE_URI = "/api/store";
 
     @Autowired
     PurchaseReturnedRetriever purchaseReturnedRetriever;
