@@ -5,6 +5,8 @@ public class PaymentDTO {
     private double amount;
     private String beneficiary;
 
+    private String mastercardTransactionId;
+
 
     public PaymentDTO() {
     }
@@ -36,5 +38,13 @@ public class PaymentDTO {
 
     public void setBeneficiary(String beneficiary) {
         this.beneficiary = beneficiary;
+    }
+
+    public String getMastercardTransactionId() {
+        return mastercardTransactionId;
+    }
+
+    public void setMastercardTransactionId(String mastercardTransactionId) {
+        this.mastercardTransactionId = mastercardTransactionId;
     }
 }

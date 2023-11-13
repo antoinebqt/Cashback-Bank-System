@@ -8,6 +8,7 @@ import fr.teama.cashbackservice.interfaces.IAffiliatedStoreManager;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.interfaces.proxy.IBankProxy;
 import fr.teama.cashbackservice.interfaces.proxy.IStoreAPIOfType1;
+import fr.teama.cashbackservice.interfaces.proxy.IStoreAPIOfType2;
 import fr.teama.cashbackservice.models.AffiliatedStore;
 import fr.teama.cashbackservice.models.StoreAPIType;
 import fr.teama.cashbackservice.models.CashBackAnnulationParameters;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffiliatedStoreCatalog, CashbackCancelAdaptor {
@@ -31,7 +33,7 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     IStoreAPIOfType1 storeAPIOfType1;
 
     @Autowired
-    IStoreAPIOfType1 storeAPIOfType2;
+    IStoreAPIOfType2 storeAPIOfType2;
 
 
     @Override
@@ -82,15 +84,27 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     @Override
     public List<TransactionDTO> getTransactionsToCancel(AffiliatedStore affiliatedStore) {
         CashBackAnnulationParameters cashBackAnnulationParameters = affiliatedStore.getCashBackAnnulationParameters();
+        List<String> transactionToAbort;
+
+        List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactionsByStore(affiliatedStore.getSiret());
         if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== StoreAPIType.TYPE1){
-            storeAPIOfType1.getCashbackTransactionsAbortedID(affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
+            transactionToAbort=storeAPIOfType1.getCashbackTransactionsAbortedID(affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
         }
         else if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== StoreAPIType.TYPE2){
-            storeAPIOfType1.getCashbackTransactionsAbortedID(affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
+            List<String> masterTransacionIdList=transactionDTOList.stream().map(transactionDTO -> transactionDTO.getPayment().getMastercardTransactionId()).collect(Collectors.toList());
+            transactionToAbort=storeAPIOfType2.getCashbackTransactionsAborted(masterTransacionIdList,affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
         }
         else
             return new ArrayList<>();
-        List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactions();
-        return null;
+
+        List<TransactionDTO> transactionsToCancel = new ArrayList<>();
+
+        for (TransactionDTO transactionDTO : transactionDTOList) {
+            if (transactionToAbort.contains(transactionDTO.getPayment().getMastercardTransactionId())){
+                transactionsToCancel.add(transactionDTO);
+            }
+        }
+
+        return transactionsToCancel;
     }
 }

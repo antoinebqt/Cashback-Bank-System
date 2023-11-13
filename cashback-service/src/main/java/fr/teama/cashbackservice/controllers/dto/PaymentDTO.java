@@ -4,6 +4,7 @@ package fr.teama.cashbackservice.controllers.dto;
 public class PaymentDTO {
     private double amount;
     private String siret;
+    private String mastercardTransactionId;
 
 
     public PaymentDTO() {
@@ -37,4 +38,13 @@ public class PaymentDTO {
     public void setSiret(String siret) {
         this.siret = siret;
     }
+
+    public String getMastercardTransactionId() {
+        return mastercardTransactionId;
+    }
+
+    public void setMastercardTransactionId(String mastercardTransactionId) {
+        this.mastercardTransactionId = mastercardTransactionId;
+    }
+
 }

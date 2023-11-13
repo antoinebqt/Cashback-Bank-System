@@ -13,17 +13,15 @@ import java.util.Objects;
 
 @Component
 public class StoreAPIOfType2Proxy implements IStoreAPIOfType2 {
-    @Value("${carrefour.host.baseurl}")
-    private String apiBaseUrlHostAndPort;
     ///api/store/carrefour/purchaseReturned
     private final RestTemplate restTemplate = new RestTemplate();
 
 
     @Override
-    public List<Long> getCashbackTransactionsAborted(List<Long> transactionAbortedID) {
+    public List<String> getCashbackTransactionsAborted(List<String> transactionAbortedID,String apiRoute) {
         try {
             LoggerHelper.logInfo("Ask carrefour service for all cashback transactions aborted in the last month");
-            ResponseEntity<Long[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/api/store/purchaseReturned", Long[].class,transactionAbortedID);
+            ResponseEntity<String[]> response = restTemplate.getForEntity(apiRoute, String[].class,transactionAbortedID);
             return List.of(Objects.requireNonNull(response.getBody()));
         } catch (Exception e) {
             LoggerHelper.logError("Carrefour service is unavailable");
