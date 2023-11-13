@@ -2,7 +2,7 @@ package fr.teama.cashbackservice.models;
 
 public class CashbackStat {
 
-    private String name;
+    private String siret;
 
     private int numberOfTransactions;
 
@@ -10,19 +10,19 @@ public class CashbackStat {
 
     private Double cashBackReturned;
 
-    public CashbackStat(String name, int numberOfTransactions, Double amountSpent, Double cashBackReturned) {
-        this.name = name;
+    public CashbackStat(String siret, int numberOfTransactions, Double amountSpent, Double cashBackReturned) {
+        this.siret = siret;
         this.numberOfTransactions = numberOfTransactions;
         this.amountSpent = amountSpent;
         this.cashBackReturned = cashBackReturned;
     }
 
-    public String getName() {
-        return name;
+    public String getSiret() {
+        return siret;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 
     public int getNumberOfTransactions() {

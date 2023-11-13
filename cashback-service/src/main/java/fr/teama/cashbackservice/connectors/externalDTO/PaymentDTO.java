@@ -3,7 +3,7 @@ package fr.teama.cashbackservice.connectors.externalDTO;
 
 public class PaymentDTO {
     private double amount;
-    private String beneficiary;
+    private String siret;
 
     private String mastercardTransactionId;
 
@@ -11,16 +11,16 @@ public class PaymentDTO {
     public PaymentDTO() {
     }
 
-    public PaymentDTO(double amount, String beneficiary) {
+    public PaymentDTO(double amount, String siret) {
         this.amount = amount;
-        this.beneficiary = beneficiary;
+        this.siret = siret;
     }
 
     @Override
     public String toString() {
         return "Payment{" +
                 "amount=" + amount +
-                ", beneficiary='" + beneficiary + '\'' +
+                ", siret='" + siret + '\'' +
                 '}';
     }
 
@@ -32,12 +32,12 @@ public class PaymentDTO {
         this.amount = amount;
     }
 
-    public String getBeneficiary() {
-        return beneficiary;
+    public String getSiret() {
+        return siret;
     }
 
-    public void setBeneficiary(String beneficiary) {
-        this.beneficiary = beneficiary;
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 
     public String getMastercardTransactionId() {

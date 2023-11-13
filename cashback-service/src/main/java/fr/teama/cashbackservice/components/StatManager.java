@@ -31,7 +31,7 @@ public class StatManager implements IStatManager {
             for (TransactionDTO transactionDTO : transactionDTOList) {
                 boolean storeFound = false;
                 for (CashbackStat stat : statsByStore) {
-                    if (stat.getName().equals(transactionDTO.getPayment().getBeneficiary())) {
+                    if (stat.getSiret().equals(transactionDTO.getPayment().getSiret())) {
                         stat.setNumberOfTransactions(stat.getNumberOfTransactions() + 1);
                         stat.setAmountSpent(stat.getAmountSpent() + transactionDTO.getPayment().getAmount());
                         stat.setCashBackReturned(stat.getCashBackReturned() + transactionDTO.getCashbackReturned());
@@ -40,7 +40,7 @@ public class StatManager implements IStatManager {
                     }
                 }
                 if (!storeFound) {
-                    CashbackStat newStat = new CashbackStat(transactionDTO.getPayment().getBeneficiary(), 1, transactionDTO.getPayment().getAmount(), transactionDTO.getCashbackReturned());
+                    CashbackStat newStat = new CashbackStat(transactionDTO.getPayment().getSiret(), 1, transactionDTO.getPayment().getAmount(), transactionDTO.getCashbackReturned());
                     statsByStore.add(newStat);
                 }
             }
