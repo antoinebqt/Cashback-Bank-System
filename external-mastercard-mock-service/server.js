@@ -38,9 +38,11 @@ app.post('/api/transaction-payment', (req, res) => {
 
     // call external store mock
     if (transaction.merchant_mid === 'MID123') {
-        axios.post('http://localhost:5003/api/store/purchaseMade', id, {headers: {"Content-Type": "text/plain"}});
+        axios.post('http://external-carrefour-mock-service:8080/api/store/return', id, {headers: {"Content-Type": "text/plain"}})
+            .then((response) => console.log(response.data));
     } else if (transaction.merchant_mid === 'MID789') {
-        axios.post('http://localhost:5004/api/store/purchaseMade', id, {headers: {"Content-Type": "text/plain"}});
+        axios.post('http://external-decathlon-mock-service:8080/api/store/return', id, {headers: {"Content-Type": "text/plain"}})
+            .then((response) => console.log(response.data));
     }
 
     console.log('Transaction validated : ' + transaction.toString());
