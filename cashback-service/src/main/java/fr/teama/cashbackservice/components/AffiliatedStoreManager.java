@@ -58,7 +58,7 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     public List<TransactionDTO> getTransactionsToCancel(AffiliatedStore affiliatedStore) {
         CashBackAnnulationParameters cashBackAnnulationParameters = affiliatedStore.getCashBackAnnulationParameters();
         if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== ApiConfigurationMode.DEFAULT){
-            return null;
+
         }
         List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactions();
         return null;
