@@ -1,10 +1,8 @@
 package fr.teama.cashbackservice.interfaces.proxy;
 
-import fr.teama.cashbackservice.connectors.externalDTO.TransactionDTO;
-
 import java.util.List;
 
-public interface IDecathlonProxy {
+public interface IStoreAPIOfType2 {
     List<Long> getCashbackTransactionsAborted(List<Long> transactionAbortedID);
 
 }

@@ -2,7 +2,7 @@ package fr.teama.cashbackservice.connectors;
 
 
 import fr.teama.cashbackservice.helpers.LoggerHelper;
-import fr.teama.cashbackservice.interfaces.proxy.ICarrefourProxy;
+import fr.teama.cashbackservice.interfaces.proxy.IStoreAPIOfType1;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class StoreAPIOfType1Proxy implements ICarrefourProxy {
+public class StoreAPIOfType1Proxy implements IStoreAPIOfType1 {
 
     ///api/store/carrefour/purchaseReturned
     private final RestTemplate restTemplate = new RestTemplate();

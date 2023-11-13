@@ -1,7 +1,7 @@
 package fr.teama.cashbackservice.connectors;
 
 import fr.teama.cashbackservice.helpers.LoggerHelper;
-import fr.teama.cashbackservice.interfaces.proxy.IDecathlonProxy;
+import fr.teama.cashbackservice.interfaces.proxy.IStoreAPIOfType2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class StoreAPIOfType2Proxy implements IDecathlonProxy {
+public class StoreAPIOfType2Proxy implements IStoreAPIOfType2 {
     @Value("${carrefour.host.baseurl}")
     private String apiBaseUrlHostAndPort;
     ///api/store/carrefour/purchaseReturned
