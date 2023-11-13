@@ -5,13 +5,15 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class CashBackAnnulationParameters {
     private boolean cashBackAnnulationActivated;
-    private String APIRouteForCashbackAnnulation;
-    private ApiConfigurationMode specificAPIConfigurationMode;
+    private String apiForCashbackAnnulation;
+    private StoreAPIType specificStoreAPIType;
 
-    public CashBackAnnulationParameters(boolean cashBackAnnulationActivated, String APIRouteForCashbackAnnulation, ApiConfigurationMode specificAPIConfigurationMode) {
-        this.cashBackAnnulationActivated = cashBackAnnulationActivated;
-        this.APIRouteForCashbackAnnulation = APIRouteForCashbackAnnulation;
-        this.specificAPIConfigurationMode = specificAPIConfigurationMode;
+    public String getApiForCashbackAnnulation() {
+        return apiForCashbackAnnulation;
+    }
+
+    public void setApiForCashbackAnnulation(String apiForCashbackAnnulation) {
+        this.apiForCashbackAnnulation = apiForCashbackAnnulation;
     }
 
     public CashBackAnnulationParameters() {
@@ -25,28 +27,21 @@ public class CashBackAnnulationParameters {
         this.cashBackAnnulationActivated = cashBackAnnulationActivated;
     }
 
-    public String getAPIRouteForCashbackAnnulation() {
-        return APIRouteForCashbackAnnulation;
+
+    public StoreAPIType getSpecificAPIConfigurationMode() {
+        return specificStoreAPIType;
     }
 
-    public void setAPIRouteForCashbackAnnulation(String APIRouteForCashbackAnnulation) {
-        this.APIRouteForCashbackAnnulation = APIRouteForCashbackAnnulation;
-    }
-
-    public ApiConfigurationMode getSpecificAPIConfigurationMode() {
-        return specificAPIConfigurationMode;
-    }
-
-    public void setSpecificAPIConfigurationMode(ApiConfigurationMode specificAPIConfigurationMode) {
-        this.specificAPIConfigurationMode = specificAPIConfigurationMode;
+    public void setSpecificAPIConfigurationMode(StoreAPIType specificStoreAPIType) {
+        this.specificStoreAPIType = specificStoreAPIType;
     }
 
     @Override
     public String toString() {
         return "CashBackAnnulationParameters{" +
                 "cashBackAnnulationActivated=" + cashBackAnnulationActivated +
-                ", APIRouteForCashbackAnnulation='" + APIRouteForCashbackAnnulation + '\'' +
-                ", specificAPINumber='" + specificAPIConfigurationMode + '\'' +
+                ", apiForCashbackAnnulation='" + apiForCashbackAnnulation + '\'' +
+                ", specificAPIConfigurationMode=" + specificStoreAPIType +
                 '}';
     }
 }
