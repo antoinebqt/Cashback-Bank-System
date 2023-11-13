@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    List<Transaction> findByCashbackReturnedNotEqual(int cashbackReturned);
+    List<Transaction> findByCashbackReturnedIsNot(double cashbackReturned);
+    List<Transaction> findByCashbackReturnedIsNotAndPaymentSiretEquals(double cashbackReturned, String siret);
+
 }

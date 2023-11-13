@@ -50,7 +50,7 @@ public class TransactionHandler implements ITransaction {
 
     @Override
     public List<TransactionDTO> getCashbackTransactionsByStore(String siret) {
-        List<Transaction> transactions = transactionRepository.findAll().stream().filter(transaction -> transaction.getCashbackReturned() != 0).toList();
+        List<Transaction> transactions = transactionRepository.findByCashbackReturnedIsNotAndPaymentSiretEquals(0,siret);
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
         for (Transaction transaction : transactions) {
             transactionDTOS.add(new TransactionDTO(transaction));
@@ -59,7 +59,7 @@ public class TransactionHandler implements ITransaction {
     }
     @Override
     public List<TransactionDTO> getCashbackTransactions() {
-        List<Transaction> transactions = transactionRepository.findByCashbackReturnedNotEqual(0);
+        List<Transaction> transactions = transactionRepository.findByCashbackReturnedIsNot(0);
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
         for (Transaction transaction : transactions) {
             transactionDTOS.add(new TransactionDTO(transaction));
