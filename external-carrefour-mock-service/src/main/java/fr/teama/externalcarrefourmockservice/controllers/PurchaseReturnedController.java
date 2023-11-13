@@ -21,20 +21,20 @@ public class PurchaseReturnedController {
     PurchaseReturnedRetriever purchaseReturnedRetriever;
 
     @GetMapping(path = "/purchaseReturned")
-    public ResponseEntity<List<Long>> getPurchasedReturned() {
+    public ResponseEntity<List<String>> getPurchasedReturned() {
         LoggerHelper.logInfo("Carrefour: Request received to get the list of purchase returned");
         return ResponseEntity.ok(purchaseReturnedRetriever.getPurchasedReturned());
     }
 
     @PostMapping(path = "/purchaseMade")
-    public ResponseEntity<String> makePurchase(@RequestBody Long id) {
+    public ResponseEntity<String> makePurchase(@RequestBody String id) {
         LoggerHelper.logInfo("Request received to get make purchase in Store Carrefour");
         purchaseReturnedRetriever.makePurchase(id);
         return ResponseEntity.ok("Purchase made in Store Carrefour");
     }
 
     @PostMapping(path = "/return")
-    public ResponseEntity<String> returnPurchase(@RequestBody Long id) {
+    public ResponseEntity<String> returnPurchase(@RequestBody String id) {
         LoggerHelper.logInfo("Request received to get return purchase in Store Carrefour");
         purchaseReturnedRetriever.returnPurchase(id);
         return ResponseEntity.ok("Purchase returned in Store Carrefour");

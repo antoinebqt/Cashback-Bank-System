@@ -9,21 +9,21 @@ import java.util.List;
 @Component
 public class PurchaseReturnedManager implements PurchaseReturnedRetriever {
 
-    private List<Long> purchaseReturnedList = new ArrayList<>();
-    private List<Long> purchaseMadeList = new ArrayList<>();
+    private List<String> purchaseReturnedList = new ArrayList<>();
+    private List<String> purchaseMadeList = new ArrayList<>();
 
     @Override
-    public List<Long> getPurchasedReturned() {
+    public List<String> getPurchasedReturned() {
         return purchaseReturnedList;
     }
 
     @Override
-    public void makePurchase(Long id) {
+    public void makePurchase(String id) {
         purchaseMadeList.add(id);
     }
 
     @Override
-    public void returnPurchase(Long id) {
+    public void returnPurchase(String id) {
         purchaseReturnedList.add(id);
         purchaseMadeList.remove(id);
     }

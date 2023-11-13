@@ -10,20 +10,15 @@ import java.util.List;
 @Component
 public class PurchaseReturnedManager implements PurchaseReturnedRetriever {
 
-    private List<Long> purchaseReturnedList = new ArrayList<>();
-    private List<Long> purchaseMadeList = new ArrayList<>();
+    private List<String> purchaseReturnedList = new ArrayList<>();
+    private List<String> purchaseMadeList = new ArrayList<>();
 
     @Override
-    public List<Long> getPurchasedReturned(List<Long> purchasedItems) {
-        List<Long> purchaseReturned = new ArrayList<>();
-        LoggerHelper.logInfo("ID: " + purchaseReturnedList.get(0));
-        LoggerHelper.logInfo("ID: " + purchaseReturnedList.get(1));
-        LoggerHelper.logInfo("ID: " + purchaseReturnedList.get(2));
-        LoggerHelper.logInfo("ID: " + purchaseReturnedList.get(3));
-        LoggerHelper.logInfo("ID: " + purchaseReturnedList.get(4));
-        for(Long id : purchasedItems) {
+    public List<String> getPurchasedReturned(List<String> purchasedItems) {
+        List<String> purchaseReturned = new ArrayList<>();
+        for(String id : purchasedItems) {
             LoggerHelper.logInfo("ID: " + id);
-            if(purchaseReturnedList.contains(id)) {
+            if(purchaseMadeList.contains(id)) {
                 LoggerHelper.logInfo("IN IF ");
                 purchaseReturned.add(id);
             }
@@ -34,12 +29,12 @@ public class PurchaseReturnedManager implements PurchaseReturnedRetriever {
     }
 
     @Override
-    public void makePurchase(Long id) {
+    public void makePurchase(String id) {
         purchaseMadeList.add(id);
     }
 
     @Override
-    public void returnPurchase(Long id) {
+    public void returnPurchase(String id) {
         purchaseReturnedList.add(id);
         purchaseMadeList.remove(id);
     }

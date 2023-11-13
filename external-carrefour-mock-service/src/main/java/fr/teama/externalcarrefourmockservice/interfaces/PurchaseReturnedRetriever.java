@@ -3,9 +3,9 @@ package fr.teama.externalcarrefourmockservice.interfaces;
 import java.util.List;
 
 public interface PurchaseReturnedRetriever {
-    List<Long> getPurchasedReturned();
+    List<String> getPurchasedReturned();
 
-    void makePurchase(Long id);
+    void makePurchase(String id);
 
-    void returnPurchase(Long id);
+    void returnPurchase(String id);
 }

@@ -35,6 +35,11 @@ app.post('/api/transaction-payment', (req, res) => {
     let mastercardTransactionId = generateRandomNumericString(10);
 
     // call external store mock
+    if (transaction.merchant_mid === 'MID123') {
+        POST('http://localhost:5003/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
+    } else if (transaction.merchant_mid === 'MID789') {
+        POST('http://localhost:5004/api/store/purchaseMade', mastercardTransactionId).then(r => console.log(r));
+    }
 
     console.log('Transaction validated : ' + transaction.toString());
     res.send(mastercardTransactionId);
@@ -44,3 +49,11 @@ app.post('/api/transaction-payment', (req, res) => {
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });
+
+function POST(url, body) {
+    const requestOptions = {
+        method: 'POST',
+        body: body
+    };
+    return fetch(url, requestOptions);
+}
