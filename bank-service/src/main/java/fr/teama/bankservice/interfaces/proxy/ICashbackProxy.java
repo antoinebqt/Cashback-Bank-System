@@ -1,5 +1,8 @@
 package fr.teama.bankservice.interfaces.proxy;
 
+import fr.teama.bankservice.models.Transaction;
+
 public interface ICashbackProxy {
-    Double getCashbackRate(String storeName);
+
+    Transaction updateWithPotentialCashback(Transaction transaction);
 }

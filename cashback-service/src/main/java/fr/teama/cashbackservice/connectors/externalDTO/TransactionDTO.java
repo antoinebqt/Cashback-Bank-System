@@ -4,7 +4,7 @@ public class TransactionDTO {
 
     private Long id;
 
-    private Double cashBack;
+    private Double cashbackReturned;
 
     PaymentDTO payment;
 
@@ -15,7 +15,7 @@ public class TransactionDTO {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", cashBack=" + cashBack +
+                ", cashBack=" + cashbackReturned +
                 ", payment=" + payment +
                 '}';
     }
@@ -28,12 +28,12 @@ public class TransactionDTO {
         return id;
     }
 
-    public Double getCashBack() {
-        return cashBack;
+    public Double getCashbackReturned() {
+        return cashbackReturned;
     }
 
-    public void setCashBack(Double cashBack) {
-        this.cashBack = cashBack;
+    public void setCashbackReturned(Double cashbackReturned) {
+        this.cashbackReturned = cashbackReturned;
     }
 
     public PaymentDTO getPayment() {

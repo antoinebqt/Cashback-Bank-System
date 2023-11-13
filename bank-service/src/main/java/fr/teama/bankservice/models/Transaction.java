@@ -9,7 +9,7 @@ public class Transaction {
     @Id
     private Long id;
     @Column(nullable = true)
-    private Double cashBack;
+    private Double cashbackReturned;
     @ManyToOne
     @JoinColumn(name = "card_id")
     @JsonIgnore
@@ -19,23 +19,18 @@ public class Transaction {
 
     public Transaction() {
     }
-    public Transaction(Double cashBack, Payment payment, Card card) {
-        this.cashBack = cashBack;
-        this.payment = payment;
-        this.card = card;
-    }
 
     @Override
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", cashBack=" + cashBack +
+                ", cashBack=" + cashbackReturned +
                 ", payment=" + payment +
                 '}';
     }
 
     public Transaction(Payment payment, Card card) {
-        this.cashBack = 0.0;
+        this.cashbackReturned = 0.0;
         this.payment = payment;
         this.card = card;
     }
@@ -47,12 +42,12 @@ public class Transaction {
         return id;
     }
 
-    public Double getCashBack() {
-        return cashBack;
+    public Double getCashbackReturned() {
+        return cashbackReturned;
     }
 
-    public void setCashBack(Double cashBack) {
-        this.cashBack = cashBack;
+    public void setCashbackReturned(Double cashBack) {
+        this.cashbackReturned = cashBack;
     }
 
     public Card getCard() {

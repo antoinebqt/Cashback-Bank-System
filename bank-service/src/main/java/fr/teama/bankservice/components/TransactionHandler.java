@@ -22,30 +22,15 @@ public class TransactionHandler implements ITransaction {
     ICashbackProxy cashbackProxy;
     @Autowired
     TransactionRepository transactionRepository;
-    @Autowired
-    BalanceManager balanceManager;
-
     @Override
     public Transaction pay(Card card, String beneficiary, double amount) throws NotEnoughMoneyException {
         LoggerHelper.logInfo("Ask " + beneficiary + " to validate payment of " + amount);
         Payment myPayment = payment.pay(card, beneficiary, amount);
-        LoggerHelper.logInfo("Check if " + beneficiary + " is an affiliated store");
-        Double cashbackRate = cashbackProxy.getCashbackRate(beneficiary);
-        // Generate transaction with cashback if affiliated store
-        Transaction transaction;
-        if (cashbackRate > 0) {
-            LoggerHelper.logInfo(beneficiary + " is an affiliated store, apply cashback of " + cashbackRate + "%");
-            Double cashbackAmount = amount * cashbackRate / 100;
-            transaction = new Transaction(cashbackAmount, myPayment, card);
-            try {
-                balanceManager.addBalance(card.getBankAccount().getIban(), cashbackAmount);
-            } catch (Exception e) {
-                LoggerHelper.logError("Error while adding cashback to bank account");
-            }
-        } else {
-            LoggerHelper.logInfo(beneficiary + " is not an affiliated store");
-            transaction = new Transaction(myPayment, card);
-        }
+
+        Transaction transaction = new Transaction(myPayment, card);
+
+        transaction = cashbackProxy.updateWithPotentialCashback(transaction);
+
         return saveTransaction(transaction);
     }
 
@@ -62,6 +47,6 @@ public class TransactionHandler implements ITransaction {
 
     @Override
     public List<Transaction> getCashbackTransactions() {
-        return transactionRepository.findAll().stream().filter(transaction -> transaction.getCashBack() != 0).toList();
+        return transactionRepository.findAll().stream().filter(transaction -> transaction.getCashbackReturned() != 0).toList();
     }
 }
