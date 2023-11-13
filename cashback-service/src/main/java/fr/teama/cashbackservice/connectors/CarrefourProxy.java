@@ -21,7 +21,7 @@ public class CarrefourProxy implements ICarrefourProxy {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public List<Long> getCashbackAbortedTransactions() {
+    public List<Long> getCashbackTransactionsAbortedID() {
         try {
             LoggerHelper.logInfo("Ask carrefour service for all cashback transactions aborted in the last month");
             ResponseEntity<Long[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/api/store/carrefour", Long[].class);

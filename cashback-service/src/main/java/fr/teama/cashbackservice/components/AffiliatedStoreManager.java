@@ -7,6 +7,7 @@ import fr.teama.cashbackservice.interfaces.IAffiliatedStoreCatalog;
 import fr.teama.cashbackservice.interfaces.IAffiliatedStoreManager;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.interfaces.proxy.IBankProxy;
+import fr.teama.cashbackservice.interfaces.proxy.ICarrefourProxy;
 import fr.teama.cashbackservice.models.AffiliatedStore;
 import fr.teama.cashbackservice.models.ApiConfigurationMode;
 import fr.teama.cashbackservice.models.CashBackAnnulationParameters;
@@ -24,6 +25,9 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
 
     @Autowired
     IBankProxy bankProxy;
+
+    @Autowired
+    ICarrefourProxy carrefourProxy;
 
 
     @Override
@@ -71,7 +75,7 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     public List<TransactionDTO> getTransactionsToCancel(AffiliatedStore affiliatedStore) {
         CashBackAnnulationParameters cashBackAnnulationParameters = affiliatedStore.getCashBackAnnulationParameters();
         if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== ApiConfigurationMode.DEFAULT){
-
+            carrefourProxy.getCashbackTransactionsAbortedID();
         }
         List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactions();
         return null;
