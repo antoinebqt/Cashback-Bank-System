@@ -50,9 +50,12 @@ public class TransactionHandler implements ITransaction {
 
     @Override
     public List<TransactionDTO> getCashbackTransactionsByStore(String siret) {
-        List<Transaction> transactions = transactionRepository.findByCashbackReturnedIsNotAndPaymentSiretEquals(0,siret);
+        List<Transaction> transactions = transactionRepository.findByCashbackReturnedIsNot(0);
+
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
         for (Transaction transaction : transactions) {
+
+            //if (transaction.getPayment().getSiret().equals(siret))
             transactionDTOS.add(new TransactionDTO(transaction));
         }
         return transactionDTOS;

@@ -85,8 +85,9 @@ public class AffiliatedStoreManager implements IAffiliatedStoreManager, IAffilia
     public List<TransactionDTO> getTransactionsToCancel(AffiliatedStore affiliatedStore) {
         CashBackAnnulationParameters cashBackAnnulationParameters = affiliatedStore.getCashBackAnnulationParameters();
         List<String> transactionToAbort;
+        System.out.println(affiliatedStore.getSiret());
+        List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactions();
 
-        List<TransactionDTO> transactionDTOList = bankProxy.getCashbackTransactionsByStore(affiliatedStore.getSiret());
         if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== StoreAPIType.TYPE1){
             transactionToAbort=storeAPIOfType1.getCashbackTransactionsAbortedID(affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
         }

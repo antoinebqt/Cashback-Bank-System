@@ -36,7 +36,7 @@ public class BankProxy implements IBankProxy {
     public List<TransactionDTO> getCashbackTransactionsByStore(String siret) {
         try {
             LoggerHelper.logInfo("Ask bank-service for all cashback transactions");
-            ResponseEntity<TransactionDTO[]> response = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/api/transaction/cashback-by-store", TransactionDTO[].class, siret);
+            ResponseEntity<TransactionDTO[]> response = restTemplate.postForEntity(apiBaseUrlHostAndPort + "/transaction/cashback-by-store", siret, TransactionDTO[].class);
             return List.of(Objects.requireNonNull(response.getBody()));
         } catch (Exception e) {
             LoggerHelper.logError("Bank service is unavailable");
