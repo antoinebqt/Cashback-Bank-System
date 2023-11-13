@@ -1,4 +1,7 @@
-package fr.teama.cashbackservice.connectors.externalDTO;
+package fr.teama.bankservice.controllers.dto;
+
+import fr.teama.bankservice.models.Payment;
+import fr.teama.bankservice.models.Transaction;
 
 public class TransactionDTO {
 
@@ -6,11 +9,15 @@ public class TransactionDTO {
 
     private Double cashbackReturned;
 
-    PaymentDTO payment;
+    Payment payment;
 
     Long bankAccountId;
 
-    public TransactionDTO() {
+    public TransactionDTO(Transaction transaction) {
+        this.id = transaction.getId();
+        this.cashbackReturned = transaction.getCashbackReturned();
+        this.payment = transaction.getPayment();
+        this.bankAccountId = transaction.getCard().getBankAccount().getId();
     }
 
     @Override
@@ -39,11 +46,11 @@ public class TransactionDTO {
         this.cashbackReturned = cashbackReturned;
     }
 
-    public PaymentDTO getPayment() {
+    public Payment getPayment() {
         return payment;
     }
 
-    public void setPayment(PaymentDTO payment) {
+    public void setPayment(Payment payment) {
         this.payment = payment;
     }
 

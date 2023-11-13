@@ -24,7 +24,7 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
     @Override
     public BankUser registerUser(String firstName, String lastName, String email, String password) throws BankUserWithEmailAlreadyExistException {
         if (bankUserRepository.findByEmail(email) != null) {
-            throw new BankUserWithEmailAlreadyExistException();
+            throw new BankUserWithEmailAlreadyExistException(email);
         }
 
         BankUser user = new BankUser(firstName, lastName, email, password);

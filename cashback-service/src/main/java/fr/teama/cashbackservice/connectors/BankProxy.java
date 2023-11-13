@@ -42,4 +42,15 @@ public class BankProxy implements IBankProxy {
             LoggerHelper.logError(e.getMessage());
         }
     }
+
+    @Override
+    public void removeCashback(Double cashbackToRemove, Long bankAccountId) {
+        try {
+            LoggerHelper.logInfo("Ask Bank service to remove " + cashbackToRemove + "€ to bank account " + bankAccountId);
+            restTemplate.postForEntity(apiBaseUrlHostAndPort + "/balance/remove-cashback/" + bankAccountId, cashbackToRemove, Void.class);
+        } catch (Exception e) {
+            LoggerHelper.logError("Bank service is unavailable");
+            LoggerHelper.logError(e.getMessage());
+        }
+    }
 }

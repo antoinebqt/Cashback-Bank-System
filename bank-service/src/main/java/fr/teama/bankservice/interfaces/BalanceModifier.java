@@ -11,4 +11,6 @@ public interface BalanceModifier {
     void debitBalance(BankAccount bankAccount, Double amount) throws NotEnoughMoneyException;
 
     void addCashback(Long bankAccountId, Double cashbackAmount);
+
+    void removeCashback(Long bankAccountId, Double cashbackToRemove);
 }
