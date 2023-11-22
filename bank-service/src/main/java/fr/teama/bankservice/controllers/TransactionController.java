@@ -14,6 +14,7 @@ import fr.teama.bankservice.interfaces.BankUserInformation;
 import fr.teama.bankservice.models.Card;
 import fr.teama.bankservice.models.Transaction;
 import fr.teama.bankservice.repository.CardRepository;
+import fr.teama.bankservice.services.RabbitMQProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +28,22 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = TransactionController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class TransactionController {
     public static final String BASE_URI = "/api/transaction";
+
     @Autowired
     private CardRepository cardRepository;
     @Autowired
     private TransactionHandler transactionHandler;
     @Autowired
     private BankUserInformation bankUserInformation;
+    @Autowired
+    private RabbitMQProducerService rabbitMQProducerService;
+
+    @PostMapping("/cashback-message")
+    public ResponseEntity<String> sendCashbackMessage(@RequestBody String message) {
+        LoggerHelper.logInfo("Request received to send cashback message: " + message);
+        rabbitMQProducerService.sendCashbackMessage(message);
+        return ResponseEntity.ok("Message sent");
+    }
 
     @PostMapping("/pay")
     public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException {

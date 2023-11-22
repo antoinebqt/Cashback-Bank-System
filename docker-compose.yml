@@ -15,6 +15,14 @@ services:
 #    ports:
 #      - 3001:3001
 
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
 
   external-bank-mock-service:
     image: "newbank/external-bank-mock-service"
