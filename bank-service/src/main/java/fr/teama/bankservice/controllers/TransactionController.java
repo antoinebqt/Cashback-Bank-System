@@ -50,8 +50,8 @@ public class TransactionController {
 
     @PostMapping("/cashback-message-test")
     public ResponseEntity<String> sendCashbackMessage2(@RequestBody String message) {
-        LoggerHelper.logInfo("Request received to send cashback message: " + message);
-        Payment payment = new Payment(1234, "kiminanonina", "TOMA-je-t'aime");
+        LoggerHelper.logInfo("Request received to send payment message: " + message);
+        Payment payment = new Payment(1234, message, "randomID");
         rabbitMQProducerService.sendCashbackMessage(payment);
         return ResponseEntity.ok("Message sent");
     }
