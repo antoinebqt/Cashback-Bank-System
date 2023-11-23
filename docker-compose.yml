@@ -15,6 +15,15 @@ services:
 #    ports:
 #      - 3001:3001
 
+  transaction-service:
+    image: "newbank/transaction-service"
+    environment:
+      - POSTGRES_HOST=postgres-transaction:5432
+    ports:
+      - "3001:8080"
+    depends_on:
+      - postgres-transaction
+
   rabbitmq:
     image: "rabbitmq:3-management"
     restart: always
@@ -103,3 +112,39 @@ services:
       - "4002:5432"
     volumes:
       - ./cashback-directory-slave:/var/lib/postgresql/data
+
+  postgres-transaction:
+    image: 'bitnami/postgresql:latest'
+    container_name: database-transaction
+    restart: always
+    environment:
+      - POSTGRESQL_PASSWORD=postgrespass
+      - POSTGRESQL_USER=postgresuser
+      - POSTGRESQL_DATABASE=database-transaction
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+    ports:
+      - "4005:5432"
+    volumes:
+      - ./transaction-directory-master:/var/lib/postgresql/data
+
+  postgres-transaction-slave:
+    image: 'bitnami/postgresql:latest'
+    container_name: database-transaction-slave
+    restart: always
+    depends_on:
+      - postgres-transaction
+    environment:
+      - POSTGRESQL_USER=postgresuser
+      - POSTGRESQL_PASSWORD=postgrespass
+      - POSTGRESQL_MASTER_HOST=postgres-transaction
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+    ports:
+      - "4006:5432"
+    volumes:
+      - ./transaction-directory-slave:/var/lib/postgresql/data
