@@ -1,6 +1,5 @@
 package fr.teama.cashbackservice.services;
 
-import fr.teama.cashbackservice.controllers.dto.PaymentDTO;
 import fr.teama.cashbackservice.exceptions.BadMIDException;
 import fr.teama.cashbackservice.exceptions.MIDIterpreterServiceUnavailableException;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
@@ -20,17 +19,7 @@ public class RabbitMQConsumerService {
         this.cashbackManager = cashbackManager;
     }
 
-    @RabbitListener(queues = "cashback-queue")
-    public void receiveMessage(String message) {
-        LoggerHelper.logInfo("Received string <" + message + ">");
-    }
-
-    @RabbitListener(queues = "object-test-queue")
-    public void receiveMessage(PaymentDTO message) {
-        LoggerHelper.logInfo("Received payment <" + message + ">");
-    }
-
-    @RabbitListener(queues = "transaction-created-queue")
+    @RabbitListener(queues = "transaction-queue")
     public void newTransaction(Transaction transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException {
         LoggerHelper.logInfo("Received transaction: " + transaction);
         this.cashbackManager.processTransaction(transaction);

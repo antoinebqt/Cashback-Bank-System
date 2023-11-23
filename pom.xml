@@ -28,6 +28,7 @@
         <module>bank-service</module>
         <module>cashback-service</module>
         <module>transaction-service</module>
+        <module>affiliated-store-service</module>
     </modules>
 
     <dependencyManagement>
