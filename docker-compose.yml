@@ -19,6 +19,7 @@ services:
     image: "newbank/transaction-service"
     environment:
       - POSTGRES_HOST=postgres-transaction:5432
+      - POSTGRESQL_DATABASE=database-transaction
     ports:
       - "3001:8080"
     depends_on:
