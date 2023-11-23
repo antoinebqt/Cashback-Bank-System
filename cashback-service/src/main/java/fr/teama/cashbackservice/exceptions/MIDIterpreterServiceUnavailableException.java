@@ -1,5 +1,4 @@
-package fr.teama.bankservice.exceptions;
+package fr.teama.cashbackservice.exceptions;
 
-// TODO: delete
 public class MIDIterpreterServiceUnavailableException extends Exception {
 }

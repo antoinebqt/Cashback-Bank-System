@@ -1,15 +1,14 @@
-package fr.teama.bankservice.connectors;
+package fr.teama.cashbackservice.connectors;
 
-import fr.teama.bankservice.exceptions.BadMIDException;
-import fr.teama.bankservice.exceptions.MIDIterpreterServiceUnavailableException;
-import fr.teama.bankservice.helpers.LoggerHelper;
-import fr.teama.bankservice.interfaces.proxy.IMIDIterpreterProxy;
+import fr.teama.cashbackservice.exceptions.BadMIDException;
+import fr.teama.cashbackservice.exceptions.MIDIterpreterServiceUnavailableException;
+import fr.teama.cashbackservice.helpers.LoggerHelper;
+import fr.teama.cashbackservice.interfaces.proxy.IMIDIterpreterProxy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-//TODO: delete
 @Component
 public class MIDInterpreterProxy implements IMIDIterpreterProxy {
     @Value("${mid.interpreter.host.baseurl}")

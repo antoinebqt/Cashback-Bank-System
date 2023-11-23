@@ -19,7 +19,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue transactionQueue() {
+    public Queue objectTestQueue() {
         return new Queue("object-test-queue");
     }
 
