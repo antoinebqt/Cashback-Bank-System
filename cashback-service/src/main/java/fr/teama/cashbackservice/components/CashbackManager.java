@@ -2,7 +2,6 @@ package fr.teama.cashbackservice.components;
 
 import fr.teama.cashbackservice.controllers.dto.PaymentDTO;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
-import fr.teama.cashbackservice.interfaces.IAffiliatedStoreCatalog;
 import fr.teama.cashbackservice.interfaces.ICashbackManager;
 import fr.teama.cashbackservice.interfaces.proxy.IBankProxy;
 import fr.teama.cashbackservice.interfaces.proxy.IMIDIterpreterProxy;
@@ -14,6 +13,7 @@ import fr.teama.cashbackservice.services.dto.BalanceMessage;
 import fr.teama.cashbackservice.services.dto.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class CashbackManager implements ICashbackManager {

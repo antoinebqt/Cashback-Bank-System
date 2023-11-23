@@ -1,14 +1,12 @@
 package fr.teama.cashbackservice.controllers;
 
-import fr.teama.cashbackservice.controllers.dto.PaymentDTO;
-import fr.teama.cashbackservice.controllers.dto.TransactionRequestDTO;
+import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.interfaces.ICashbackManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -27,14 +25,12 @@ public class CashbackController {
         this.cashbackManager = cashbackManager;
     }
 
-    @PostMapping(path = "/check-transaction")
-    public ResponseEntity<Double> checkTransaction(@RequestBody TransactionRequestDTO requestDTO) {
-        PaymentDTO payment = requestDTO.getPayment();
-        Long bankAccountId = requestDTO.getBankAccountId();
+    @PostMapping(path= "cancelled-cashback-transactions")
+    public ResponseEntity<String> manuallyCheckCancelledCashbackTransactions() {
+        LoggerHelper.logInfo("Request received to manually check cancelled cashback transactions for affiliated stores");
 
-        // Utilisez payment et bankAccountId comme nécessaire dans votre logique de cashback
-        Double cashback = cashbackManager.addPotentialCashback(payment, bankAccountId);
+        //affiliatedStoreManager.manuallyCheckCancelledCashbackTransactions();
 
-        return ResponseEntity.ok(cashback);
+        return ResponseEntity.ok("Cashback removed of bank accounts with cancelled cashback transactions.");
     }
 }

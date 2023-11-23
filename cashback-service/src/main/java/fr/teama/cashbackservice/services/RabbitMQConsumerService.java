@@ -30,7 +30,7 @@ public class RabbitMQConsumerService {
         LoggerHelper.logInfo("Received payment <" + message + ">");
     }
 
-    @RabbitListener(queues = "transaction-created-queue")
+    @RabbitListener(queues = "transaction-queue")
     public void newTransaction(Transaction transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException {
         LoggerHelper.logInfo("Received transaction: " + transaction);
         this.cashbackManager.processTransaction(transaction);

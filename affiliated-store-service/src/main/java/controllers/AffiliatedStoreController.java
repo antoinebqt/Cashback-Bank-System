@@ -1,14 +1,15 @@
-package fr.teama.cashbackservice.controllers;
+package controllers;
 
-import fr.teama.cashbackservice.exceptions.AffiliatedStoreAlreadyExist;
-import fr.teama.cashbackservice.helpers.LoggerHelper;
-import fr.teama.cashbackservice.interfaces.IAffiliatedStoreCatalog;
-import fr.teama.cashbackservice.interfaces.IAffiliatedStoreManager;
-import fr.teama.cashbackservice.models.AffiliatedStore;
+import exceptions.AffiliatedStoreAlreadyExist;
+import helpers.LoggerHelper;
+import interfaces.IAffiliatedStoreCatalog;
+import interfaces.IAffiliatedStoreManager;
+import models.AffiliatedStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -66,12 +67,4 @@ public class AffiliatedStoreController {
         return ResponseEntity.ok(affiliatedStoreCatalog.getAllAffiliatedStores());
     }
 
-    @PostMapping(path= "cancelled-cashback-transactions")
-    public ResponseEntity<String> manuallyCheckCancelledCashbackTransactions() {
-        LoggerHelper.logInfo("Request received to manually check cancelled cashback transactions for affiliated stores");
-
-        affiliatedStoreManager.manuallyCheckCancelledCashbackTransactions();
-
-        return ResponseEntity.ok("Cashback removed of bank accounts with cancelled cashback transactions.");
-    }
 }

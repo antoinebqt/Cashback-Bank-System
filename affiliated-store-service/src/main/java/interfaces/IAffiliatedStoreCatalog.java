@@ -1,6 +1,7 @@
-package fr.teama.cashbackservice.interfaces;
+package interfaces;
 
-import fr.teama.cashbackservice.models.AffiliatedStore;
+
+import models.AffiliatedStore;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package fr.teama.cashbackservice.exceptions;
+package exceptions;
 
 public class AffiliatedStoreAlreadyExist extends Exception {
 }

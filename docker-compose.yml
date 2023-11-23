@@ -103,3 +103,15 @@ services:
       - "4002:5432"
     volumes:
       - ./cashback-directory-slave:/var/lib/postgresql/data
+
+  # the postgres DB to be connected to the backend (watch out: no volume specified, everything can be lost)
+  postgres-affiliated-store:
+    image: postgres:15.2
+    container_name: database-affiliated-store
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=database-affiliated-store
+    ports:
+      - "4004:5432"
