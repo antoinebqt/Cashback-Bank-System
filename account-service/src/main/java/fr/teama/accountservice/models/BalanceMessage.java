@@ -1,6 +1,7 @@
 package fr.teama.accountservice.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
@@ -8,6 +9,7 @@ public class BalanceMessage {
     private Long bankAccountId;
     private double amount;
     @Id
+    @GeneratedValue
     private Long id;
 
     public BalanceMessage() {
@@ -16,6 +18,14 @@ public class BalanceMessage {
     public BalanceMessage(Long bankAccountId, double amount) {
         this.bankAccountId = bankAccountId;
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "BalanceMessage{" +
+                "bankAccountId=" + bankAccountId +
+                ", amount=" + amount +
+                '}';
     }
 
     public Long getBankAccountId() {

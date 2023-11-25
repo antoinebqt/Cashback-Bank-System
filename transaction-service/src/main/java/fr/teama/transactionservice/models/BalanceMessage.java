@@ -12,6 +12,14 @@ public class BalanceMessage {
         this.amount = amount;
     }
 
+    @Override
+    public String toString() {
+        return "BalanceMessage{" +
+                "bankAccountId=" + bankAccountId +
+                ", amount=" + amount +
+                '}';
+    }
+
     public Long getBankAccountId() {
         return bankAccountId;
     }

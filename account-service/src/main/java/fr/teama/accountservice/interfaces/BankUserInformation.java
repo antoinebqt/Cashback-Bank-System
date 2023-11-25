@@ -1,5 +1,6 @@
 package fr.teama.accountservice.interfaces;
 
+import fr.teama.accountservice.controllers.dto.CardDTO;
 import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.accountservice.exceptions.InvalidCardException;
@@ -13,5 +14,5 @@ import java.util.List;
 public interface BankUserInformation {
     List<Transaction> getTransactions(String email, String password) throws BankAccountNotFoundException, InvalidAccountPasswordException;
     BankUser getBankUser(String email, String password) throws BankAccountNotFoundException, InvalidAccountPasswordException;
-    BankAccount getBankAccountByCard(Card bankUserCard) throws InvalidCardException, BankAccountNotFoundException;
+    BankAccount getBankAccountByCard(CardDTO bankUserCard) throws InvalidCardException, BankAccountNotFoundException;
 }

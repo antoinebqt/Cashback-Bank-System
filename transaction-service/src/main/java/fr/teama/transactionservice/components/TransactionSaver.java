@@ -17,7 +17,7 @@ public class TransactionSaver implements ITransactionSaver {
     @Override
     public void debitAndSaveTransaction(Transaction transaction) {
         Transaction savedTransaction = transactionRepository.save(transaction);
-        rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), transaction.getAmount());
+        rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()));
         rabbitMQProducerService.sendTransactionMessage(savedTransaction);
     }
 }

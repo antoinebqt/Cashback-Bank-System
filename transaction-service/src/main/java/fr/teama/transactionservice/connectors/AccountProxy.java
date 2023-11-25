@@ -18,7 +18,7 @@ public class AccountProxy implements IAccountProxy {
     @Override
     public Long getBankAccountIdByCard(Card card) throws BankAccountUnavailableException {
         try {
-            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/account/user-by-card", card, Long.class).getBody();
+            return restTemplate.postForEntity(apiBaseUrlHostAndPort + "/account/account-by-card", card, Long.class).getBody();
         } catch (Exception e) {
             LoggerHelper.logError("Cannot get bank account id by card because BankAccount service is unavailable");
             throw new BankAccountUnavailableException();

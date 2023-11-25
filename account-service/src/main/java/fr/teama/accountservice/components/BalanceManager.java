@@ -32,11 +32,12 @@ public class BalanceManager implements BalanceModifier, BalanceChecker {
 
     @Override
     public void changeBalance(BalanceMessage balanceMessage) throws BankAccountNotFoundException {
-        BankAccount bankAccount = bankAccountRepository.findById(balanceMessage.getId()).orElse(null);
+        BankAccount bankAccount = bankAccountRepository.findById(balanceMessage.getBankAccountId()).orElse(null);
         if (bankAccount == null) {
-            throw new BankAccountNotFoundException("BankAccountID", balanceMessage.getId().toString());
+            throw new BankAccountNotFoundException("BankAccountID", balanceMessage.getBankAccountId().toString());
         }
         bankAccount.setBalance(bankAccount.getBalance() + balanceMessage.getAmount());
+        bankAccountRepository.save(bankAccount);
         balanceMessageRepository.save(balanceMessage);
     }
 

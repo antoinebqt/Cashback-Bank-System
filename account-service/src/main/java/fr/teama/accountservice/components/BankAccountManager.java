@@ -1,5 +1,6 @@
 package fr.teama.accountservice.components;
 
+import fr.teama.accountservice.controllers.dto.CardDTO;
 import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
@@ -73,7 +74,7 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
     }
 
     @Override
-    public BankAccount getBankAccountByCard(Card bankUserCard) throws InvalidCardException, BankAccountNotFoundException {
+    public BankAccount getBankAccountByCard(CardDTO bankUserCard) throws InvalidCardException, BankAccountNotFoundException {
         Card card = cardRepository.findByCardNumber(bankUserCard.getCardNumber());
         if (!card.getCvv().equals(bankUserCard.getCvv()) && !card.getExpirationDate().equals(bankUserCard.getExpirationDate())) {
             throw new InvalidCardException();

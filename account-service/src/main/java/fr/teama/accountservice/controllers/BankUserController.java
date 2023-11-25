@@ -2,6 +2,7 @@ package fr.teama.accountservice.controllers;
 
 import fr.teama.accountservice.controllers.dto.BankUserConnectionDTO;
 import fr.teama.accountservice.controllers.dto.BankUserDTO;
+import fr.teama.accountservice.controllers.dto.CardDTO;
 import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
@@ -58,7 +59,7 @@ public class BankUserController {
         return ResponseEntity.ok(user);
     }
     @PostMapping("/account-by-card")
-    public ResponseEntity<Long> getBankAccountIdByCard(@RequestBody Card card) throws BankAccountNotFoundException, InvalidCardException {
+    public ResponseEntity<Long> getBankAccountIdByCard(@RequestBody CardDTO card) throws BankAccountNotFoundException, InvalidCardException {
         LoggerHelper.logInfo("Request received for getting user: " + card);
         BankAccount account = bankUserInformation.getBankAccountByCard(card);
         return ResponseEntity.ok(account.getId());
