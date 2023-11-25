@@ -19,9 +19,15 @@ public class RabbitMQConsumerService {
         this.cashbackManager = cashbackManager;
     }
 
-    @RabbitListener(queues = "transaction-queue")
+    @RabbitListener(queues = "transaction-created-queue")
     public void newTransaction(Transaction transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException {
         LoggerHelper.logInfo("Received transaction: " + transaction);
         this.cashbackManager.processTransaction(transaction);
+    }
+
+    @RabbitListener(queues = "transaction-cancelled-queue")
+    public void cancelCashbackOfTransaction(String transactionId) {
+        LoggerHelper.logInfo("Received transaction id to cancel cancel cashback: " + transactionId);
+        this.cashbackManager.cancelCashbackTransaction(transactionId);
     }
 }

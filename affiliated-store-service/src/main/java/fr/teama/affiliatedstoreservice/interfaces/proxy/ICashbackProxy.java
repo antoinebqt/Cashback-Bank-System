@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ICashbackProxy {
     List<CashbackDTO> getCashbackTransactionsLastMonth();
+
+    List<CashbackDTO> getCashbackTransactions();
+
+    List<String> getCashbackTransactionIdsLastMonthWithSiret(String siret);
 }

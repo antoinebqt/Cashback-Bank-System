@@ -7,4 +7,6 @@ import fr.teama.cashbackservice.services.dto.Transaction;
 public interface ICashbackManager {
 
     void processTransaction(Transaction transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException;
+
+    void cancelCashbackTransaction(String transactionId);
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
@@ -38,6 +39,28 @@ public class CashbackController {
         List<CashbackDTO> cashbackDTOs = new ArrayList<>();
         for (Cashback cashback : cashbackLastMonth) {
             cashbackDTOs.add(new CashbackDTO(cashback));
+        }
+        return ResponseEntity.ok(cashbackDTOs);
+    }
+
+    @GetMapping("/transaction-id-last-month-with-siret")
+    public ResponseEntity<List<CashbackDTO>> getCashbackTransactionIdsLastMonthWithSiret(@RequestBody String siret) {
+        LoggerHelper.logInfo("Request received to get the cashback of the last month for siret " + siret);
+        List<Cashback> cashbackLastMonth = cashbackRepository.findAllWithTimestampOlderThanAndSiret(LocalDateTime.now().minusMonths(1), siret);
+        List<CashbackDTO> cashbackDTOs = new ArrayList<>();
+        for (Cashback cashback : cashbackLastMonth) {
+            cashbackDTOs.add(new CashbackDTO(cashback));
+        }
+        return ResponseEntity.ok(cashbackDTOs);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CashbackDTO>> getCashbackTransactions() {
+        LoggerHelper.logInfo("Request received to get the cashback");
+        List<Cashback> cashback = cashbackRepository.findAll();
+        List<CashbackDTO> cashbackDTOs = new ArrayList<>();
+        for (Cashback cashbackToConvert : cashback) {
+            cashbackDTOs.add(new CashbackDTO(cashbackToConvert));
         }
         return ResponseEntity.ok(cashbackDTOs);
     }

@@ -53,4 +53,14 @@ public class CashbackManager implements ICashbackManager {
             this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(transaction.getBankAccountId(), cashbackAmount));
         }
     }
+
+    @Override
+    public void cancelCashbackTransaction(String transactionId) {
+        Cashback cashback = cashbackRepository.findCashbackByTransactionId(Long.valueOf(transactionId));
+        if (cashback != null) {
+            LoggerHelper.logInfo("Cancel cashback of transaction " + transactionId);
+            cashbackRepository.delete(cashback);
+            this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(cashback.getBankAccountId(), -cashback.getAmountReturned()));
+        }
+    }
 }
