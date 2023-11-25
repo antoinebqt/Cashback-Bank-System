@@ -8,10 +8,13 @@ public class CashbackDTO {
 
     private String siret;
 
-    public CashbackDTO(double amountSpent, double amountReturned,String siret) {
+    private Long transactionId;
+
+    public CashbackDTO(double amountSpent, double amountReturned,String siret, Long transactionId) {
         this.amountSpent = amountSpent;
         this.amountReturned = amountReturned;
         this.siret = siret;
+        this.transactionId = transactionId;
     }
 
     public CashbackDTO() {
@@ -41,12 +44,21 @@ public class CashbackDTO {
         this.amountSpent = amountSpent;
     }
 
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
+    }
+
     @Override
     public String toString() {
         return "CashbackDTO{" +
                 "amountSpent=" + amountSpent +
                 ", amountReturned=" + amountReturned +
                 ", siret=" + siret +
+                ", transactionId=" + transactionId +
                 '}';
     }
 }

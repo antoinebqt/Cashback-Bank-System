@@ -27,7 +27,7 @@ public class StatManager implements IStatManager {
 
     @Override
     public AdminCashbackStatistic getCashbackStat() {
-        List<CashbackDTO> cashbackDTOList = cashbackProxy.getCashbackTransactionsLastMonth();
+        List<CashbackDTO> cashbackDTOList = cashbackProxy.getCashbackTransactions();
         CashbackStat generalStat = new CashbackStat("Overall", 0, 0.0, 0.0);
         List<CashbackStat> statsByStore = new ArrayList<>();
 

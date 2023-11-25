@@ -5,7 +5,6 @@ import fr.teama.transactionservice.models.BalanceMessage;
 import fr.teama.transactionservice.models.Transaction;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +18,7 @@ public class RabbitMQProducerService {
 
     public void sendTransactionMessage(Transaction transaction) {
         LoggerHelper.logInfo("Sending transaction message: " + transaction);
-        rabbitTemplate.convertAndSend("transaction-queue", transaction);
+        rabbitTemplate.convertAndSend("transaction-created-queue", transaction);
     }
 
     public void sendBalanceMessage(Long bankAccountId, double amount) {

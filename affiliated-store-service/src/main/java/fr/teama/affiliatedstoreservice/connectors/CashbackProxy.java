@@ -29,4 +29,28 @@ public class CashbackProxy implements ICashbackProxy {
             return null;
         }
     }
+
+    @Override
+    public List<CashbackDTO> getCashbackTransactions() {
+        try {
+            LoggerHelper.logInfo("Ask cashback service for the cashback transactions");
+            ResponseEntity<CashbackDTO[]> cashbacks = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/cashback", CashbackDTO[].class);
+            return List.of(Objects.requireNonNull(cashbacks.getBody()));
+        } catch (Exception e) {
+            LoggerHelper.logError("Cashback service is unavailable: " + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<String> getCashbackTransactionIdsLastMonthWithSiret(String siret) {
+        try {
+            LoggerHelper.logInfo("Ask cashback service for the cashback transactions of the last month for siret " + siret);
+            ResponseEntity<String[]> cashbacks = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/cashback/transaction-id-last-month-with-siret", String[].class, siret);
+            return List.of(Objects.requireNonNull(cashbacks.getBody()));
+        } catch (Exception e) {
+            LoggerHelper.logError("Cashback service is unavailable: " + e.getMessage());
+            return null;
+        }
+    }
 }
