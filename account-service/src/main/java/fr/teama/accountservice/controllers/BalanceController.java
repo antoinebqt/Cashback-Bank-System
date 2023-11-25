@@ -3,6 +3,7 @@ package fr.teama.accountservice.controllers;
 import fr.teama.accountservice.controllers.dto.BankTransferDTO;
 import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.helpers.LoggerHelper;
+import fr.teama.accountservice.interfaces.BalanceChecker;
 import fr.teama.accountservice.interfaces.BalanceModifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,19 @@ public class BalanceController {
     @Autowired
     BalanceModifier balanceModifier;
 
+    @Autowired
+    BalanceChecker balanceChecker;
+
     @PostMapping("/add")
     public ResponseEntity<String> addBalance(@RequestBody BankTransferDTO bankTransferDTO) throws BankAccountNotFoundException {
-        System.out.println("Received bank transfer request: " + bankTransferDTO.toString());
+        LoggerHelper.logInfo("Received bank transfer request: " + bankTransferDTO.toString());
         balanceModifier.addBalance(bankTransferDTO.getIban(), bankTransferDTO.getAmount());
         return ResponseEntity.ok("Balance added");
+    }
+
+    @PostMapping("/check/{bankAccountId}")
+    public ResponseEntity<Boolean> checkBalance(@PathVariable Long bankAccountId, @RequestBody double amount) throws BankAccountNotFoundException {
+        LoggerHelper.logInfo("Received balance check request for bank account id " + bankAccountId + " with amount " + amount);
+        return ResponseEntity.ok(balanceChecker.checkBalance(bankAccountId, amount));
     }
 }

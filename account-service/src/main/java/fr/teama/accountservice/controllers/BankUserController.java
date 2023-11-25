@@ -9,6 +9,7 @@ import fr.teama.accountservice.exceptions.InvalidCardException;
 import fr.teama.accountservice.helpers.LoggerHelper;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
+import fr.teama.accountservice.models.BankAccount;
 import fr.teama.accountservice.models.BankUser;
 import fr.teama.accountservice.models.Card;
 import fr.teama.accountservice.repository.BankUserRepository;
@@ -56,10 +57,10 @@ public class BankUserController {
         BankUser user = bankUserInformation.getBankUser(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
         return ResponseEntity.ok(user);
     }
-    @GetMapping("/user-By-Card")
-    public ResponseEntity<BankUser> getUserByCard(@RequestBody Card bankUserCard) throws BankAccountNotFoundException, InvalidCardException {
-        LoggerHelper.logInfo("Request received for getting user: " + bankUserCard);
-        BankUser user = bankUserInformation.getBankUserByCard(bankUserCard);
-        return ResponseEntity.ok(user);
+    @PostMapping("/account-by-card")
+    public ResponseEntity<Long> getBankAccountIdByCard(@RequestBody Card card) throws BankAccountNotFoundException, InvalidCardException {
+        LoggerHelper.logInfo("Request received for getting user: " + card);
+        BankAccount account = bankUserInformation.getBankAccountByCard(card);
+        return ResponseEntity.ok(account.getId());
     }
 }

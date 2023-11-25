@@ -6,9 +6,11 @@ import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.accountservice.exceptions.InvalidCardException;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
+import fr.teama.accountservice.models.BankAccount;
 import fr.teama.accountservice.models.BankUser;
 import fr.teama.accountservice.models.Card;
 import fr.teama.accountservice.models.Transaction;
+import fr.teama.accountservice.repository.BankAccountRepository;
 import fr.teama.accountservice.repository.BankUserRepository;
 import fr.teama.accountservice.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
 
     @Autowired
     BankUserRepository bankUserRepository;
+
+    @Autowired
+    BankAccountRepository bankAccountRepository;
 
     @Autowired
     CardRepository cardRepository;
@@ -68,16 +73,16 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
     }
 
     @Override
-    public BankUser getBankUserByCard(Card bankUserCard) throws InvalidCardException, BankAccountNotFoundException {
+    public BankAccount getBankAccountByCard(Card bankUserCard) throws InvalidCardException, BankAccountNotFoundException {
         Card card = cardRepository.findByCardNumber(bankUserCard.getCardNumber());
         if (!card.getCvv().equals(bankUserCard.getCvv()) && !card.getExpirationDate().equals(bankUserCard.getExpirationDate())) {
             throw new InvalidCardException();
         }
-        BankUser user = card.getBankAccount().getBankUser();
-        if (user == null) {
+        BankAccount account = card.getBankAccount();
+        if (account == null) {
             throw new BankAccountNotFoundException();
         }
-        return user;
+        return account;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.teama.accountservice.components;
 
 import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.NotEnoughMoneyException;
+import fr.teama.accountservice.interfaces.BalanceChecker;
 import fr.teama.accountservice.interfaces.BalanceModifier;
 import fr.teama.accountservice.models.BalanceMessage;
 import fr.teama.accountservice.models.BankAccount;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BalanceManager implements BalanceModifier {
+public class BalanceManager implements BalanceModifier, BalanceChecker {
 
     @Autowired
     BankAccountRepository bankAccountRepository;
@@ -37,5 +38,14 @@ public class BalanceManager implements BalanceModifier {
         }
         bankAccount.setBalance(bankAccount.getBalance() + balanceMessage.getAmount());
         balanceMessageRepository.save(balanceMessage);
+    }
+
+    @Override
+    public boolean checkBalance(Long bankAccountId, Double amount) throws BankAccountNotFoundException {
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId).orElse(null);
+        if (bankAccount == null) {
+            throw new BankAccountNotFoundException("BankAccountID", bankAccountId.toString());
+        }
+        return bankAccount.getBalance() >= amount;
     }
 }
