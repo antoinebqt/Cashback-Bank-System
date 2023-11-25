@@ -60,6 +60,16 @@ services:
     ports:
       - "4000:5432"
 
+  postgres-account:
+    image: postgres:15.2
+    container_name: database-account
+    environment:
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=database-account
+    ports:
+      - "4003:5432"
+
   postgres-cashback:
     image: postgres:15.2
     container_name: database-cashback
