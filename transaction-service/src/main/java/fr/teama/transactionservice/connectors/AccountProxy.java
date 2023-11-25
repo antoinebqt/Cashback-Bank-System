@@ -2,16 +2,15 @@ package fr.teama.transactionservice.connectors;
 
 import fr.teama.transactionservice.exceptions.BankAccountUnavailableException;
 import fr.teama.transactionservice.helpers.LoggerHelper;
-import fr.teama.transactionservice.interfaces.IBankAccountProxy;
+import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.models.Card;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class BankAccountProxy implements IBankAccountProxy {
-    @Value("${bank.account.host.baseurl}")
+public class AccountProxy implements IAccountProxy {
+    @Value("${account.host.baseurl}")
     private String apiBaseUrlHostAndPort;
 
     private final RestTemplate restTemplate = new RestTemplate();

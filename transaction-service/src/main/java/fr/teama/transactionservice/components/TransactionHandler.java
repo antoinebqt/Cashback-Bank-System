@@ -6,7 +6,7 @@ import fr.teama.transactionservice.exceptions.NotEnoughMoneyException;
 import fr.teama.transactionservice.exceptions.PaymentFailedException;
 import fr.teama.transactionservice.exceptions.TransferPaymentErrorException;
 import fr.teama.transactionservice.helpers.LoggerHelper;
-import fr.teama.transactionservice.interfaces.IBankAccountProxy;
+import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
 import fr.teama.transactionservice.interfaces.proxy.IMastercardProxy;
 import fr.teama.transactionservice.models.Transaction;
@@ -23,7 +23,7 @@ public class TransactionHandler implements ITransactionManager {
     @Autowired
     TransactionRepository transactionRepository;
     @Autowired
-    IBankAccountProxy bankAccountProxy;
+    IAccountProxy bankAccountProxy;
 
     @Override
     public Transaction pay(Long bankAccountId, String MID, double amount) throws PaymentFailedException {

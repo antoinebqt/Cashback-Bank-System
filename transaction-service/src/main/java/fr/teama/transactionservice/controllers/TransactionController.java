@@ -1,13 +1,12 @@
 package fr.teama.transactionservice.controllers;
 
 
-import fr.teama.transactionservice.components.TransactionHandler;
 import fr.teama.transactionservice.controllers.dto.PaymentDTO;
 import fr.teama.transactionservice.exceptions.BankAccountUnavailableException;
 import fr.teama.transactionservice.exceptions.InvalidCardException;
 import fr.teama.transactionservice.exceptions.PaymentFailedException;
 import fr.teama.transactionservice.helpers.LoggerHelper;
-import fr.teama.transactionservice.interfaces.IBankAccountProxy;
+import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
 import fr.teama.transactionservice.interfaces.ITransactionSaver;
 import fr.teama.transactionservice.models.Card;
@@ -31,7 +30,7 @@ public class TransactionController {
     @Autowired
     private ITransactionSaver transactionSaver;
     @Autowired
-    private IBankAccountProxy bankAccountProxy;
+    private IAccountProxy bankAccountProxy;
 
     @PostMapping("/pay")
     public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountUnavailableException {

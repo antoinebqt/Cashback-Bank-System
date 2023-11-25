@@ -6,6 +6,6 @@ COPY . /app
 
 RUN mvn clean package
 
-EXPOSE 3000
+EXPOSE 8080
 
-CMD ["java", "-jar", "target/bank-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/account-service-0.0.1-SNAPSHOT.jar"]

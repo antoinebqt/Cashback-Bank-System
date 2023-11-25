@@ -6,6 +6,6 @@ COPY . /app
 
 RUN mvn clean package
 
-EXPOSE 3004
+EXPOSE 8080
 
 CMD ["java", "-jar", "target/affiliated-store-service-0.0.1-SNAPSHOT.jar"]

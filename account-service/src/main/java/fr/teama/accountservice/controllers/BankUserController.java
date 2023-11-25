@@ -25,7 +25,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @CrossOrigin
 @RequestMapping(path = BankUserController.BASE_URI, produces = APPLICATION_JSON_VALUE)
 public class BankUserController {
-    public static final String BASE_URI = "/api/bank";
+    public static final String BASE_URI = "/api/account";
 
     @Autowired
     UserRegistration userRegistration;
