@@ -28,6 +28,6 @@ compile_dir "external-decathlon-mock-service"
 compile_dir "external-mastercard-mock-service"
 
 # remove # to add pause in script execution
-read -p "Press any key to continue... "
+#read -p "Press any key to continue... "
 
 echo "** Done all"
