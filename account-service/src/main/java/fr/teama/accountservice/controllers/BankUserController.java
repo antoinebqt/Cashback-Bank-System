@@ -5,10 +5,12 @@ import fr.teama.accountservice.controllers.dto.BankUserDTO;
 import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
+import fr.teama.accountservice.exceptions.InvalidCardException;
 import fr.teama.accountservice.helpers.LoggerHelper;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
 import fr.teama.accountservice.models.BankUser;
+import fr.teama.accountservice.models.Card;
 import fr.teama.accountservice.repository.BankUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +54,12 @@ public class BankUserController {
     public ResponseEntity<BankUser> getUser(@RequestBody BankUserConnectionDTO bankUserConnectionDTO) throws BankAccountNotFoundException, InvalidAccountPasswordException {
         LoggerHelper.logInfo("Request received for getting user " + bankUserConnectionDTO.getEmail());
         BankUser user = bankUserInformation.getBankUser(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
+        return ResponseEntity.ok(user);
+    }
+    @GetMapping("/user-By-Card")
+    public ResponseEntity<BankUser> getUserByCard(@RequestBody Card bankUserCard) throws BankAccountNotFoundException, InvalidCardException {
+        LoggerHelper.logInfo("Request received for getting user: " + bankUserCard);
+        BankUser user = bankUserInformation.getBankUserByCard(bankUserCard);
         return ResponseEntity.ok(user);
     }
 }
