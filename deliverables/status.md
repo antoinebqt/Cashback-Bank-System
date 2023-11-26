@@ -1,5 +1,29 @@
 # New Bank Status
 
+## Week 47
+
+### What was done
+- Major refactor of our architecture diagram to take into account the feedbacks made during the presentation and the new development needs
+
+### What is planned
+- Continue refactoring the code to match our new architecture
+- Add a load balancer for the transaction service and a cache for the affiliated store service
+
+### What's the difference from last week
+- Two new services to better separate responsibilities
+- Database replication using the master-slave pattern
+- Add a RabbitMQ message queue for communication between certain services
+
+### Issues
+- No blockers
+
+### Risk
+- No risks
+
+### RYG flag
+- Green
+---
+
 ## Week 44
 
 ### What was done

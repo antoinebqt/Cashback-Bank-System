@@ -5,8 +5,7 @@ const axios = require('axios');
 const app = express();
 const port = 8080;
 
-const apiURL = "http://bank-service:3000";
-//const apiURL = "http://localhost:3000";
+const apiURL = "http://account-service:8080";
 
 app.use(bodyParser.json());
 

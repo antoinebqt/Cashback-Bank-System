@@ -15,6 +15,11 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue transactionCancelledQueue() {
+        return new Queue("transaction-cancelled-queue");
+    }
+
+    @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
