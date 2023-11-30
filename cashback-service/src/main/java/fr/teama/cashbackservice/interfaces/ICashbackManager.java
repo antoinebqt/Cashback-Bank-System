@@ -8,5 +8,5 @@ public interface ICashbackManager {
 
     void processTransaction(Transaction transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException;
 
-    void cancelCashbackTransaction(String transactionId);
+    void cancelCashbackTransaction(Long transactionId);
 }

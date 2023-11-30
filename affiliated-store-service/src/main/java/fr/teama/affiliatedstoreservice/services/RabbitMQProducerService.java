@@ -14,7 +14,7 @@ public class RabbitMQProducerService {
     }
 
 
-    public void sendCashbackToCancel(String transactionId) {
+    public void sendCashbackToCancel(Long transactionId) {
         rabbitTemplate.convertAndSend("transaction-cancelled-queue", transactionId);
     }
 }

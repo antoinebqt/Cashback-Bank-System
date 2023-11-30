@@ -9,5 +9,5 @@ public interface ICashbackProxy {
 
     List<CashbackDTO> getCashbackTransactions();
 
-    List<String> getCashbackTransactionIdsLastMonthWithSiret(String siret);
+    List<CashbackDTO> getCashbackTransactionIdsLastMonthWithSiret(String siret);
 }
