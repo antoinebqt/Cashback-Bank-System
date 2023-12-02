@@ -5,7 +5,7 @@
 ### What was done
 - Refactor of the code to match our new architecture
 - Add a slave database for the account service to prevent table locking on balance update/read
-- 
+- Load test on old and new architecture to compare performance
 
 ### What is planned
 - Add a load balancer and a cache for the transaction service
@@ -13,7 +13,7 @@
 
 ### What's the difference from last week
 - Database replication using the master-slave pattern on the account service
-- 
+- End of architecture refactoring
 
 ### Issues
 - No blockers
