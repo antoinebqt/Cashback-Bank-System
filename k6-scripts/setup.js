@@ -35,6 +35,25 @@ function addMoneyToAccount(iban, amount) {
     });
 }
 
+function createAffiliatedStore() {
+    let url = 'http://localhost:3003/api/store/create';
+    let payload = {
+        name: `Benostore`,
+        cashback_rate: 20,
+        siret: "55555555500030",
+        cashBackAnnulationParameters: {
+            cashBackAnnulationActivated: false,
+            apiForCashbackAnnulation: "",
+            specificAPIConfigurationMode: "TYPE1"
+        }
+    };
+    let headers = { 'Content-Type': 'application/json' };
+    let response = http.post(url, JSON.stringify(payload), { headers: headers });
+    check(response, {
+        'Store created successfully': (r) => r.status === 200,
+    });
+}
+
 export default function () {
     let userNumber = 1000;
     let usersIban = [];
@@ -46,4 +65,5 @@ export default function () {
     for (let i = 0; i < usersIban.length; i++) {
         addMoneyToAccount(usersIban[i], 1000000);
     }
+    createAffiliatedStore();
 }
