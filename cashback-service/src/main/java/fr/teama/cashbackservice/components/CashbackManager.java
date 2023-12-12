@@ -48,15 +48,15 @@ public class CashbackManager implements ICashbackManager {
             double cashbackAmount = transaction.getAmount() * cashbackRate / 100;
             LoggerHelper.logInfo("Cashback rate found for this SIRET: " + cashbackRate + "%");
             LoggerHelper.logInfo("Apply cashback of " + cashbackRate + "% on " + transaction.getAmount() + "€");
-            Cashback cashback = new Cashback(transaction.getBankAccountId(), transaction.getAmount(), cashbackAmount, transaction.getId(), siret);
+            Cashback cashback = new Cashback(transaction.getBankAccountId(), transaction.getAmount(), cashbackAmount, transaction.getId(), siret, transaction.getMastercardTransactionId());
             cashbackRepository.save(cashback);
             this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(transaction.getBankAccountId(), cashbackAmount));
         }
     }
 
     @Override
-    public void cancelCashbackTransaction(String transactionId) {
-        Cashback cashback = cashbackRepository.findCashbackByTransactionId(Long.valueOf(transactionId));
+    public void cancelCashbackTransaction(Long transactionId) {
+        Cashback cashback = cashbackRepository.findCashbackByTransactionId(transactionId);
         if (cashback != null) {
             LoggerHelper.logInfo("Cancel cashback of transaction " + transactionId);
             cashbackRepository.delete(cashback);

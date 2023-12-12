@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface CashbackRepository extends JpaRepository<Cashback, Long> {
 
-    @Query("SELECT cb FROM Cashback cb WHERE cb.timestamp <= :date")
-    List<Cashback> findAllWithTimestampOlderThan(@Param("date") LocalDateTime date);
+    @Query("SELECT cb FROM Cashback cb WHERE cb.timestamp >= :date")
+    List<Cashback> findAllWithTimestampGreaterThan(@Param("date") LocalDateTime date);
 
     // Find all with timestamp older than date and siret
-    @Query("SELECT cb FROM Cashback cb WHERE cb.timestamp <= :date AND cb.siret = :siret")
-    List<Cashback> findAllWithTimestampOlderThanAndSiret(@Param("date") LocalDateTime date, @Param("siret") String siret);
+    @Query("SELECT cb FROM Cashback cb WHERE cb.timestamp >= :date AND cb.siret = :siret")
+    List<Cashback> findAllWithTimestampGreaterThanAndSiret(@Param("date") LocalDateTime date, @Param("siret") String siret);
 
     Cashback findCashbackByTransactionId(Long transactionId);
 }

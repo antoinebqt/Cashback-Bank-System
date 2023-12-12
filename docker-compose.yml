@@ -40,6 +40,8 @@ services:
     restart: always
     environment:
       - POSTGRES_HOST=postgres-account:5432
+      - POSTGRES_HOST_MASTER=postgres-account:5432
+      - POSTGRES_HOST_SLAVE=postgres-account-slave:5432
       - POSTGRESQL_DATABASE=database-account
     ports:
       - "3002:8080"
@@ -132,15 +134,42 @@ services:
       - ./cashback-directory-slave:/var/lib/postgresql/data
 
   postgres-account:
-    image: postgres:15.2
+    image: 'bitnami/postgresql:latest'
     container_name: database-account
     restart: always
     environment:
-      - POSTGRES_PASSWORD=postgrespass
-      - POSTGRES_USER=postgresuser
-      - POSTGRES_DB=database-account
+      - POSTGRESQL_PASSWORD=postgrespass
+      - POSTGRESQL_USER=postgresuser
+      - POSTGRESQL_DATABASE=database-account
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
     ports:
       - "4002:5432"
+    volumes:
+      - ./transaction-directory-master:/var/lib/postgresql/data
+
+  postgres-account-slave:
+    image: 'bitnami/postgresql:latest'
+    container_name: database-account-slave
+    restart: always
+    depends_on:
+      - postgres-transaction
+    environment:
+      - POSTGRESQL_USER=postgresuser
+      - POSTGRESQL_PASSWORD=postgrespass
+      - POSTGRESQL_MASTER_HOST=postgres-account
+      - POSTGRESQL_LOG_HOSTNAME=true
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+    ports:
+      - "6002:5432"
+    volumes:
+      - ./transaction-directory-slave:/var/lib/postgresql/data
+
+
 
   postgres-affiliated-store:
     image: postgres:15.2

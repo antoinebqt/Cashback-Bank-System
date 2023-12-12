@@ -26,7 +26,7 @@ public class RabbitMQConsumerService {
     }
 
     @RabbitListener(queues = "transaction-cancelled-queue")
-    public void cancelCashbackOfTransaction(String transactionId) {
+    public void cancelCashbackOfTransaction(Long transactionId) {
         LoggerHelper.logInfo("Received transaction id to cancel cancel cashback: " + transactionId);
         this.cashbackManager.cancelCashbackTransaction(transactionId);
     }

@@ -23,7 +23,7 @@ public class AffiliatedStoreProxy implements IAffiliatedStoreProxy {
             ResponseEntity<Float> cashbackRate = restTemplate.getForEntity(apiBaseUrlHostAndPort + "/catalog/" + siret + "/cashback-rate", Float.class);
             return Objects.requireNonNull(cashbackRate.getBody());
         } catch (Exception e) {
-            LoggerHelper.logError("Cashback service is unavailable: " + e.getMessage());
+//            LoggerHelper.logError("Cashback service is unavailable: " + e.getMessage());
             return 0;
         }
     }

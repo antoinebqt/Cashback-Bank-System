@@ -7,6 +7,7 @@ import fr.teama.affiliatedstoreservice.interfaces.proxy.IStoreAPIOfType1;
 import fr.teama.affiliatedstoreservice.interfaces.proxy.IStoreAPIOfType2;
 import fr.teama.affiliatedstoreservice.models.AffiliatedStore;
 import fr.teama.affiliatedstoreservice.models.CashBackAnnulationParameters;
+import fr.teama.affiliatedstoreservice.models.CashbackDTO;
 import fr.teama.affiliatedstoreservice.models.StoreAPIType;
 import fr.teama.affiliatedstoreservice.repository.AffiliatedStoreRepository;
 import fr.teama.affiliatedstoreservice.services.RabbitMQProducerService;
@@ -49,23 +50,30 @@ public class CancelledTransactionAdapter implements ICancelledTransactionAdapter
     public void checkCancelledTransaction() {
         List<AffiliatedStore> affiliatedStores = affiliatedStoreRepository.findAll().stream().filter(s -> s.getCashBackAnnulationParameters().isCashBackAnnulationActivated()).toList();
         for (AffiliatedStore store : affiliatedStores) {
-            List<String> transactionIdList = getCashbacksToCancel(store);
-            for (String transactionId : transactionIdList) {
+            List<Long> transactionIdList = getCashbacksToCancel(store);
+            for (Long transactionId : transactionIdList) {
                 rabbitMQProducerService.sendCashbackToCancel(transactionId);
             }
         }
     }
 
-    private List<String> getCashbacksToCancel(AffiliatedStore affiliatedStore) {
+    private List<Long> getCashbacksToCancel(AffiliatedStore affiliatedStore) {
         CashBackAnnulationParameters cashBackAnnulationParameters = affiliatedStore.getCashBackAnnulationParameters();
-        List<String> transactionIdToAbort = new ArrayList<>();
-        List<String> cashbackDTOListDTOList = cashbackProxy.getCashbackTransactionIdsLastMonthWithSiret(affiliatedStore.getSiret());
+        List<Long> transactionIdToAbort = new ArrayList<>();
+        List<CashbackDTO> cashbackDTOList = cashbackProxy.getCashbackTransactionIdsLastMonthWithSiret(affiliatedStore.getSiret());
+        List<String> transactionAbortedMastercardId = cashbackDTOList.stream().map(CashbackDTO::getMastercardTransactionId).toList(); // PROBLEME ICI, ON A BESOIN DU MASTER CARD ID JE CROIS ...
 
         if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode() == StoreAPIType.TYPE1){
-            transactionIdToAbort = storeAPIOfType1.getCashbackTransactionsAbortedID(affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
+            List<String> mastercardTransactionIdToAbort = storeAPIOfType1.getCashbackTransactionsAbortedID(affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
+            cashbackDTOList.stream()
+                    .filter(cashbackDTO -> mastercardTransactionIdToAbort.contains(cashbackDTO.getMastercardTransactionId()))
+                    .forEach(cashbackDTO -> transactionIdToAbort.add(cashbackDTO.getTransactionId()));
         }
         else if (cashBackAnnulationParameters.getSpecificAPIConfigurationMode()== StoreAPIType.TYPE2){
-            transactionIdToAbort = storeAPIOfType2.getCashbackTransactionsAborted(cashbackDTOListDTOList, affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
+            List<String> mastercardTransactionIdToAbort = storeAPIOfType2.getCashbackTransactionsAborted(transactionAbortedMastercardId, affiliatedStore.getCashBackAnnulationParameters().getApiForCashbackAnnulation());
+            cashbackDTOList.stream()
+                    .filter(cashbackDTO -> mastercardTransactionIdToAbort.contains(cashbackDTO.getMastercardTransactionId()))
+                    .forEach(cashbackDTO -> transactionIdToAbort.add(cashbackDTO.getTransactionId()));
         }
 
         return transactionIdToAbort;

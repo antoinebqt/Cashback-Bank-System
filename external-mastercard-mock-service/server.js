@@ -34,7 +34,7 @@ app.post('/api/transaction-payment', (req, res) => {
         return res.status(400).send(false);
     }
 
-    let id = generateRandomNumericString(10);
+    let id = generateRandomNumericString(16);
 
     // call external store mock
     if (transaction.merchant_mid === 'MID123') {

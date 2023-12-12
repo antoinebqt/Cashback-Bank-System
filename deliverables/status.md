@@ -1,5 +1,59 @@
 # New Bank Status
 
+## Week 49
+
+### What was done
+- Refactor of the code to match our new architecture
+- Add a slave database for the account service to prevent table locking on balance update/read
+- Load test between previous and new architcture
+- Write ADR
+
+### What is planned
+- Continue work on the load balancer for transaction service
+- Continue to work on the cache for transaction service
+- Add a cache for the affiliated store service
+- Analyze more precisely where the old architectural problems originate
+
+### What's the difference from last week
+- Continue work on the load balancer for transaction service
+- Continue to work on the cache for transaction service
+- Write missing ADR
+
+### Issues
+- No blockers
+
+### Risk
+- No risks
+
+### RYG flag
+- Green
+---
+
+## Week 48
+
+### What was done
+- Refactor of the code to match our new architecture
+- Add a slave database for the account service to prevent table locking on balance update/read
+- Load test on old and new architecture to compare performance
+
+### What is planned
+- Add a load balancer and a cache for the transaction service
+- Add a cache for the affiliated store service
+
+### What's the difference from last week
+- Database replication using the master-slave pattern on the account service
+- End of architecture refactoring
+
+### Issues
+- No blockers
+
+### Risk
+- No risks
+
+### RYG flag
+- Green
+---
+
 ## Week 47
 
 ### What was done

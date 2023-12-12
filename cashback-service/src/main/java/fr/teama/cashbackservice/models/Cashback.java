@@ -25,14 +25,17 @@ public class Cashback {
 
     private LocalDateTime timestamp;
 
+    private String mastercardTransactionId;
 
-    public Cashback(Long bankAccountId, double amountSpent, double amountReturned, Long transactionId, String siret) {
+
+    public Cashback(Long bankAccountId, double amountSpent, double amountReturned, Long transactionId, String siret, String mastercardTransactionId) {
         this.bankAccountId = bankAccountId;
         this.amountSpent = amountSpent;
         this.amountReturned = amountReturned;
         this.transactionId = transactionId;
         this.siret = siret;
         this.timestamp = LocalDateTime.now();
+        this.mastercardTransactionId = mastercardTransactionId;
     }
 
     public Cashback() {
@@ -94,6 +97,14 @@ public class Cashback {
         this.timestamp = timestamp;
     }
 
+    public String getMastercardTransactionId() {
+        return mastercardTransactionId;
+    }
+
+    public void setMastercardTransactionId(String mastercardTransactionId) {
+        this.mastercardTransactionId = mastercardTransactionId;
+    }
+
     @Override
     public String toString() {
         return "Cashback{" +
@@ -104,6 +115,7 @@ public class Cashback {
                 ", transactionId=" + transactionId +
                 ", siret=" + siret +
                 ", timestamp=" + timestamp +
+                ", mastercardTransactionId='" + mastercardTransactionId + '\'' +
                 '}';
     }
 }
