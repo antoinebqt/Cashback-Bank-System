@@ -34,7 +34,6 @@ services:
     depends_on:
       - transaction-service
       - transaction-service-redundancy
-      - transaction-service-backup
 
   transaction-service-redundancy:
     image: "newbank/transaction-service"
