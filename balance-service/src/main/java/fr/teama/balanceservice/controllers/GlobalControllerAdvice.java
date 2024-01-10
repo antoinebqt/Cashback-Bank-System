@@ -1,13 +1,13 @@
-package fr.teama.accountservice.controllers;
+package fr.teama.balanceservice.controllers;
 
-import fr.teama.accountservice.controllers.dto.ErrorDTO;
-import fr.teama.accountservice.exceptions.*;
+import fr.teama.balanceservice.controllers.dto.ErrorDTO;
+import fr.teama.balanceservice.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(assignableTypes = {BankUserController.class})
+@RestControllerAdvice(assignableTypes = {BalanceController.class})
 public class GlobalControllerAdvice {
 
     @ExceptionHandler({BankAccountNotFoundException.class})

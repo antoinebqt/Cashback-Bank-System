@@ -48,6 +48,20 @@ services:
     depends_on:
       - postgres-account
 
+
+  balance-service:
+    image: "newbank/balance-service"
+    restart: always
+    environment:
+      - POSTGRES_HOST=postgres-account:5432
+      - POSTGRES_HOST_MASTER=postgres-account:5432
+      - POSTGRES_HOST_SLAVE=postgres-account-slave:5432
+      - POSTGRESQL_DATABASE=database-account
+    ports:
+      - "3004:8080"
+    depends_on:
+      - postgres-account
+
   affiliated-store-service:
     image: "newbank/affiliated-store-service"
     restart: always
@@ -147,7 +161,7 @@ services:
     ports:
       - "4002:5432"
     volumes:
-      - ./transaction-directory-master:/var/lib/postgresql/data
+      - master-data:/bitnami/postgresql
 
   postgres-account-slave:
     image: 'bitnami/postgresql:latest'
@@ -166,8 +180,6 @@ services:
       - POSTGRESQL_MASTER_PORT_NUMBER=5432
     ports:
       - "6002:5432"
-    volumes:
-      - ./transaction-directory-slave:/var/lib/postgresql/data
 
 
 
@@ -213,3 +225,6 @@ services:
     restart: always
     ports:
       - "5004:8080"
+
+volumes:
+  master-data:

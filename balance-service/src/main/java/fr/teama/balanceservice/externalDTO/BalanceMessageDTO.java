@@ -1,24 +1,20 @@
-package fr.teama.accountservice.models;
+package fr.teama.balanceservice.externalDTO;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-@Entity
-public class BalanceMessage {
+public class BalanceMessageDTO {
+
     private Long bankAccountId;
     private double amount;
+    private Long transactionId;
     @Id
     @GeneratedValue
     private Long id;
 
-    public BalanceMessage() {
+    public BalanceMessageDTO() {
     }
 
-    public BalanceMessage(Long bankAccountId, double amount) {
-        this.bankAccountId = bankAccountId;
-        this.amount = amount;
-    }
 
     @Override
     public String toString() {
@@ -50,5 +46,13 @@ public class BalanceMessage {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 }

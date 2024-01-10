@@ -1,4 +1,4 @@
-package fr.teama.accountservice.configuration;
+package fr.teama.balanceservice.configuration;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;

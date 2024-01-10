@@ -28,7 +28,7 @@ public class AccountProxy implements IAccountProxy {
     @Override
     public boolean checkBalance(Long bankAccountId, double amount) throws BankAccountUnavailableException {
         try {
-            return Boolean.TRUE.equals(restTemplate.postForEntity(apiBaseUrlHostAndPort + "/balance/check/" + bankAccountId, amount, Boolean.class).getBody());
+            return Boolean.TRUE.equals(restTemplate.postForEntity(apiBaseUrlHostAndPort + "/account/check/" + bankAccountId, amount, Boolean.class).getBody());
         } catch (Exception e) {
             LoggerHelper.logError("Cannot check balance because BankAccount service is unavailable");
             throw new BankAccountUnavailableException();

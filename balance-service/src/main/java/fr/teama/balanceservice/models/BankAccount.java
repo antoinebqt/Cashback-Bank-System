@@ -1,4 +1,4 @@
-package fr.teama.accountservice.models;
+package fr.teama.balanceservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -19,7 +19,9 @@ public class BankAccount {
     private BankUser bankUser;
 
     @OneToMany(mappedBy = "bankAccount")
+    @JsonIgnore
     private List<BalanceModification> balanceModificationList;
+
 
 
     private String iban;
@@ -35,14 +37,6 @@ public class BankAccount {
         this.card = card;
         this.balance = balance;
         this.bankUser = bankUser;
-    }
-
-    public List<BalanceModification> getBalanceModificationList() {
-        return balanceModificationList;
-    }
-
-    public void setBalanceModificationList(List<BalanceModification> balanceModificationList) {
-        this.balanceModificationList = balanceModificationList;
     }
 
     public Card getCard() {
@@ -87,7 +81,6 @@ public class BankAccount {
                 "id=" + id +
                 ", card=" + card +
                 ", bankUser=" + bankUser +
-                ", balanceModificationList=" + balanceModificationList +
                 ", iban='" + iban + '\'' +
                 ", balance=" + balance +
                 '}';
