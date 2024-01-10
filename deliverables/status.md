@@ -1,5 +1,32 @@
 # New Bank Status
 
+## Week 1
+
+### What was done
+- Refactor of the code to match our new architecture
+- Add a slave database for the account service to prevent table locking on balance update/read
+- Write ADR
+- Continue work on the load balancer for transaction service
+- Advanced load test with container limitation
+
+### What is planned
+- Continue to analyze the load test
+- Create multiple instances of transaction service with load balancer to make load tests
+
+### What's the difference from last week
+- Continue work on the load balancer for transaction service
+- New Advanced load test with container limitation
+
+### Issues
+- No blockers
+
+### Risk
+- No risks
+
+### RYG flag
+- Green
+---
+
 ## Week 50
 
 ### What was done

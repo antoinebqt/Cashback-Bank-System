@@ -9,7 +9,7 @@ Moreover, we need resiliency.
 
 ### Decision
 Adding a Master-Slave model to allow the access to the data while new data are written.
-This model is added to the bank, transactions and cashback services, as they are the ones which handle many reads and writes.
+This model is added to the bank (now named balance), transactions and cashback services, as they are the ones which handle many reads and writes.
 
 ### Consequences
 The code needs to undergo refactoring, and we need more resources to handle more data.
