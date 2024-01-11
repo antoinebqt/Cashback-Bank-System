@@ -5,23 +5,22 @@ import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.accountservice.exceptions.InvalidCardException;
+import fr.teama.accountservice.interfaces.BalanceChecker;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
 import fr.teama.accountservice.models.BankAccount;
 import fr.teama.accountservice.models.BankUser;
 import fr.teama.accountservice.models.Card;
-import fr.teama.accountservice.models.Transaction;
 import fr.teama.accountservice.repository.BankAccountRepository;
 import fr.teama.accountservice.repository.BankUserRepository;
 import fr.teama.accountservice.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Random;
 
 @Component
-public class BankAccountManager implements UserRegistration, BankUserInformation {
+public class BankAccountManager implements UserRegistration, BankUserInformation, BalanceChecker {
 
     @Autowired
     BankUserRepository bankUserRepository;
@@ -87,12 +86,12 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
     }
 
     @Override
-    public List<Transaction> getTransactions(String email, String password) throws BankAccountNotFoundException, InvalidAccountPasswordException {
-        //TODO add the new logic
-        return null;
-
-        //BankUser user = getBankUser(email, password);
-        //return user.getBankAccount().getCard().getTransactions();
+    public boolean checkBalance(Long bankAccountId, Double amount) throws BankAccountNotFoundException {
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId).orElse(null);
+        if (bankAccount == null) {
+            throw new BankAccountNotFoundException("BankAccountID", bankAccountId.toString());
+        }
+        return bankAccount.getBalance() >= amount;
     }
 
 }

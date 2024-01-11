@@ -21,8 +21,8 @@ public class RabbitMQProducerService {
         rabbitTemplate.convertAndSend("transaction-created-queue", transaction);
     }
 
-    public void sendBalanceMessage(Long bankAccountId, double amount) {
-        BalanceMessage balanceMessage = new BalanceMessage(bankAccountId, amount);
+    public void sendBalanceMessage(Long bankAccountId, double amount, Long transactionId) {
+        BalanceMessage balanceMessage = new BalanceMessage(bankAccountId, amount, transactionId);
         LoggerHelper.logInfo("Sending balance message: " + balanceMessage);
         rabbitTemplate.convertAndSend("balance-queue", balanceMessage);
     }

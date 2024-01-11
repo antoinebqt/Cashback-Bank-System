@@ -8,11 +8,14 @@ import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.accountservice.exceptions.InvalidCardException;
 import fr.teama.accountservice.helpers.LoggerHelper;
+import fr.teama.accountservice.interfaces.BalanceChecker;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
+import fr.teama.accountservice.models.BalanceModification;
 import fr.teama.accountservice.models.BankAccount;
 import fr.teama.accountservice.models.BankUser;
 import fr.teama.accountservice.models.Card;
+import fr.teama.accountservice.repository.BalanceModificationRepository;
 import fr.teama.accountservice.repository.BankUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +41,12 @@ public class BankUserController {
     @Autowired
     BankUserInformation bankUserInformation;
 
+    @Autowired
+    BalanceChecker balanceChecker;
+
+    @Autowired
+    BalanceModificationRepository balanceModificationRepository;
+
     @PostMapping(value = "/register", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<BankUser> register(@RequestBody BankUserDTO bankUserDTO) throws BankUserWithEmailAlreadyExistException {
         LoggerHelper.logInfo("Request received for registering user " + bankUserDTO.getEmail());
@@ -58,10 +67,23 @@ public class BankUserController {
         BankUser user = bankUserInformation.getBankUser(bankUserConnectionDTO.getEmail(), bankUserConnectionDTO.getPassword());
         return ResponseEntity.ok(user);
     }
+
+    @GetMapping("/balanceModifications")
+    public ResponseEntity<List<BalanceModification>> getBalanceModifications() throws BankAccountNotFoundException, InvalidAccountPasswordException {
+        LoggerHelper.logInfo("Request received for getting balanceModifications ");
+        List<BalanceModification> balanceModifications = balanceModificationRepository.findAll();
+        return ResponseEntity.ok(balanceModifications);
+    }
+
     @PostMapping("/account-by-card")
     public ResponseEntity<Long> getBankAccountIdByCard(@RequestBody CardDTO card) throws BankAccountNotFoundException, InvalidCardException {
         LoggerHelper.logInfo("Request received for getting user: " + card);
         BankAccount account = bankUserInformation.getBankAccountByCard(card);
         return ResponseEntity.ok(account.getId());
+    }
+    @PostMapping("/check/{bankAccountId}")
+    public ResponseEntity<Boolean> checkBalance(@PathVariable Long bankAccountId, @RequestBody double amount) throws BankAccountNotFoundException {
+        LoggerHelper.logInfo("Received balance check request for bank account id " + bankAccountId + " with amount " + amount);
+        return ResponseEntity.ok(balanceChecker.checkBalance(bankAccountId, amount));
     }
 }

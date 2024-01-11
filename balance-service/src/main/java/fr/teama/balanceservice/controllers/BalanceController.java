@@ -1,12 +1,10 @@
-package fr.teama.accountservice.controllers;
+package fr.teama.balanceservice.controllers;
 
-import fr.teama.accountservice.controllers.dto.BankTransferDTO;
-import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
-import fr.teama.accountservice.helpers.LoggerHelper;
-import fr.teama.accountservice.interfaces.BalanceChecker;
-import fr.teama.accountservice.interfaces.BalanceModifier;
+import fr.teama.balanceservice.controllers.dto.BankTransferDTO;
+import fr.teama.balanceservice.exceptions.BankAccountNotFoundException;
+import fr.teama.balanceservice.helpers.LoggerHelper;
+import fr.teama.balanceservice.interfaces.BalanceModifier;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,19 +19,11 @@ public class BalanceController {
     @Autowired
     BalanceModifier balanceModifier;
 
-    @Autowired
-    BalanceChecker balanceChecker;
 
     @PostMapping("/add")
     public ResponseEntity<String> addBalance(@RequestBody BankTransferDTO bankTransferDTO) throws BankAccountNotFoundException {
         LoggerHelper.logInfo("Received bank transfer request: " + bankTransferDTO.toString());
         balanceModifier.addBalance(bankTransferDTO.getIban(), bankTransferDTO.getAmount());
         return ResponseEntity.ok("Balance added");
-    }
-
-    @PostMapping("/check/{bankAccountId}")
-    public ResponseEntity<Boolean> checkBalance(@PathVariable Long bankAccountId, @RequestBody double amount) throws BankAccountNotFoundException {
-        LoggerHelper.logInfo("Received balance check request for bank account id " + bankAccountId + " with amount " + amount);
-        return ResponseEntity.ok(balanceChecker.checkBalance(bankAccountId, amount));
     }
 }
