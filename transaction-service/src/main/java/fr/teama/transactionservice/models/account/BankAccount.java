@@ -10,35 +10,21 @@ public class BankAccount {
     @GeneratedValue
     private Long id;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "card_id")
-//    private Card card;
-//    @OneToOne(mappedBy = "bankAccount")
-//    @JsonIgnore
-//    private BankUser bankUser;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
+    private BankAccountCard card;
 
     private String iban;
 
     private Double balance;
 
-//    public BankAccount() {
-//        card = new Card();
-//        balance = 0.0;
-//    }
-//
-//    public BankAccount(BankUser bankUser, Card card, Double balance) {
-//        this.card = card;
-//        this.balance = balance;
-//        this.bankUser = bankUser;
-//    }
-//
-//    public Card getCard() {
-//        return card;
-//    }
-//
-//    public void setCard(Card card) {
-//        this.card = card;
-//    }
+    public BankAccountCard getCard() {
+        return card;
+    }
+
+    public void setCard(BankAccountCard card) {
+        this.card = card;
+    }
 
     public Double getBalance() {
         return balance;
@@ -64,16 +50,11 @@ public class BankAccount {
         return id;
     }
 
-//    public BankUser getBankUser() {
-//        return bankUser;
-//    }
-
     @Override
     public String toString() {
         return "BankAccount{" +
                 "id=" + id +
-//                ", card=" + card +
-//                ", bankUser=" + bankUser +
+                ", card=" + card +
                 ", iban='" + iban + '\'' +
                 ", balance=" + balance +
                 '}';

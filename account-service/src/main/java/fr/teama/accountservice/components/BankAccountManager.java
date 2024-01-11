@@ -5,7 +5,6 @@ import fr.teama.accountservice.exceptions.BankAccountNotFoundException;
 import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException;
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.accountservice.exceptions.InvalidCardException;
-import fr.teama.accountservice.interfaces.BalanceChecker;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
 import fr.teama.accountservice.models.BankAccount;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class BankAccountManager implements UserRegistration, BankUserInformation, BalanceChecker {
+public class BankAccountManager implements UserRegistration, BankUserInformation {
 
     @Autowired
     BankUserRepository bankUserRepository;
@@ -83,15 +82,6 @@ public class BankAccountManager implements UserRegistration, BankUserInformation
             throw new BankAccountNotFoundException();
         }
         return account;
-    }
-
-    @Override
-    public boolean checkBalance(Long bankAccountId, Double amount) throws BankAccountNotFoundException {
-        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId).orElse(null);
-        if (bankAccount == null) {
-            throw new BankAccountNotFoundException("BankAccountID", bankAccountId.toString());
-        }
-        return bankAccount.getBalance() >= amount;
     }
 
 }

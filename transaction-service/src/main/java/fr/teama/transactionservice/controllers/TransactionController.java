@@ -2,6 +2,7 @@ package fr.teama.transactionservice.controllers;
 
 
 import fr.teama.transactionservice.controllers.dto.PaymentDTO;
+import fr.teama.transactionservice.exceptions.BankAccountNotFoundException;
 import fr.teama.transactionservice.exceptions.BankAccountUnavailableException;
 import fr.teama.transactionservice.exceptions.InvalidCardException;
 import fr.teama.transactionservice.exceptions.PaymentFailedException;
@@ -32,19 +33,17 @@ public class TransactionController {
     @Autowired
     private ITransactionSaver transactionSaver;
     @Autowired
-    private IAccountProxy bankAccountProxy;
-    @Autowired
     private AccountRepository accountRepository;
 
     @PostMapping("/pay")
-    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountUnavailableException {
+    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountNotFoundException {
         LoggerHelper.logInfo("Request received to pay " + paymentDTO);
         Card card = new Card(paymentDTO.getCardNumber(), paymentDTO.getExpirationDate(), paymentDTO.getCvv());
-        Long bankAccountId = bankAccountProxy.getBankAccountIdByCard(card);
-        if (bankAccountId == null) {
+        BankAccount bankAccount = transactionManager.getBankAccountByCard(card);
+        if (bankAccount.getId() == null) {
             throw new InvalidCardException();
         }
-        Transaction transaction = transactionManager.pay(bankAccountId, paymentDTO.getMid(), paymentDTO.getAmount());
+        Transaction transaction = transactionManager.pay(bankAccount.getId(), paymentDTO.getMid(), paymentDTO.getAmount());
         transactionSaver.debitAndSaveTransaction(transaction);
         return ResponseEntity.ok(transaction);
     }
