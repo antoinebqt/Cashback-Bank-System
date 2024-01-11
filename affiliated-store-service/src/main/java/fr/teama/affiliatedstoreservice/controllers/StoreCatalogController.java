@@ -54,8 +54,10 @@ public class StoreCatalogController {
         LoggerHelper.logInfo("Request received to get cashback rate of affiliated store with siret : " + siret);
         AffiliatedStore affiliatedStore = affiliatedStoreCatalog.getAffiliatedStoreBySiret(siret);
         if (affiliatedStore == null) {
+            LoggerHelper.logInfo("This SIRET is not an affiliated store");
             return ResponseEntity.status(404).body(null);
         }
+        LoggerHelper.logInfo("Found cashback rate of " + affiliatedStore.getCashbackRate() + "% for this SIRET");
         return ResponseEntity.ok(affiliatedStore.getCashbackRate());
     }
 
