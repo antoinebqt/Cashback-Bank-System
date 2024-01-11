@@ -1,8 +1,10 @@
-package fr.teama.affiliatedstoreservice.models;
+package fr.teama.affiliatedstoreservice.models.affiliatedstore;
 
+import fr.teama.affiliatedstoreservice.models.CashBackAnnulationParameters;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "affiliated_store")
 public class AffiliatedStore {
     @Id
     @GeneratedValue
@@ -11,11 +13,13 @@ public class AffiliatedStore {
     @Column(unique = true)
     private String name;
 
+    @Column(name = "cashback_rate")
     private float cashbackRate;
 
     private String siret;
 
     @Embedded
+    @Column(name = "cashback_annulation_parameters")
     CashBackAnnulationParameters cashBackAnnulationParameters;
 
     public AffiliatedStore() {

@@ -89,12 +89,15 @@ services:
     image: "newbank/affiliated-store-service"
     restart: always
     environment:
-      - POSTGRES_HOST=postgres-affiliated-store:5432
-      - POSTGRESQL_DATABASE=database-affiliated-store
+      - POSTGRES_HOST_STORE=postgres-affiliated-store:5432
+      - POSTGRESQL_DATABASE_STORE=database-affiliated-store
+      - POSTGRES_HOST_CASHBACK=postgres-cashback-slave:5432
+      - POSTGRESQL_DATABASE_CASHBACK=database-cashback
     ports:
       - "3003:8080"
     depends_on:
       - postgres-affiliated-store
+      - postgres-cashback-slave
 
   # DATABASES
 

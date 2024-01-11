@@ -1,7 +1,7 @@
 package fr.teama.affiliatedstoreservice.interfaces;
 
 
-import fr.teama.affiliatedstoreservice.models.AffiliatedStore;
+import fr.teama.affiliatedstoreservice.models.affiliatedstore.AffiliatedStore;
 
 import java.util.List;
 

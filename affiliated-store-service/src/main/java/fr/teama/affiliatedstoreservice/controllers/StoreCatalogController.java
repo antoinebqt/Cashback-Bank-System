@@ -2,7 +2,7 @@ package fr.teama.affiliatedstoreservice.controllers;
 
 import fr.teama.affiliatedstoreservice.helpers.LoggerHelper;
 import fr.teama.affiliatedstoreservice.interfaces.IAffiliatedStoreCatalog;
-import fr.teama.affiliatedstoreservice.models.AffiliatedStore;
+import fr.teama.affiliatedstoreservice.models.affiliatedstore.AffiliatedStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

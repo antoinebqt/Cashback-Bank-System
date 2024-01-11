@@ -29,6 +29,7 @@
         <module>transaction-service</module>
         <module>affiliated-store-service</module>
         <module>account-service</module>
+        <module>balance-service</module>
     </modules>
 
     <dependencyManagement>

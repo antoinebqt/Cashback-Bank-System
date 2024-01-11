@@ -32,8 +32,6 @@ public class TransactionController {
     private ITransactionManager transactionManager;
     @Autowired
     private ITransactionSaver transactionSaver;
-    @Autowired
-    private AccountRepository accountRepository;
 
     @PostMapping("/pay")
     public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountNotFoundException {
@@ -52,11 +50,5 @@ public class TransactionController {
     public ResponseEntity<List<Transaction>> getTransaction() {
         LoggerHelper.logInfo("Request received to get all transactions");
         return ResponseEntity.ok(transactionManager.getTransactions());
-    }
-
-    @GetMapping("/bankaccount")
-    public ResponseEntity<List<BankAccount>> getBankAccount() {
-        LoggerHelper.logInfo("Request received to get all bank accounts");
-        return ResponseEntity.ok(accountRepository.findAll());
     }
 }
