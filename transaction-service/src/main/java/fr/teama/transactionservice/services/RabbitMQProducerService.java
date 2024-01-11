@@ -2,7 +2,7 @@ package fr.teama.transactionservice.services;
 
 import fr.teama.transactionservice.helpers.LoggerHelper;
 import fr.teama.transactionservice.models.BalanceMessage;
-import fr.teama.transactionservice.models.Transaction;
+import fr.teama.transactionservice.models.transaction.Transaction;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

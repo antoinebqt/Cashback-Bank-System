@@ -1,4 +1,4 @@
-package fr.teama.transactionservice.models;
+package fr.teama.transactionservice.models.transaction;
 
 import jakarta.persistence.*;
 

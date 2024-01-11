@@ -10,7 +10,9 @@ import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
 import fr.teama.transactionservice.interfaces.ITransactionSaver;
 import fr.teama.transactionservice.models.Card;
-import fr.teama.transactionservice.models.Transaction;
+import fr.teama.transactionservice.models.transaction.Transaction;
+import fr.teama.transactionservice.models.account.BankAccount;
+import fr.teama.transactionservice.repository.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,8 @@ public class TransactionController {
     private ITransactionSaver transactionSaver;
     @Autowired
     private IAccountProxy bankAccountProxy;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @PostMapping("/pay")
     public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountUnavailableException {
@@ -49,5 +53,11 @@ public class TransactionController {
     public ResponseEntity<List<Transaction>> getTransaction() {
         LoggerHelper.logInfo("Request received to get all transactions");
         return ResponseEntity.ok(transactionManager.getTransactions());
+    }
+
+    @GetMapping("/bankaccount")
+    public ResponseEntity<List<BankAccount>> getBankAccount() {
+        LoggerHelper.logInfo("Request received to get all bank accounts");
+        return ResponseEntity.ok(accountRepository.findAll());
     }
 }

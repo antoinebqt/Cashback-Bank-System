@@ -9,8 +9,8 @@ import fr.teama.transactionservice.helpers.LoggerHelper;
 import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
 import fr.teama.transactionservice.interfaces.proxy.IMastercardProxy;
-import fr.teama.transactionservice.models.Transaction;
-import fr.teama.transactionservice.repository.TransactionRepository;
+import fr.teama.transactionservice.models.transaction.Transaction;
+import fr.teama.transactionservice.repository.transaction.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

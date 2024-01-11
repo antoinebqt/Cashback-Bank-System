@@ -1,7 +1,7 @@
 package fr.teama.transactionservice.interfaces;
 
 import fr.teama.transactionservice.exceptions.PaymentFailedException;
-import fr.teama.transactionservice.models.Transaction;
+import fr.teama.transactionservice.models.transaction.Transaction;
 
 import java.util.List;
 
