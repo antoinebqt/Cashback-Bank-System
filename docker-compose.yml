@@ -17,8 +17,10 @@ services:
     image: "newbank/transaction-service"
     restart: always
     environment:
-      - POSTGRES_HOST=postgres-transaction:5432
-      - POSTGRESQL_DATABASE=database-transaction
+      - POSTGRES_HOST_TRANSACTION=postgres-transaction:5432
+      - POSTGRESQL_DATABASE_TRANSACTION=database-transaction
+      - POSTGRES_HOST_ACCOUNT=postgres-account-slave:5432
+      - POSTGRESQL_DATABASE_ACCOUNT=database-account
     ports:
       - "3000:8080"
     depends_on:
@@ -34,18 +36,20 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - transaction-service
-#      - transaction-service-redundancy
+      - transaction-service-redundancy
 
-#  transaction-service-redundancy:
-#    image: "newbank/transaction-service"
-#    restart: always
-#    environment:
-#      - POSTGRES_HOST=postgres-transaction:5432
-#      - POSTGRESQL_DATABASE=database-transaction
-#    ports:
-#      - "7001:8080"
-#    depends_on:
-#      - postgres-transaction
+  transaction-service-redundancy:
+    image: "newbank/transaction-service"
+    restart: always
+    environment:
+      - POSTGRES_HOST_TRANSACTION=postgres-transaction:5432
+      - POSTGRESQL_DATABASE_TRANSACTION=database-transaction
+      - POSTGRES_HOST_ACCOUNT=postgres-account-slave:5432
+      - POSTGRESQL_DATABASE_ACCOUNT=database-account
+    ports:
+      - "7001:8080"
+    depends_on:
+      - postgres-transaction
 
   cashback-service:
     image: "newbank/cashback-service"
@@ -187,7 +191,8 @@ services:
     ports:
       - "4002:5432"
     volumes:
-      - master-data:/bitnami/postgresql
+#      - master-data:/bitnami/postgresql
+      - master-data:/var/lib/postgresql
 
   postgres-account-slave:
     image: 'bitnami/postgresql:latest'
