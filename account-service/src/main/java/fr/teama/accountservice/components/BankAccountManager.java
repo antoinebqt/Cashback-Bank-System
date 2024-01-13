@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class BankAccountManager implements UserRegistration, BankUserInformation {
+public class BankAccountManager implements BankUserInformation {
 
     @Autowired
     BankUserRepository bankUserRepository;

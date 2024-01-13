@@ -2,15 +2,16 @@ package fr.teama.transactionservice.controllers;
 
 
 import fr.teama.transactionservice.controllers.dto.PaymentDTO;
-import fr.teama.transactionservice.exceptions.BankAccountUnavailableException;
+import fr.teama.transactionservice.exceptions.BankAccountNotFoundException;
 import fr.teama.transactionservice.exceptions.InvalidCardException;
 import fr.teama.transactionservice.exceptions.PaymentFailedException;
 import fr.teama.transactionservice.helpers.LoggerHelper;
-import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
+import fr.teama.transactionservice.interfaces.ITransactionRepublisher;
 import fr.teama.transactionservice.interfaces.ITransactionSaver;
 import fr.teama.transactionservice.models.Card;
-import fr.teama.transactionservice.models.Transaction;
+import fr.teama.transactionservice.models.account.BankAccount;
+import fr.teama.transactionservice.models.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,6 @@ public class TransactionController {
     private ITransactionManager transactionManager;
     @Autowired
     private ITransactionSaver transactionSaver;
-    @Autowired
-    private IAccountProxy bankAccountProxy;
     @Autowired
     private ITransactionRepublisher transactionRepublisher;
 

@@ -3,7 +3,6 @@ package fr.teama.transactionservice.components;
 
 import fr.teama.transactionservice.exceptions.*;
 import fr.teama.transactionservice.helpers.LoggerHelper;
-import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
 import fr.teama.transactionservice.interfaces.proxy.IMastercardProxy;
 import fr.teama.transactionservice.models.Card;
