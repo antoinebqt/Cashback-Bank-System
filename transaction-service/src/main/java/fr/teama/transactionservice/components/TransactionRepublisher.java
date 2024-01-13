@@ -1,7 +1,7 @@
 package fr.teama.transactionservice.components;
 
 import fr.teama.transactionservice.interfaces.ITransactionRepublisher;
-import fr.teama.transactionservice.repository.TransactionRepository;
+import fr.teama.transactionservice.repository.transaction.TransactionRepository;
 import fr.teama.transactionservice.services.RabbitMQProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

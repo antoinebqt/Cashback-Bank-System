@@ -1,6 +1,6 @@
-package fr.teama.affiliatedstoreservice.repository;
+package fr.teama.affiliatedstoreservice.repository.affiliatedstore;
 
-import fr.teama.affiliatedstoreservice.models.CandidateStore;
+import fr.teama.affiliatedstoreservice.models.affiliatedstore.CandidateStore;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,8 +1,9 @@
-package fr.teama.affiliatedstoreservice.models;
+package fr.teama.affiliatedstoreservice.models.affiliatedstore;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "candidate_store")
 public class CandidateStore {
 
     @Id
@@ -13,14 +14,16 @@ public class CandidateStore {
     private String name;
 
     private String email;
+    @Column(name = "phone_number")
     private int phoneNumber;
     private String address;
     private String city;
+    @Column(name = "postal_code")
     private int postalCode;
     private String country;
     private String website;
     private String description;
-
+    @Column(name = "cashback_rate")
     private float cashbackRate;
 
     private String siret;
