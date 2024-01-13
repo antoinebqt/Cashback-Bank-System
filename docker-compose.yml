@@ -17,12 +17,15 @@ services:
     image: "newbank/transaction-service"
     restart: always
     environment:
-      - POSTGRES_HOST=postgres-transaction:5432
-      - POSTGRESQL_DATABASE=database-transaction
+      - POSTGRES_HOST_TRANSACTION=postgres-transaction:5432
+      - POSTGRESQL_DATABASE_TRANSACTION=database-transaction
+      - POSTGRES_HOST_ACCOUNT=postgres-account-slave:5432
+      - POSTGRESQL_DATABASE_ACCOUNT=database-account
     ports:
       - "3000:8080"
     depends_on:
       - postgres-transaction
+      - postgres-account-slave
 
   load-balancer:
     image: "nginx:latest"
@@ -39,8 +42,10 @@ services:
     image: "newbank/transaction-service"
     restart: always
     environment:
-      - POSTGRES_HOST=postgres-transaction:5432
-      - POSTGRESQL_DATABASE=database-transaction
+      - POSTGRES_HOST_TRANSACTION=postgres-transaction:5432
+      - POSTGRESQL_DATABASE_TRANSACTION=database-transaction
+      - POSTGRES_HOST_ACCOUNT=postgres-account-slave:5432
+      - POSTGRESQL_DATABASE_ACCOUNT=database-account
     ports:
       - "7001:8080"
     depends_on:
@@ -88,12 +93,15 @@ services:
     image: "newbank/affiliated-store-service"
     restart: always
     environment:
-      - POSTGRES_HOST=postgres-affiliated-store:5432
-      - POSTGRESQL_DATABASE=database-affiliated-store
+      - POSTGRES_HOST_STORE=postgres-affiliated-store:5432
+      - POSTGRESQL_DATABASE_STORE=database-affiliated-store
+      - POSTGRES_HOST_CASHBACK=postgres-cashback-slave:5432
+      - POSTGRESQL_DATABASE_CASHBACK=database-cashback
     ports:
       - "3003:8080"
     depends_on:
       - postgres-affiliated-store
+      - postgres-cashback-slave
 
   # DATABASES
 
@@ -183,7 +191,8 @@ services:
     ports:
       - "4002:5432"
     volumes:
-      - ./account-directory:/var/lib/postgresql/data
+#      - master-data:/bitnami/postgresql
+      - master-data:/var/lib/postgresql
 
   postgres-account-slave:
     image: 'bitnami/postgresql:latest'

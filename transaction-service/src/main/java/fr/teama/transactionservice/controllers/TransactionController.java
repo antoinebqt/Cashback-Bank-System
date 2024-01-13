@@ -8,11 +8,9 @@ import fr.teama.transactionservice.exceptions.PaymentFailedException;
 import fr.teama.transactionservice.helpers.LoggerHelper;
 import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
-import fr.teama.transactionservice.interfaces.ITransactionRepublisher;
 import fr.teama.transactionservice.interfaces.ITransactionSaver;
 import fr.teama.transactionservice.models.Card;
 import fr.teama.transactionservice.models.Transaction;
-import fr.teama.transactionservice.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +35,14 @@ public class TransactionController {
     private ITransactionRepublisher transactionRepublisher;
 
     @PostMapping("/pay")
-    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountUnavailableException {
+    public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountNotFoundException {
         LoggerHelper.logInfo("Request received to pay " + paymentDTO);
         Card card = new Card(paymentDTO.getCardNumber(), paymentDTO.getExpirationDate(), paymentDTO.getCvv());
-        Long bankAccountId = bankAccountProxy.getBankAccountIdByCard(card);
-        if (bankAccountId == null) {
+        BankAccount bankAccount = transactionManager.getBankAccountByCard(card);
+        if (bankAccount.getId() == null) {
             throw new InvalidCardException();
         }
-        Transaction transaction = transactionManager.pay(bankAccountId, paymentDTO.getMid(), paymentDTO.getAmount());
+        Transaction transaction = transactionManager.pay(bankAccount.getId(), paymentDTO.getMid(), paymentDTO.getAmount());
         transactionSaver.debitAndSaveTransaction(transaction);
         return ResponseEntity.ok(transaction);
     }
@@ -62,9 +60,4 @@ public class TransactionController {
         return ResponseEntity.ok("All transactions have been resend");
     }
 
-//    @GetMapping("/transaction_last_hours")
-//    public ResponseEntity<List<Transaction>> getTransactionInLastHours() {
-//        LoggerHelper.logInfo("Request received to get all transactions in the last hours");
-//        return ResponseEntity.ok(transactionRepository.findTransactionsInLast2Hours());
-//    }
 }

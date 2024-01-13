@@ -8,7 +8,6 @@ import fr.teama.accountservice.exceptions.BankUserWithEmailAlreadyExistException
 import fr.teama.accountservice.exceptions.InvalidAccountPasswordException;
 import fr.teama.accountservice.exceptions.InvalidCardException;
 import fr.teama.accountservice.helpers.LoggerHelper;
-import fr.teama.accountservice.interfaces.BalanceChecker;
 import fr.teama.accountservice.interfaces.BankUserInformation;
 import fr.teama.accountservice.interfaces.UserRegistration;
 import fr.teama.accountservice.models.BalanceModification;
@@ -40,9 +39,6 @@ public class BankUserController {
 
     @Autowired
     BankUserInformation bankUserInformation;
-
-    @Autowired
-    BalanceChecker balanceChecker;
 
     @Autowired
     BalanceModificationRepository balanceModificationRepository;
@@ -80,10 +76,5 @@ public class BankUserController {
         LoggerHelper.logInfo("Request received for getting user: " + card);
         BankAccount account = bankUserInformation.getBankAccountByCard(card);
         return ResponseEntity.ok(account.getId());
-    }
-    @PostMapping("/check/{bankAccountId}")
-    public ResponseEntity<Boolean> checkBalance(@PathVariable Long bankAccountId, @RequestBody double amount) throws BankAccountNotFoundException {
-        LoggerHelper.logInfo("Received balance check request for bank account id " + bankAccountId + " with amount " + amount);
-        return ResponseEntity.ok(balanceChecker.checkBalance(bankAccountId, amount));
     }
 }

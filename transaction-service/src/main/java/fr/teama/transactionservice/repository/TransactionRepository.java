@@ -9,6 +9,4 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-//    @Query(value = "SELECT t FROM Transaction t WHERE t.createdAt >= CURRENT_TIMESTAMP - INTERVAL 2 HOUR", nativeQuery = true)
-//    List<Transaction> findTransactionsInLast2Hours();
 }

@@ -2,7 +2,7 @@ package fr.teama.affiliatedstoreservice.controllers;
 
 import fr.teama.affiliatedstoreservice.helpers.LoggerHelper;
 import fr.teama.affiliatedstoreservice.interfaces.IAffiliatedStoreCatalog;
-import fr.teama.affiliatedstoreservice.models.AffiliatedStore;
+import fr.teama.affiliatedstoreservice.models.affiliatedstore.AffiliatedStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -54,8 +54,10 @@ public class StoreCatalogController {
         LoggerHelper.logInfo("Request received to get cashback rate of affiliated store with siret : " + siret);
         AffiliatedStore affiliatedStore = affiliatedStoreCatalog.getAffiliatedStoreBySiret(siret);
         if (affiliatedStore == null) {
+            LoggerHelper.logInfo("This SIRET is not an affiliated store");
             return ResponseEntity.status(404).body(null);
         }
+        LoggerHelper.logInfo("Found cashback rate of " + affiliatedStore.getCashbackRate() + "% for this SIRET");
         return ResponseEntity.ok(affiliatedStore.getCashbackRate());
     }
 

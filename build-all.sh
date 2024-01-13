@@ -17,6 +17,8 @@ compile_dir "account-service"
 
 compile_dir "affiliated-store-service"
 
+compile_dir "balance-service"
+
 compile_dir "external-bank-mock-service"
 
 compile_dir "external-mid-interpreter-mock-service"
