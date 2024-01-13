@@ -50,7 +50,7 @@ public class CashbackManager implements ICashbackManager {
             LoggerHelper.logInfo("Apply cashback of " + cashbackRate + "% on " + transaction.getAmount() + "€");
             Cashback cashback = new Cashback(transaction.getBankAccountId(), transaction.getAmount(), cashbackAmount, transaction.getId(), siret, transaction.getMastercardTransactionId());
             cashbackRepository.save(cashback);
-            this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(transaction.getBankAccountId(), cashbackAmount));
+            this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(transaction.getBankAccountId(), cashbackAmount, transaction.getId(), false));
         }
     }
 
@@ -60,7 +60,7 @@ public class CashbackManager implements ICashbackManager {
         if (cashback != null) {
             LoggerHelper.logInfo("Cancel cashback of transaction " + transactionId);
             cashbackRepository.delete(cashback);
-            this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(cashback.getBankAccountId(), -cashback.getAmountReturned()));
+            this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(cashback.getBankAccountId(), -cashback.getAmountReturned(), cashback.getTransactionId(), false));
         }
     }
 }

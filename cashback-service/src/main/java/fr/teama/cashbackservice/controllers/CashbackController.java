@@ -1,7 +1,10 @@
 package fr.teama.cashbackservice.controllers;
 
+import fr.teama.cashbackservice.components.CashbackManager;
 import fr.teama.cashbackservice.controllers.dto.CashbackDTO;
 import fr.teama.cashbackservice.helpers.LoggerHelper;
+import fr.teama.cashbackservice.interfaces.ICashbackManager;
+import fr.teama.cashbackservice.interfaces.ICashbackRepublisher;
 import fr.teama.cashbackservice.models.Cashback;
 import fr.teama.cashbackservice.repository.CashbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +26,13 @@ public class CashbackController {
     public static final String BASE_URI = "/api/cashback";
 
     private final CashbackRepository cashbackRepository;
+    private final ICashbackRepublisher cashbackRepublisher;
+
 
     @Autowired
-    CashbackController(CashbackRepository cashbackRepository) {
+    CashbackController(CashbackRepository cashbackRepository, ICashbackRepublisher cashbackRepublisher) {
         this.cashbackRepository = cashbackRepository;
+        this.cashbackRepublisher = cashbackRepublisher;
     }
 
     @GetMapping("/last-month")
@@ -61,4 +67,11 @@ public class CashbackController {
         }
         return ResponseEntity.ok(cashbackDTOs);
     }
+    @PostMapping("/resendAll")
+    public ResponseEntity<String> resendAllCashbackTransaction(){
+        LoggerHelper.logInfo("Request received to resend all transactions");
+        cashbackRepublisher.republishAllCashbackTransactions();
+        return ResponseEntity.ok("All transactions have been resend");
+    }
+
 }

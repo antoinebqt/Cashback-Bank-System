@@ -2,6 +2,8 @@ package fr.teama.transactionservice.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Transaction {
     @GeneratedValue
@@ -11,6 +13,8 @@ public class Transaction {
     private double amount;
     private String MID;
     private String mastercardTransactionId;
+
+//    private LocalDateTime createdAt;
 
     public Transaction() {
     }

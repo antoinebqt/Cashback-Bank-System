@@ -4,14 +4,16 @@ public class BalanceMessage {
     private Long bankAccountId;
     private double amount;
     private Long transactionId;
+    boolean republishing;
 
     public BalanceMessage() {
     }
 
-    public BalanceMessage(Long bankAccountId, double amount, Long transactionId) {
+    public BalanceMessage(Long bankAccountId, double amount, Long transactionId, boolean republishing) {
         this.bankAccountId = bankAccountId;
         this.amount = amount;
         this.transactionId = transactionId;
+        this.republishing = republishing;
     }
 
     public Long getTransactionId() {
@@ -44,5 +46,13 @@ public class BalanceMessage {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public void setRepublishing(boolean republishing) {
+        this.republishing = republishing;
+    }
+
+    public boolean isRepublishing() {
+        return republishing;
     }
 }

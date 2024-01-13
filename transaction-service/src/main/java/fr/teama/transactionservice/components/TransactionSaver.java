@@ -7,6 +7,8 @@ import fr.teama.transactionservice.services.RabbitMQProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class TransactionSaver implements ITransactionSaver {
     @Autowired
@@ -16,8 +18,13 @@ public class TransactionSaver implements ITransactionSaver {
 
     @Override
     public void debitAndSaveTransaction(Transaction transaction) {
+
         Transaction savedTransaction = transactionRepository.save(transaction);
-        rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()),savedTransaction.getId());
-        rabbitMQProducerService.sendTransactionMessage(savedTransaction);
+        rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()),savedTransaction.getId(),false);
+        try{
+            rabbitMQProducerService.sendTransactionMessage(savedTransaction);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

@@ -8,6 +8,7 @@ public class BalanceMessageDTO {
     private Long bankAccountId;
     private double amount;
     private Long transactionId;
+    boolean republishing;
     @Id
     @GeneratedValue
     private Long id;
@@ -54,5 +55,13 @@ public class BalanceMessageDTO {
 
     public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public boolean isRepublishing() {
+        return republishing;
+    }
+
+    public void setRepublishing(boolean republishing) {
+        this.republishing = republishing;
     }
 }

@@ -183,7 +183,7 @@ services:
     ports:
       - "4002:5432"
     volumes:
-      - master-data:/bitnami/postgresql
+      - ./account-directory:/var/lib/postgresql/data
 
   postgres-account-slave:
     image: 'bitnami/postgresql:latest'

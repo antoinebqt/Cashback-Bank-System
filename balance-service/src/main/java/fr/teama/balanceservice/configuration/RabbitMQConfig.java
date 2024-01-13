@@ -9,12 +9,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${balance.queue.name}")
-    String balanceQueueName;
+    @Value("${balance_payment.queue.name}")
+    String balanceQueuePaymentName;
+    @Value("${balance_cashback.queue.name}")
+    String balanceQueueCashbackName;
+
 
     @Bean
-    public Queue balanceQueue() {
-        return new Queue(balanceQueueName);
+    public Queue balanceQueuePayment() {
+        return new Queue(balanceQueuePaymentName);
+    }
+    @Bean
+    public Queue balanceQueueCashback() {
+        return new Queue(balanceQueueCashbackName);
     }
 
     @Bean

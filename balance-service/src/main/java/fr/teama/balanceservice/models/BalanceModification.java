@@ -15,6 +15,7 @@ public class BalanceModification {
     @Id
     @GeneratedValue
     private Long id;
+    boolean cashback = false;
 
     public BalanceModification() {
     }
@@ -63,6 +64,14 @@ public class BalanceModification {
 
     public void setBankAccount(BankAccount bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public boolean isCashback() {
+        return cashback;
+    }
+
+    public void setCashback(boolean cashback) {
+        this.cashback = cashback;
     }
 }
 

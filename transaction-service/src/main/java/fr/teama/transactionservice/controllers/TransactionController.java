@@ -8,9 +8,11 @@ import fr.teama.transactionservice.exceptions.PaymentFailedException;
 import fr.teama.transactionservice.helpers.LoggerHelper;
 import fr.teama.transactionservice.interfaces.IAccountProxy;
 import fr.teama.transactionservice.interfaces.ITransactionManager;
+import fr.teama.transactionservice.interfaces.ITransactionRepublisher;
 import fr.teama.transactionservice.interfaces.ITransactionSaver;
 import fr.teama.transactionservice.models.Card;
 import fr.teama.transactionservice.models.Transaction;
+import fr.teama.transactionservice.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,8 @@ public class TransactionController {
     private ITransactionSaver transactionSaver;
     @Autowired
     private IAccountProxy bankAccountProxy;
+    @Autowired
+    private ITransactionRepublisher transactionRepublisher;
 
     @PostMapping("/pay")
     public ResponseEntity<Transaction> pay(@RequestBody PaymentDTO paymentDTO) throws InvalidCardException, PaymentFailedException, BankAccountUnavailableException {
@@ -50,4 +54,17 @@ public class TransactionController {
         LoggerHelper.logInfo("Request received to get all transactions");
         return ResponseEntity.ok(transactionManager.getTransactions());
     }
+
+    @PostMapping("/resendAll")
+    public ResponseEntity<String> resendAllTransaction(){
+        LoggerHelper.logInfo("Request received to resend all transactions");
+        transactionRepublisher.republishAllTransactions();
+        return ResponseEntity.ok("All transactions have been resend");
+    }
+
+//    @GetMapping("/transaction_last_hours")
+//    public ResponseEntity<List<Transaction>> getTransactionInLastHours() {
+//        LoggerHelper.logInfo("Request received to get all transactions in the last hours");
+//        return ResponseEntity.ok(transactionRepository.findTransactionsInLast2Hours());
+//    }
 }

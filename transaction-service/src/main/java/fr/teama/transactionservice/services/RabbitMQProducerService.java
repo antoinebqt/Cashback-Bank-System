@@ -18,12 +18,20 @@ public class RabbitMQProducerService {
 
     public void sendTransactionMessage(Transaction transaction) {
         LoggerHelper.logInfo("Sending transaction message: " + transaction);
-        rabbitTemplate.convertAndSend("transaction-created-queue", transaction);
+        try{
+            rabbitTemplate.convertAndSend("transaction-created-queue", transaction);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
-    public void sendBalanceMessage(Long bankAccountId, double amount, Long transactionId) {
-        BalanceMessage balanceMessage = new BalanceMessage(bankAccountId, amount, transactionId);
+    public void sendBalanceMessage(Long bankAccountId, double amount, Long transactionId, boolean republishing) {
+        BalanceMessage balanceMessage = new BalanceMessage(bankAccountId, amount, transactionId,republishing);
         LoggerHelper.logInfo("Sending balance message: " + balanceMessage);
-        rabbitTemplate.convertAndSend("balance-queue", balanceMessage);
+        try{
+            rabbitTemplate.convertAndSend("balance-queue-payment", balanceMessage);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

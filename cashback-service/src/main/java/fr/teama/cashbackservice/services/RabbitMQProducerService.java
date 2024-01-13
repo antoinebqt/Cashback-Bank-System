@@ -16,6 +16,6 @@ public class RabbitMQProducerService {
 
 
     public void sendBalanceMessage(BalanceMessage balanceMessage) {
-        rabbitTemplate.convertAndSend("balance-queue", balanceMessage);
+        rabbitTemplate.convertAndSend("balance-queue-cashback", balanceMessage);
     }
 }

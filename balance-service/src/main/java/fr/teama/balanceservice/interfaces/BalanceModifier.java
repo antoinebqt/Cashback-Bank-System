@@ -8,5 +8,6 @@ public interface BalanceModifier {
 
     void addBalance(String iban, Double amount) throws BankAccountNotFoundException;
 
-    void changeBalance(BalanceMessageDTO balanceMessageDTO) throws BankAccountNotFoundException;
+    void changeBalance(BalanceMessageDTO balanceMessageDTO, boolean isPayment) throws BankAccountNotFoundException;
+
 }

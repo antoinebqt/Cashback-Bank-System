@@ -1,17 +1,35 @@
 package fr.teama.cashbackservice.services.dto;
 
 public class BalanceMessage {
-
     private Long bankAccountId;
-
     private double amount;
-
-    public BalanceMessage(Long bankAccountId, double amount) {
-        this.bankAccountId = bankAccountId;
-        this.amount = amount;
-    }
+    private Long transactionId;
+    boolean republishing;
 
     public BalanceMessage() {
+    }
+
+    public BalanceMessage(Long bankAccountId, double amount, Long transactionId, boolean republishing) {
+        this.bankAccountId = bankAccountId;
+        this.amount = amount;
+        this.transactionId = transactionId;
+        this.republishing = republishing;
+    }
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    @Override
+    public String toString() {
+        return "BalanceMessage{" +
+                "bankAccountId=" + bankAccountId +
+                ", amount=" + amount +
+                '}';
     }
 
     public Long getBankAccountId() {
@@ -30,11 +48,11 @@ public class BalanceMessage {
         this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "BalanceMessage{" +
-                "bankAccountId=" + bankAccountId +
-                ", amount=" + amount +
-                '}';
+    public void setRepublishing(boolean republishing) {
+        this.republishing = republishing;
+    }
+
+    public boolean isRepublishing() {
+        return republishing;
     }
 }
