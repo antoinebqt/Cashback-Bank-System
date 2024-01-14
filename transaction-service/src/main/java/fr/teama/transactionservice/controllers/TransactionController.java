@@ -55,8 +55,7 @@ public class TransactionController {
     @PostMapping("/resendAll")
     public ResponseEntity<String> resendAllTransaction(){
         LoggerHelper.logInfo("Request received to resend all transactions");
-        transactionRepublisher.republishAllTransactions();
-        return ResponseEntity.ok("All transactions have been resend");
+        return ResponseEntity.ok(transactionRepublisher.republishAllTransactions());
     }
 
 }
