@@ -118,8 +118,6 @@ services:
       - POSTGRESQL_REPLICATION_PASSWORD=repl_password
     ports:
       - "4000:5432"
-    volumes:
-      - ./transaction-directory-master:/var/lib/postgresql/data
 
   postgres-transaction-slave:
     image: 'bitnami/postgresql:latest'
@@ -138,8 +136,6 @@ services:
       - POSTGRESQL_MASTER_PORT_NUMBER=5432
     ports:
       - "6000:5432"
-    volumes:
-      - ./transaction-directory-slave:/var/lib/postgresql/data
 
   postgres-cashback:
     image: 'bitnami/postgresql:latest'
@@ -154,8 +150,6 @@ services:
       - POSTGRESQL_REPLICATION_PASSWORD=repl_password
     ports:
       - "4001:5432"
-    volumes:
-      - ./cashback-directory-master:/var/lib/postgresql/data
 
   postgres-cashback-slave:
     image: 'bitnami/postgresql:latest'
@@ -174,8 +168,6 @@ services:
       - POSTGRESQL_MASTER_PORT_NUMBER=5432
     ports:
       - "6001:5432"
-    volumes:
-      - ./cashback-directory-slave:/var/lib/postgresql/data
 
   postgres-account:
     image: 'bitnami/postgresql:latest'
@@ -190,9 +182,6 @@ services:
       - POSTGRESQL_REPLICATION_PASSWORD=repl_password
     ports:
       - "4002:5432"
-    volumes:
-#      - master-data:/bitnami/postgresql
-      - master-data:/var/lib/postgresql
 
   postgres-account-slave:
     image: 'bitnami/postgresql:latest'
@@ -256,6 +245,3 @@ services:
     restart: always
     ports:
       - "5004:8080"
-
-volumes:
-  master-data:
