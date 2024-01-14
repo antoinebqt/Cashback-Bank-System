@@ -22,7 +22,7 @@ public class TransactionSaver implements ITransactionSaver {
         Transaction savedTransaction = transactionRepository.save(transaction);
         rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()),savedTransaction.getId(),false);
         try{
-            rabbitMQProducerService.sendTransactionMessage(savedTransaction);
+            rabbitMQProducerService.sendTransactionMessage(savedTransaction,false);
         } catch (Exception e) {
             System.out.println(e);
         }

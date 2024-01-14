@@ -1,6 +1,7 @@
 package fr.teama.transactionservice.components;
 
 import fr.teama.transactionservice.interfaces.ITransactionRepublisher;
+import fr.teama.transactionservice.models.transaction.Transaction;
 import fr.teama.transactionservice.repository.transaction.TransactionRepository;
 import fr.teama.transactionservice.services.RabbitMQProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,14 @@ public class TransactionRepublisher implements ITransactionRepublisher{
     TransactionRepository transactionRepository;
 
     @Override
-    public void republishAllTransactions() {
-        transactionRepository.findAll().forEach(transaction -> rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()),transaction.getId(),true));
+    public String republishAllTransactions() {
+        for (Transaction transaction: transactionRepository.findAll()) {
+            if(!rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()),transaction.getId(),true))
+                return "Queue not ready";
+            if(!rabbitMQProducerService.sendTransactionMessage(transaction,true))
+                return "Queue not ready";
+        }
+        return "All messages have been sent";
     }
 
 }

@@ -12,6 +12,8 @@ import fr.teama.cashbackservice.services.dto.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 
 @Component
 public class CashbackManager implements ICashbackManager {
@@ -33,7 +35,14 @@ public class CashbackManager implements ICashbackManager {
     }
 
     @Override
-    public void processTransaction(Transaction transaction) {
+    public void processTransaction(Transaction transaction,boolean isRepublishing) {
+        if (isRepublishing){
+            Optional<Cashback> cashback= cashbackRepository.findCashbackByTransactionId(transaction.getId());
+            if (cashback.isPresent()){
+                this.rabbitMQProducerService.sendBalanceMessage(new BalanceMessage(transaction.getBankAccountId(), cashback.get().getAmountReturned(), transaction.getId(), true));
+                return ;
+            }
+        }
         String siret = null;
         try {
             siret = this.midInterpreterProxy.getSiretByMID(transaction.getMID());
@@ -56,7 +65,7 @@ public class CashbackManager implements ICashbackManager {
 
     @Override
     public void cancelCashbackTransaction(Long transactionId) {
-        Cashback cashback = cashbackRepository.findCashbackByTransactionId(transactionId);
+        Cashback cashback = cashbackRepository.findCashbackByTransactionId(transactionId).get();
         if (cashback != null) {
             LoggerHelper.logInfo("Cancel cashback of transaction " + transactionId);
             cashbackRepository.delete(cashback);
