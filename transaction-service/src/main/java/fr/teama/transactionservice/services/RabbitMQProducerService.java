@@ -2,6 +2,7 @@ package fr.teama.transactionservice.services;
 
 import fr.teama.transactionservice.helpers.LoggerHelper;
 import fr.teama.transactionservice.models.BalanceMessage;
+import fr.teama.transactionservice.models.TransactionMessage;
 import fr.teama.transactionservice.models.transaction.Transaction;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ public class RabbitMQProducerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public boolean sendTransactionMessage(Transaction transaction) {
+    public boolean sendTransactionMessage(Transaction transaction, boolean republishing) {
         LoggerHelper.logInfo("Sending transaction message: " + transaction);
         try{
-            rabbitTemplate.convertAndSend("transaction-created-queue", transaction);
+            rabbitTemplate.convertAndSend("transaction-created-queue", new TransactionMessage(transaction,republishing));
         } catch (Exception e) {
             System.out.println(e);
             return false;

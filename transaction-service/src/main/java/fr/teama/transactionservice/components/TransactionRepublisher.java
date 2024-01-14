@@ -19,7 +19,7 @@ public class TransactionRepublisher implements ITransactionRepublisher{
         for (Transaction transaction: transactionRepository.findAll()) {
             if(!rabbitMQProducerService.sendBalanceMessage(transaction.getBankAccountId(), -1 * (transaction.getAmount()),transaction.getId(),true))
                 return "Queue not ready";
-            if(!rabbitMQProducerService.sendTransactionMessage(transaction))
+            if(!rabbitMQProducerService.sendTransactionMessage(transaction,true))
                 return "Queue not ready";
         }
         return "All messages have been sent";

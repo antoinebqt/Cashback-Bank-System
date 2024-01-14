@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CashbackRepository extends JpaRepository<Cashback, Long> {
@@ -19,5 +20,5 @@ public interface CashbackRepository extends JpaRepository<Cashback, Long> {
     @Query("SELECT cb FROM Cashback cb WHERE cb.timestamp >= :date AND cb.siret = :siret")
     List<Cashback> findAllWithTimestampGreaterThanAndSiret(@Param("date") LocalDateTime date, @Param("siret") String siret);
 
-    Cashback findCashbackByTransactionId(Long transactionId);
+    Optional<Cashback> findCashbackByTransactionId(Long transactionId);
 }

@@ -5,6 +5,7 @@ import fr.teama.cashbackservice.exceptions.MIDIterpreterServiceUnavailableExcept
 import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.interfaces.ICashbackManager;
 import fr.teama.cashbackservice.services.dto.Transaction;
+import fr.teama.cashbackservice.services.dto.TransactionMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ public class RabbitMQConsumerService {
     }
 
     @RabbitListener(queues = "transaction-created-queue")
-    public void newTransaction(Transaction transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException {
+    public void newTransaction(TransactionMessage transaction) throws MIDIterpreterServiceUnavailableException, BadMIDException {
         LoggerHelper.logInfo("Received transaction: " + transaction);
-        this.cashbackManager.processTransaction(transaction);
+        this.cashbackManager.processTransaction(transaction.getTransaction(),transaction.isRepublishing());
     }
 
     @RabbitListener(queues = "transaction-cancelled-queue")
