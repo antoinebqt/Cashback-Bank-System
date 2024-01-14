@@ -2,7 +2,7 @@
 
 ## Self-evaluation
 
-We feel that we have correctly evolved our architecture to accommodate the new extensions. All in a step-by-step approach, testing and progressively improving the scalability and resilience of our application.
+We feel that we have correctly evolved our architecture to accommodate the new extensions but also to solve the problems we had previously, i.e. strong coupling, poor distribution of responsibilities and bottlenecks. All in a step-by-step approach, testing and progressively improving the scalability and resilience of our application.
 
 |     Member        | Involvement  |
 |:-----------------:|:------------:|
