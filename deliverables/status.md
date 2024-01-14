@@ -1,5 +1,46 @@
 # New Bank Status
 
+## Self-evaluation
+
+
+
+|     Member        | Involvement  |
+|:-----------------:|:------------:|
+|    Ayoub IMAMI    |     100      |
+|   Benoit GAUDET   |     100      |
+|  Antoine BUQUET   |     100      |
+| Mourad KARRAKCHOU |     100      |
+
+---
+
+## Week 2
+
+### What was done
+- Refactor of the code to match our new architecture
+- Add a slave database for the account service to prevent table locking on balance update/read
+- Write ADR
+- Add load balancer for transaction service
+- Advanced load test with container limitation and multiple instances of transaction service
+
+What is planned
+- 
+
+### What's the difference from last week
+- Load tests with multiple instances of transaction service with load balancer
+- Split account service into balance and account services
+- Services communicating directly to slave databases
+- Recover system in case of queue failure
+
+### Issues
+- No blockers
+
+### Risk
+- No risks
+
+### RYG flag
+- Green
+---
+
 ## Week 1
 
 ### What was done
