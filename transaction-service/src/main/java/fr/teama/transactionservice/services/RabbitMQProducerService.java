@@ -18,7 +18,7 @@ public class RabbitMQProducerService {
     }
 
     public boolean sendTransactionMessage(Transaction transaction, boolean republishing) {
-        LoggerHelper.logInfo("Sending transaction message: " + transaction);
+        LoggerHelper.logInfo("Sending transaction created message: " + transaction);
         try{
             rabbitTemplate.convertAndSend("transaction-created-queue", new TransactionMessage(transaction,republishing));
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class RabbitMQProducerService {
 
     public boolean sendBalanceMessage(Long bankAccountId, double amount, Long transactionId, boolean republishing) {
         BalanceMessage balanceMessage = new BalanceMessage(bankAccountId, amount, transactionId,republishing);
-        LoggerHelper.logInfo("Sending balance message: " + balanceMessage);
+        LoggerHelper.logInfo("Sending balance modified message: " + balanceMessage);
         try{
             rabbitTemplate.convertAndSend("balance-queue-payment", balanceMessage);
         } catch (Exception e) {
