@@ -22,8 +22,8 @@ We feel that we have correctly evolved our architecture to accommodate the new e
 - Add load balancer for transaction service
 - Advanced load test with container limitation and multiple instances of transaction service
 
-What is planned
-- 
+### What is planned
+- ‎
 
 ### What's the difference from last week
 - Load tests with multiple instances of transaction service with load balancer
