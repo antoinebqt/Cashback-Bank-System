@@ -1,5 +1,6 @@
 package fr.teama.cashbackservice.services;
 
+import fr.teama.cashbackservice.helpers.LoggerHelper;
 import fr.teama.cashbackservice.services.dto.BalanceMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class RabbitMQProducerService {
 
 
     public void sendBalanceMessage(BalanceMessage balanceMessage) {
+        LoggerHelper.logInfo("Sending balance modified message : " + balanceMessage);
         rabbitTemplate.convertAndSend("balance-queue-cashback", balanceMessage);
     }
 }

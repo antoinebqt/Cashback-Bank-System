@@ -27,4 +27,12 @@ public class TransactionMessage {
     public void setRepublishing(boolean republishing) {
         this.republishing = republishing;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionMessage{" +
+                "transaction=" + transaction +
+                ", republishing=" + republishing +
+                '}';
+    }
 }

@@ -29,6 +29,8 @@ public class BalanceMessage {
         return "BalanceMessage{" +
                 "bankAccountId=" + bankAccountId +
                 ", amount=" + amount +
+                ", transactionId=" + transactionId +
+                ", republishing=" + republishing +
                 '}';
     }
 

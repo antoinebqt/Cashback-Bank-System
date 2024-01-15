@@ -50,6 +50,7 @@ services:
       - "7001:8080"
     depends_on:
       - postgres-transaction
+      - postgres-account-slave
 
   cashback-service:
     image: "newbank/cashback-service"
